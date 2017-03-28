@@ -24,3 +24,13 @@ CREATE TABLE guestbook.countries (
 DROP BLOB TABLE IF EXISTS guestbook_images;
 CREATE BLOB TABLE guestbook_images
 WITH (number_of_replicas='0-2');
+
+-- projects table
+DROP TABLE IF EXISTS showcase.projects;
+CREATE TABLE showcase.projects (
+    id STRING PRIMARY KEY,
+    title STRING INDEX USING FULLTEXT WITH (analyzer = 'english'),
+    description STRING INDEX USING FULLTEXT WITH (analyzer = 'english'),
+    year INT,
+    url STRING
+) WITH (number_of_replicas = 0);

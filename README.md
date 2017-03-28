@@ -32,7 +32,7 @@ You need [crash][13] (Crate Shell) to connect to Crate.
 
 ```bash
 crash < sql/schemas.sql
-crash -c "COPY guestbook.countries FROM '$(pwd)/sql/countries.json'"
+crash -c "COPY showcase.projects FROM '$(pwd)/sql/MOCK_DATA.json'"
 ```
 
 ## Develop
