@@ -89,6 +89,7 @@ angular.module('app', [])
     var SEARCH_API = new Api('/search');
 
     $scope.posts = [];
+    $scope.projects = [];
     $scope.imagedata = null;
     $scope.formdata = angular.copy(EMPTY);
     $scope.apiHost = apiHost;
@@ -97,17 +98,19 @@ angular.module('app', [])
     };
 
     var init = function() {
-      // try to get location from browser
-      var location = new Location();
-      location.get().then(function(pos) {
-        locationCache = [pos.coords.longitude, pos.coords.latitude];
-        $scope.formdata.user.location = angular.copy(locationCache);
-      }, function(e) {
-        console.warn(e);
-        window.alert(e.message);
-      });
+      // // try to get location from browser
+      // var location = new Location();
+      // location.get().then(function(pos) {
+      //   locationCache = [pos.coords.longitude, pos.coords.latitude];
+      //   $scope.formdata.user.location = angular.copy(locationCache);
+      // }, function(e) {
+      //   console.warn(e);
+      //   window.alert(e.message);
+      // });
       // load existing posts
       loadPosts();
+      // load existing projects
+      loadProjects();
     };
 
     var loadPosts = function() {
@@ -117,6 +120,16 @@ angular.module('app', [])
       }, function(e) {
         console.warn(e);
         $scope.posts = [];
+      });
+    };
+
+    var loadProjects = function() {
+      var api = new Api('/projects');
+      api.get().then(function(response) {
+        $scope.projects = response.data;
+      }, function(e) {
+        console.warn(e);
+        $scope.projects = [];
       });
     };
 
@@ -156,12 +169,21 @@ angular.module('app', [])
       })
     };
 
-    var searchPosts = function() {
+    // var searchPosts = function() {
+    //   SEARCH_API.post($scope.search).then(function(response) {
+    //     $scope.posts = response.data;
+    //   }, function(e) {
+    //     console.warn(e);
+    //     $scope.posts = [];
+    //   });
+    // };
+
+    var searchProjects = function() {
       SEARCH_API.post($scope.search).then(function(response) {
-        $scope.posts = response.data;
+        $scope.projects = response.data;
       }, function(e) {
         console.warn(e);
-        $scope.posts = [];
+        $scope.projects = [];
       });
     };
 
@@ -170,9 +192,11 @@ angular.module('app', [])
       return scope.search.query_string;
     }, function(newVal, oldVal) {
       if (newVal === '') {
-        loadPosts();
+        // loadPosts();
+        loadProjects();
       } else if (newVal != oldVal) {
-        searchPosts();
+        // searchPosts();
+        searchProjects();
       }
     });
 

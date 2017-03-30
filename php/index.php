@@ -240,6 +240,25 @@ $app->get('/posts', function() use ($app)
     $app->success(200, $result);
 })->name('posts-get');
 
+
+
+
+/**
+ * Get a list of all projects.
+ */
+$app->get('/projects', function() use ($app)
+{
+    $qry = $app->conn->prepare("SELECT p.*
+            FROM showcase.projects AS p");
+    $qry->execute();
+    $result = $qry->fetchAll(PDO::FETCH_ASSOC);
+    $app->success(200, $result);
+})->name('projects-get');
+
+
+
+
+
 /**
  * returns all images that are saved in the crate blob store.
  */
@@ -325,6 +344,7 @@ $app->delete('/image/:digest', function($digest) use ($app)
     }
 })->name('image-delete');
 
+/*
 $app->post('/search', function() use ($app)
 {
     $data = json_decode($app->request->getBody());
@@ -337,6 +357,32 @@ $app->post('/search', function() use ($app)
             FROM guestbook.posts AS p, guestbook.countries AS c
             WHERE within(p.user['location'], c.geometry)
               AND match(p.text, ?)");
+    $qry->bindParam(1, $data->query_string);
+    $qry->execute();
+    $result = $qry->fetchAll(PDO::FETCH_ASSOC);
+    $app->success(200, $result);
+})->name('search');
+*/
+
+$app->post('/search', function() use ($app)
+{
+    $data = json_decode($app->request->getBody());
+    if (!isset($data->query_string)) {
+        $app->argument_required('Argument "query_string" is required');
+        return;
+    }
+    /*
+    $qry = $app->conn->prepare("SELECT p.*, p._score as _score
+            FROM showcase.projects AS p
+            WHERE match(p.title, ?) 
+            OR match(p.description, ?)
+            OR p.year = ?
+            ORDER BY _score DESC");
+            */
+    $qry = $app->conn->prepare("SELECT p.*, p._score as _score
+            FROM showcase.projects AS p
+            WHERE match((p.title, p.description, p.year), ?)
+            ORDER BY _score DESC");
     $qry->bindParam(1, $data->query_string);
     $qry->execute();
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
