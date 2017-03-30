@@ -21,6 +21,15 @@ Then open the application on port `8000` in the browser:
 
 In order to get auto-reloading on file save, you can serve the frontend with browser-sync.
 
+First install the extra dev tools with `npm`.
+
+```console
+$ npm install
+```
+
+This will pull down browser-sync, and also eslint to keep your code clean. Then run that server.
+
+
 ```console
 $ npm run serve
 ```
