@@ -1,0 +1,28 @@
+{
+  "name": "avl-showcase",
+  "version": "1.0.0",
+  "description": "Make sure your browser has an editorconfig plugin in order to maintain the code style.",
+  "main": "index.js",
+  "author": "dmreagan",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb-base": "^11.1.2",
+    "eslint-plugin-import": "^2.2.0"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "env": {
+      "es6": true,
+      "browser": true
+    },
+    "ecmaVersion": 6,
+    "globals": {
+      "angular": false
+    }
+  },
+  "scripts": {
+    "serve": "node ./node_modules/browser-sync/bin/browser-sync start --server 'frontend' --files 'frontend'"
+  }
+}

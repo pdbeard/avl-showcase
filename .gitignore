@@ -1,3 +1,4 @@
 php/vendor/
 php/composer.phar
 php/composer.lock
+node_modules
