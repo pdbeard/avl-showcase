@@ -24,5 +24,8 @@
   },
   "scripts": {
     "serve": "node ./node_modules/browser-sync/bin/browser-sync start --server 'frontend' --files 'frontend'"
+  },
+  "dependencies": {
+    "choices.js": "^2.7.7"
   }
 }

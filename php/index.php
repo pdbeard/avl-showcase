@@ -1,6 +1,16 @@
 <?php
 error_reporting(E_STRICT);
 
+function debug_to_console( $data ) {
+    $output = $data;
+    if ( is_array( $output ) )
+        $output = implode( ',', $output);
+
+    echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+}
+
+
+
 require 'vendor/autoload.php';
 $config = parse_ini_file('app.ini');
 
@@ -133,6 +143,70 @@ $app->post('/posts', function() use ($app)
 })->name('post-post');
 
 /**
+ * insert a project.
+ */
+$app->post('/projects', function() use ($app)
+{
+    $data        = json_decode($app->request->getBody());
+    $title       = $data->title;
+    $description = $data->description;
+    $url         = $data->url;
+    $year        = $data->year;
+//    $image_ref   = $data->image_ref;
+
+    debug_to_console($data);
+
+    if (empty($title)) {
+        $app->argument_required('Argument "title" is required');
+        return;
+    } else if (empty($description)) {
+        $app->argument_required('Argument "description" is required');
+        return;
+    }else if (empty($url)) {
+        $app->argument_required('Argument "url" is required');
+        return;
+    }else if (empty($year)) {
+        $app->argument_required('Argument "year" is required');
+        return;
+    }
+//else if (empty($user->location)) {
+//        $app->argument_required('Argument "location" is required');
+//        return;
+//    }
+
+    $id        = uniqid();
+    $now       = time() * 1000;
+    $likeCount = 0;
+    $qry       = $app->conn->prepare("INSERT INTO showcase.projects (
+      id, title, description, url, year
+    ) VALUES (
+      ?, ?, ?, ?, ?
+    )");
+    $qry->bindParam(1, $id);
+    //$user = array('name' => 'test', 'location' => array(9.74379 , 47.4124));
+    $qry->bindParam(2, $title);
+    $qry->bindParam(3, $description);
+    $qry->bindParam(4, $url);
+    $qry->bindParam(5, $year);
+    $state = $qry->execute();
+
+
+//Currently Breaks post for some reason.
+
+//    if ($state) {
+//        $app->refreshTable('showcase.projects');
+//        $qry = $app->conn->prepare("SELECT p.* FROM showcase.projects AS p WHERE p.id = ?");
+//        $qry->bindParam(1, $id);
+//        $qry->execute();
+//        $result = $qry->fetchAll(PDO::FETCH_ASSOC);
+//        $app->success(201, $result);
+//    } else {
+//        $app->resource_error(500, $app->conn->errorInfo());
+//    }
+
+})->name('post-project');
+
+/**
  * sets the text of a post
  */
 $app->put('/post/:id', function($id) use ($app)
@@ -248,6 +322,9 @@ $app->get('/posts', function() use ($app)
  */
 $app->get('/projects', function() use ($app)
 {
+//    $data        = json_decode($app->request->getBody());
+//    debug_to_console( $data );
+
     $qry = $app->conn->prepare("SELECT p.*
             FROM showcase.projects AS p");
     $qry->execute();
@@ -374,7 +451,7 @@ $app->post('/search', function() use ($app)
     /*
     $qry = $app->conn->prepare("SELECT p.*, p._score as _score
             FROM showcase.projects AS p
-            WHERE match(p.title, ?) 
+            WHERE match(p.title, ?)
             OR match(p.description, ?)
             OR p.year = ?
             ORDER BY _score DESC");
@@ -390,5 +467,8 @@ $app->post('/search', function() use ($app)
 })->name('search');
 
 $app->run();
+
+
+
 
 ?>

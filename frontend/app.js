@@ -125,7 +125,7 @@ angular.module('app', [])
     // reset input form but refill location from cache
     const resetForm = function () {
       $scope.formdata = angular.copy(EMPTY);
-      $scope.formdata.user.location = angular.copy(locationCache);
+//      $scope.formdata.user.location = angular.copy(locationCache);
       $scope.imagedata = null;
     };
 
@@ -150,6 +150,20 @@ angular.module('app', [])
         const posts = response.data;
         for (let i = 0; i < posts.length; i += 1) {
           $scope.posts.unshift(posts[0]);
+        }
+        resetForm();
+      }, (e) => {
+        console.warn(e);
+        window.alert('Creating the post failed.');
+      });
+    };
+
+    const submitProject = function () {
+      const api = new Api('/projects');
+      api.post($scope.formdata).then((response) => {
+        const projects = response.data;
+        for (let i = 0; i < projects.length; i += 1) {
+          $scope.projects.unshift(projects[0]);
         }
         resetForm();
       }, (e) => {
@@ -190,17 +204,19 @@ angular.module('app', [])
 
     // create new post
     this.submitForm = function () {
-      if (!$scope.formdata.user.location) return;
+//      if (!$scope.formdata.user.location) return;
       if ($scope.imagedata) {
         uploadBlob($scope.imagedata).then((response) => {
           $scope.formdata.image_ref = response.data.digest;
-          submitPost();
+//          submitPost();
+            submitProject();
         }, (e) => {
           console.warn(e);
           window.alert('Image upload failed.');
         });
       } else {
-        submitPost();
+//        submitPost();
+          submitProject();
       }
     };
 
@@ -219,6 +235,7 @@ angular.module('app', [])
     this.editPost = function (post) {
       console.warn('editPost() is not implemented');
     };
+
 
     // delete existing post
     this.deletePost = function (post) {
