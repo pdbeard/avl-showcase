@@ -248,8 +248,9 @@ $app->get('/posts', function() use ($app)
  */
 $app->get('/projects', function() use ($app)
 {
-    $qry = $app->conn->prepare("SELECT p.*
-            FROM showcase.projects AS p");
+    $qry = $app->conn->prepare("SELECT p.*, c.name as campus_name
+            FROM showcase.projects AS p, showcase.campuses as c
+            WHERE p.campus_id = c.id");
     $qry->execute();
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
     $app->success(200, $result);
@@ -374,7 +375,7 @@ $app->post('/search', function() use ($app)
     /*
     $qry = $app->conn->prepare("SELECT p.*, p._score as _score
             FROM showcase.projects AS p
-            WHERE match(p.title, ?) 
+            WHERE match(p.title, ?)
             OR match(p.description, ?)
             OR p.year = ?
             ORDER BY _score DESC");
