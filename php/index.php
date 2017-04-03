@@ -372,22 +372,30 @@ $app->post('/search', function() use ($app)
         $app->argument_required('Argument "query_string" is required');
         return;
     }
-    /*
-    $qry = $app->conn->prepare("SELECT p.*, p._score as _score
-            FROM showcase.projects AS p
-            WHERE match(p.title, ?)
-            OR match(p.description, ?)
-            OR p.year = ?
-            ORDER BY _score DESC");
-            */
+
+    // first check if input matches a campus
+    $qry_campus = $app->conn->prepare("SELECT c.id
+            FROM showcase.campuses AS c
+            WHERE match(c.name, ?)");
+    $qry_campus->bindParam(1, $data->query_string);
+    $qry_campus->execute();
+    $result_campus = $qry_campus->fetchAll(PDO::FETCH_ASSOC);
+    $campus_id = $result_campus[0]['id'] ? $result_campus[0]['id'] : -1; // use -1 if no id found
+
+    // error_log($campus_id . "\n", 3, "/var/tmp/my-errors.log");
+
+    // lastly, do final query
     $qry = $app->conn->prepare("SELECT p.*, p._score as _score
             FROM showcase.projects AS p
             WHERE match((p.title, p.description, p.year), ?)
+            OR p.campus_id = ?
             ORDER BY _score DESC");
     $qry->bindParam(1, $data->query_string);
+    $qry->bindParam(2, $campus_id);
     $qry->execute();
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
     $app->success(200, $result);
+
 })->name('search');
 
 $app->run();
