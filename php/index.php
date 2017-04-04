@@ -242,6 +242,20 @@ $app->get('/posts', function() use ($app)
 
 
 
+/**
+ * Get a list of all campuses.
+ */
+$app->get('/campuses', function() use ($app)
+{
+    $qry = $app->conn->prepare("SELECT c.*
+            FROM showcase.campuses AS c");
+    $qry->execute();
+    $result = $qry->fetchAll(PDO::FETCH_ASSOC);
+    $app->success(200, $result);
+})->name('campuses-get');
+
+
+
 
 /**
  * Get a list of all projects.

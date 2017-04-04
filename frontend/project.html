@@ -7,7 +7,8 @@
     <img ng-src="{{ apiHost }}/image/{{ post.image_ref }}" />
   </p>
   <p class="lead">{{ project.description }}</p>
-  <p>Campus: {{project.campus_id}}</p>
+  <!--<p>Campus: {{project.campus_id}}</p>-->
+  <p>Campus: {{ project.campus_name }}</p>
   <p>URL: <span class="label label-info">{{ project.url }}</span></p>
   <!--<p class="pull-right">
     <button type="button"

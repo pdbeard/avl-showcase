@@ -43,7 +43,7 @@ angular.module('app', [])
     };
   })
   .service('objectArrayIndexOf', () => function (arr, k, v) {
-      // usage: objectArrayIndexOf([{id:2},{id:1},{id:3}], 'id', 1) -> 1
+    // usage: objectArrayIndexOf([{id:2},{id:1},{id:3}], 'id', 1) -> 1
     for (let i = 0; i < arr.length; i += 1) {
       if (arr[i][k] === v) return i;
     }
@@ -78,6 +78,7 @@ angular.module('app', [])
     const SEARCH_API = new Api('/search');
 
     $scope.posts = [];
+    $scope.campuses = [];
     $scope.projects = [];
     $scope.imagedata = null;
     $scope.formdata = angular.copy(EMPTY);
@@ -86,13 +87,31 @@ angular.module('app', [])
       query_string: '',
     };
 
-    const loadPosts = function () {
-      const api = new Api('/posts');
+    const addCampusNameToProject = function (project) {
+      const projectWithCampus = project;
+      const campusIndex = objectArrayIndexOf($scope.campuses, 'id', project.campus_id);
+      projectWithCampus.campus_name = $scope.campuses[campusIndex].name;
+
+      return projectWithCampus;
+    };
+
+    // const loadPosts = function () {
+    //   const api = new Api('/posts');
+    //   api.get().then((response) => {
+    //     $scope.posts = response.data;
+    //   }, (e) => {
+    //     console.warn(e);
+    //     $scope.posts = [];
+    //   });
+    // };
+
+    const loadCampuses = function () {
+      const api = new Api('/campuses');
       api.get().then((response) => {
-        $scope.posts = response.data;
+        $scope.campuses = response.data;
       }, (e) => {
         console.warn(e);
-        $scope.posts = [];
+        $scope.campuses = [];
       });
     };
 
@@ -100,6 +119,8 @@ angular.module('app', [])
       const api = new Api('/projects');
       api.get().then((response) => {
         $scope.projects = response.data;
+        const projectsWithCampus = $scope.projects.map(addCampusNameToProject);
+        $scope.projects = projectsWithCampus;
       }, (e) => {
         console.warn(e);
         $scope.projects = [];
@@ -117,7 +138,11 @@ angular.module('app', [])
       //   window.alert(e.message);
       // });
       // load existing posts
-      loadPosts();
+      // loadPosts();
+
+      // load campus lookup table
+      loadCampuses();
+
       // load existing projects
       loadProjects();
     };
@@ -170,6 +195,8 @@ angular.module('app', [])
     const searchProjects = function () {
       SEARCH_API.post($scope.search).then((response) => {
         $scope.projects = response.data;
+        const projectsWithCampus = $scope.projects.map(addCampusNameToProject);
+        $scope.projects = projectsWithCampus;
       }, (e) => {
         console.warn(e);
         $scope.projects = [];
