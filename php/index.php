@@ -262,9 +262,8 @@ $app->get('/campuses', function() use ($app)
  */
 $app->get('/projects', function() use ($app)
 {
-    $qry = $app->conn->prepare("SELECT p.*, c.name as campus_name
-            FROM showcase.projects AS p, showcase.campuses as c
-            WHERE p.campus_id = c.id");
+    $qry = $app->conn->prepare("SELECT p.*
+            FROM showcase.projects AS p");
     $qry->execute();
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
     $app->success(200, $result);
@@ -388,9 +387,10 @@ $app->post('/search', function() use ($app)
     }
 
     // first check if input matches a campus
-    $qry_campus = $app->conn->prepare("SELECT c.id
+    $qry_campus = $app->conn->prepare("SELECT c.id, c._score
             FROM showcase.campuses AS c
-            WHERE match(c.name, ?)");
+            WHERE match(c.name, ?)
+            ORDER BY c._score DESC");
     $qry_campus->bindParam(1, $data->query_string);
     $qry_campus->execute();
     $result_campus = $qry_campus->fetchAll(PDO::FETCH_ASSOC);
@@ -402,7 +402,7 @@ $app->post('/search', function() use ($app)
     $qry = $app->conn->prepare("SELECT p.*, p._score as _score
             FROM showcase.projects AS p
             WHERE match((p.title, p.description, p.year), ?)
-            OR p.campus_id = ?
+            OR ? = any(p.campus_ids)
             ORDER BY _score DESC");
     $qry->bindParam(1, $data->query_string);
     $qry->bindParam(2, $campus_id);

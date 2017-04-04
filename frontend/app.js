@@ -87,12 +87,20 @@ angular.module('app', [])
       query_string: '',
     };
 
-    const addCampusNameToProject = function (project) {
-      const projectWithCampus = project;
-      const campusIndex = objectArrayIndexOf($scope.campuses, 'id', project.campus_id);
-      projectWithCampus.campus_name = $scope.campuses[campusIndex].name;
+    const addCampusNamesToProject = function (project) {
+      const projectWithCampusNames = project;
+      // const campusIndex = objectArrayIndexOf($scope.campuses, 'id', project.campus_id);
+      // projectWithCampusNames.campus_name = $scope.campuses[campusIndex].name;
 
-      return projectWithCampus;
+      const campusIndices = project.campus_ids.map(id =>
+        objectArrayIndexOf($scope.campuses, 'id', id));
+
+      projectWithCampusNames.campus_names = campusIndices.map(index => $scope.campuses[index].name);
+
+
+
+
+      return projectWithCampusNames;
     };
 
     // const loadPosts = function () {
@@ -119,8 +127,8 @@ angular.module('app', [])
       const api = new Api('/projects');
       api.get().then((response) => {
         $scope.projects = response.data;
-        const projectsWithCampus = $scope.projects.map(addCampusNameToProject);
-        $scope.projects = projectsWithCampus;
+        const projectsWithCampusNames = $scope.projects.map(addCampusNamesToProject);
+        $scope.projects = projectsWithCampusNames;
       }, (e) => {
         console.warn(e);
         $scope.projects = [];
@@ -195,8 +203,10 @@ angular.module('app', [])
     const searchProjects = function () {
       SEARCH_API.post($scope.search).then((response) => {
         $scope.projects = response.data;
-        const projectsWithCampus = $scope.projects.map(addCampusNameToProject);
-        $scope.projects = projectsWithCampus;
+        if ($scope.projects.length > 0) {
+          const projectsWithCampusNames = $scope.projects.map(addCampusNamesToProject);
+          $scope.projects = projectsWithCampusNames;
+        }
       }, (e) => {
         console.warn(e);
         $scope.projects = [];
