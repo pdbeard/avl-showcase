@@ -92,6 +92,18 @@
               </div>
             </div>
             <div class="row">
+              <div class="form-group form-group col-lg-12">
+                <label>Campus</label>
+                <br>
+                <label class="checkbox-inline" ng-repeat="campus in campuses">
+                  <input type="checkbox"
+                    id="inlineCheckbox1"
+                    value="{{campus.id}}"
+                    ng-model="formdata.campus_checkbox[$index].checked">{{campus.name}}
+                </label>
+              </div>
+            </div>
+            <div class="row">
 <!--
               <div class="form-group col-lg-6">
                 <label for="blob">Add an Image</label>

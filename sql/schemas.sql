@@ -32,5 +32,13 @@ CREATE TABLE showcase.projects (
     title STRING INDEX USING FULLTEXT WITH (analyzer = 'english'),
     description STRING INDEX USING FULLTEXT WITH (analyzer = 'english'),
     year STRING,
-    url STRING
+    url STRING,
+    campus_ids ARRAY(INTEGER)
+) WITH (number_of_replicas = 0);
+
+-- campuses table
+DROP TABLE IF EXISTS showcase.campuses;
+CREATE TABLE showcase.campuses (
+  id INTEGER,
+  name STRING
 ) WITH (number_of_replicas = 0);

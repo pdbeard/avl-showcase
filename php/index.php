@@ -143,8 +143,10 @@ $app->post('/projects', function() use ($app)
     $description = $data->description;
     $url         = $data->url;
     $year        = $data->year;
+    $campus_ids  = $data->campus_ids;
 //    $image_ref   = $data->image_ref;
 
+    // error_log($campus_ids[0] . "\n", 3, "/var/tmp/my-errors.log");
 
     if (empty($title)) {
         $app->argument_required('Argument "title" is required');
@@ -158,6 +160,9 @@ $app->post('/projects', function() use ($app)
     }else if (empty($year)) {
         $app->argument_required('Argument "year" is required');
         return;
+    }else if (empty($campus_ids)) {
+        $app->argument_required('Argument "campus_ids" is required');
+        return;
     }
 //else if (empty($user->location)) {
 //        $app->argument_required('Argument "location" is required');
@@ -168,9 +173,9 @@ $app->post('/projects', function() use ($app)
     $now       = time() * 1000;
     $likeCount = 0;
     $qry       = $app->conn->prepare("INSERT INTO showcase.projects (
-      id, title, description, url, year
+      id, title, description, url, year, campus_ids
     ) VALUES (
-      ?, ?, ?, ?, ?
+      ?, ?, ?, ?, ?, ?
     )");
     $qry->bindParam(1, $id);
     //$user = array('name' => 'test', 'location' => array(9.74379 , 47.4124));
@@ -178,6 +183,7 @@ $app->post('/projects', function() use ($app)
     $qry->bindParam(3, $description);
     $qry->bindParam(4, $url);
     $qry->bindParam(5, $year);
+    $qry->bindParam(6, $campus_ids);
     $state = $qry->execute();
 
 
@@ -237,7 +243,10 @@ $app->put('/project/:id/edit', function($id) use ($app)
     $description = $data->description;
     $url         = $data->url;
     $year        = $data->year;
+    $campus_ids  = $data->campus_ids;
 //    $image_ref   = $data->image_ref;
+
+    error_log($campus_ids[1] . "\n", 3, "/var/tmp/my-errors.log");
 
     if (empty($title)) {
         $app->argument_required('Argument "title" is required');
@@ -251,15 +260,19 @@ $app->put('/project/:id/edit', function($id) use ($app)
     }else if (empty($year)) {
         $app->argument_required('Argument "year" is required');
         return;
+    }else if (empty($campus_ids)) {
+        $app->argument_required('Argument "campus_ids" is required');
+        return;
     }
     $qry       = $app->conn->prepare("UPDATE showcase.projects
-                                      SET title = ?, description =?, url=?, year=?
+                                      SET title = ?, description =?, url=?, year=?, campus_ids=?
                                       WHERE id=?");
     $qry->bindParam(1, $title);
     $qry->bindParam(2, $description);
     $qry->bindParam(3, $url);
     $qry->bindParam(4, $year);
-    $qry->bindParam(5, $id);
+    $qry->bindParam(5, $campus_ids);
+    $qry->bindParam(6, $id);
     $state = $qry->execute();
 })->name('project-put');
 
@@ -340,6 +353,20 @@ $app->delete('/projects/:id', function($id) use ($app)
 //    $result = $qry->fetchAll(PDO::FETCH_ASSOC);
 //    $app->success(200, $result);
 //})->name('posts-get');
+
+
+
+/**
+ * Get a list of all campuses.
+ */
+$app->get('/campuses', function() use ($app)
+{
+    $qry = $app->conn->prepare("SELECT c.*
+            FROM showcase.campuses AS c");
+    $qry->execute();
+    $result = $qry->fetchAll(PDO::FETCH_ASSOC);
+    $app->success(200, $result);
+})->name('campuses-get');
 
 
 
@@ -475,27 +502,32 @@ $app->post('/search', function() use ($app)
         $app->argument_required('Argument "query_string" is required');
         return;
     }
-    /*
-    $qry = $app->conn->prepare("SELECT p.*, p._score as _score
-            FROM showcase.projects AS p
-            WHERE match(p.title, ?)
-            OR match(p.description, ?)
-            OR p.year = ?
-            ORDER BY _score DESC");
-            */
+
+    // first check if input matches a campus
+    $qry_campus = $app->conn->prepare("SELECT c.id, c._score
+            FROM showcase.campuses AS c
+            WHERE match(c.name, ?)
+            ORDER BY c._score DESC");
+    $qry_campus->bindParam(1, $data->query_string);
+    $qry_campus->execute();
+    $result_campus = $qry_campus->fetchAll(PDO::FETCH_ASSOC);
+    $campus_id = $result_campus[0]['id'] ? $result_campus[0]['id'] : -1; // use -1 if no id found
+
+    // error_log($campus_id . "\n", 3, "/var/tmp/my-errors.log");
+
+    // lastly, do final query
     $qry = $app->conn->prepare("SELECT p.*, p._score as _score
             FROM showcase.projects AS p
             WHERE match((p.title, p.description, p.year), ?)
+            OR ? = any(p.campus_ids)
             ORDER BY _score DESC");
     $qry->bindParam(1, $data->query_string);
+    $qry->bindParam(2, $campus_id);
     $qry->execute();
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
     $app->success(200, $result);
+
 })->name('search');
 
 $app->run();
-
-
-
-
 ?>

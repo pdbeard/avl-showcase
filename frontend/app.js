@@ -47,7 +47,7 @@ angular.module('app', [])
     };
   })
   .service('objectArrayIndexOf', () => function (arr, k, v) {
-      // usage: objectArrayIndexOf([{id:2},{id:1},{id:3}], 'id', 1) -> 1
+    // usage: objectArrayIndexOf([{id:2},{id:1},{id:3}], 'id', 1) -> 1
     for (let i = 0; i < arr.length; i += 1) {
       if (arr[i][k] === v) return i;
     }
@@ -82,6 +82,7 @@ angular.module('app', [])
     const SEARCH_API = new Api('/search');
 
     $scope.posts = [];
+    $scope.campuses = [];
     $scope.projects = [];
     $scope.imagedata = null;
     $scope.formdata = angular.copy(EMPTY);
@@ -90,20 +91,59 @@ angular.module('app', [])
       query_string: '',
     };
 
-//    const loadPosts = function () {
-//      const api = new Api('/posts');
-//      api.get().then((response) => {
-//        $scope.posts = response.data;
-//      }, (e) => {
-//        console.warn(e);
-//        $scope.posts = [];
-//      });
-//    };
+    const addCampusNamesToProject = function (project) {
+      const projectWithCampusNames = project;
+
+      if (project.campus_ids) {
+        const campusIndices = project.campus_ids.map(id =>
+          objectArrayIndexOf($scope.campuses, 'id', id));
+
+        projectWithCampusNames.campus_names = campusIndices.map(index => $scope.campuses[index].name);
+      }
+
+      return projectWithCampusNames;
+    };
+
+    // const loadPosts = function () {
+    //   const api = new Api('/posts');
+    //   api.get().then((response) => {
+    //     $scope.posts = response.data;
+    //   }, (e) => {
+    //     console.warn(e);
+    //     $scope.posts = [];
+    //   });
+    // };
+
+    const loadCampuses = function () {
+      const api = new Api('/campuses');
+      api.get().then((response) => {
+        $scope.campuses = response.data;
+        $scope.formdata.campus_checkbox = angular.copy($scope.campuses);
+      }, (e) => {
+        console.warn(e);
+        $scope.campuses = [];
+      });
+    };
 
     const loadProjects = function () {
       const api = new Api('/projects');
       api.get().then((response) => {
         $scope.projects = response.data;
+
+        const projectsWithCampusNames = $scope.projects.map(addCampusNamesToProject);
+        $scope.projects = projectsWithCampusNames;
+        $scope.projects = $scope.projects.map((project) => {
+          const projectWithCampuses = angular.copy(project);
+          projectWithCampuses.campuses = angular.copy($scope.campuses);
+
+          projectWithCampuses.campuses.forEach((campus) => {
+            if (project.campus_ids && project.campus_ids.find(id => id === campus.id)) {
+              campus.checked = true;
+            }
+          });
+
+          return projectWithCampuses;
+        });
       }, (e) => {
         console.warn(e);
         $scope.projects = [];
@@ -121,7 +161,11 @@ angular.module('app', [])
       //   window.alert(e.message);
       // });
       // load existing posts
-//      loadPosts();
+      // loadPosts();
+
+      // load campus lookup table
+      loadCampuses();
+
       // load existing projects
       loadProjects();
     };
@@ -164,6 +208,14 @@ angular.module('app', [])
 
     const submitProject = function () {
       const api = new Api('/projects');
+      $scope.formdata.campus_ids = [];
+      console.log($scope.formdata);
+      $scope.formdata.campus_checkbox.forEach((checkbox) => {
+        if (checkbox.checked) {
+          $scope.formdata.campus_ids.push(checkbox.id);
+        }
+      });
+
       api.post($scope.formdata).then((response) => {
         const projects = response.data;
         for (let i = 0; i < projects.length; i += 1) {
@@ -188,6 +240,22 @@ angular.module('app', [])
     const searchProjects = function () {
       SEARCH_API.post($scope.search).then((response) => {
         $scope.projects = response.data;
+        if ($scope.projects.length > 0) {
+          const projectsWithCampusNames = $scope.projects.map(addCampusNamesToProject);
+          $scope.projects = projectsWithCampusNames;
+          $scope.projects = $scope.projects.map((project) => {
+            const projectWithCampuses = angular.copy(project);
+            projectWithCampuses.campuses = angular.copy($scope.campuses);
+
+            projectWithCampuses.campuses.forEach((campus) => {
+              if (project.campus_ids && project.campus_ids.find(id => id === campus.id)) {
+                campus.checked = true;
+              }
+            });
+
+            return projectWithCampuses;
+          });
+        }
       }, (e) => {
         console.warn(e);
         $scope.projects = [];
@@ -213,14 +281,14 @@ angular.module('app', [])
         uploadBlob($scope.imagedata).then((response) => {
           $scope.formdata.image_ref = response.data.digest;
 //          submitPost();
-            submitProject();
+          submitProject();
         }, (e) => {
           console.warn(e);
           window.alert('Image upload failed.');
         });
       } else {
 //        submitPost();
-          submitProject();
+        submitProject();
       }
     };
 
@@ -238,9 +306,15 @@ angular.module('app', [])
     // edit existing post
     this.editPost = function (project) {
       const api = new Api(`/project/${project.id}/edit`);
-      console.log("Project: " + project);
+
+      project.campus_ids = [];
+
+      project.campuses.forEach((campus) => {
+        if (campus.checked) {
+          project.campus_ids.push(campus.id);
+        }
+      });
       api.put(project).then((response) => {
-        console.log("Response Data: "+ response.data)
         resetForm();
       }, (e) => {
         console.warn(e);

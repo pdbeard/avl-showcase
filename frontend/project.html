@@ -7,6 +7,12 @@
     <img ng-src="{{ apiHost }}/image/{{ post.image_ref }}" />
   </p>
   <p class="lead">{{ project.description }}</p>
+  <!--<p>Campus: {{project.campus_id}}</p>-->
+  <p>
+    <ng-pluralize count="project.campus_names.length"
+      when="{1: 'Campus', 'other': 'Campuses', 'NaN': 'error, yo!'}"></ng-pluralize>:
+    <span ng-repeat="name in project.campus_names">{{ name }}, </span>
+    </p>
   <p>URL: <span class="label label-info">{{ project.url }}</span></p>
   <p>ID: <span class="label label-info">{{ project.id }}</span></p>
 
@@ -39,6 +45,18 @@
                           class="form-control"
                           id="url"
                           ng-model="project.url"/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group form-group col-lg-12">
+                <label>Campus</label>
+                <br>
+                <label class="checkbox-inline" ng-repeat="campus in campuses">
+                  <input type="checkbox"
+                    id="inlineCheckbox1"
+                    value="{{campus.id}}"
+                    ng-model="project.campuses[$index].checked">{{campus.name}}
+                </label>
               </div>
             </div>
             <div class="row">
