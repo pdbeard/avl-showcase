@@ -1,16 +1,6 @@
 <?php
 error_reporting(E_STRICT);
 
-function debug_to_console( $data ) {
-    $output = $data;
-    if ( is_array( $output ) )
-        $output = implode( ',', $output);
-
-    echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
-}
-
-
-
 require 'vendor/autoload.php';
 $config = parse_ini_file('app.ini');
 
@@ -76,71 +66,72 @@ $app->get('/', function() use ($app)
 /**
  * Get the post for a given id.
  */
-$app->get('/post/:id', function($id) use ($app)
-{
-    $qry = $app->conn->prepare("SELECT p.*, c.name as country, c.geometry as area
-            FROM guestbook.posts AS p, guestbook.countries AS c
-            WHERE within(p.user['location'], c.geometry) AND p.id = ?");
-    $qry->bindParam(1, $id);
-    $qry->execute();
-    $result = $qry->fetch(PDO::FETCH_ASSOC);
-    if (!$result) {
-        $app->not_found("Post with id=\"{$id}\" not found");
-    } else {
-        $app->success(200, $result);
-    }
-})->name('post-get');
+//$app->get('/post/:id', function($id) use ($app)
+//{
+//    $qry = $app->conn->prepare("SELECT p.*, c.name as country, c.geometry as area
+//            FROM guestbook.posts AS p, guestbook.countries AS c
+//            WHERE within(p.user['location'], c.geometry) AND p.id = ?");
+//    $qry->bindParam(1, $id);
+//    $qry->execute();
+//    $result = $qry->fetch(PDO::FETCH_ASSOC);
+//    if (!$result) {
+//        $app->not_found("Post with id=\"{$id}\" not found");
+//    } else {
+//        $app->success(200, $result);
+//    }
+//})->name('post-get');
+
 /**
  * insert a posts.
  */
-$app->post('/posts', function() use ($app)
-{
-    $data      = json_decode($app->request->getBody());
-    $user      = $data->user;
-    $text      = $data->text;
-    $image_ref = $data->image_ref;
-
-    if (empty($user)) {
-        $app->argument_required('Argument "user" is required');
-        return;
-    } else if (empty($user->name)) {
-        $app->argument_required('Argument "name" is required');
-        return;
-    } else if (empty($user->location)) {
-        $app->argument_required('Argument "location" is required');
-        return;
-    }
-
-    $id        = uniqid();
-    $now       = time() * 1000;
-    $likeCount = 0;
-    $qry       = $app->conn->prepare("INSERT INTO guestbook.posts (
-      id, user, text, created, image_ref, like_count
-    ) VALUES (
-      ?, ?, ?, ?, ?, ?
-    )");
-    $qry->bindParam(1, $id);
-    //$user = array('name' => 'test', 'location' => array(9.74379 , 47.4124));
-    $qry->bindParam(2, $user);
-    $qry->bindParam(3, $text);
-    $qry->bindParam(4, $now);
-    $qry->bindParam(5, $image_ref);
-    $qry->bindParam(6, $likeCount);
-    $state = $qry->execute();
-
-    if ($state) {
-        $app->refreshTable('guestbook.posts');
-        $qry = $app->conn->prepare("SELECT p.*, c.name as country, c.geometry as area
-            FROM guestbook.posts AS p, guestbook.countries AS c
-            WHERE within(p.user['location'], c.geometry) AND p.id = ?");
-        $qry->bindParam(1, $id);
-        $qry->execute();
-        $result = $qry->fetchAll(PDO::FETCH_ASSOC);
-        $app->success(201, $result);
-    } else {
-        $app->resource_error(500, $app->conn->errorInfo());
-    }
-})->name('post-post');
+//$app->post('/posts', function() use ($app)
+//{
+//    $data      = json_decode($app->request->getBody());
+//    $user      = $data->user;
+//    $text      = $data->text;
+//    $image_ref = $data->image_ref;
+//
+//    if (empty($user)) {
+//        $app->argument_required('Argument "user" is required');
+//        return;
+//    } else if (empty($user->name)) {
+//        $app->argument_required('Argument "name" is required');
+//        return;
+//    } else if (empty($user->location)) {
+//        $app->argument_required('Argument "location" is required');
+//        return;
+//    }
+//
+//    $id        = uniqid();
+//    $now       = time() * 1000;
+//    $likeCount = 0;
+//    $qry       = $app->conn->prepare("INSERT INTO guestbook.posts (
+//      id, user, text, created, image_ref, like_count
+//    ) VALUES (
+//      ?, ?, ?, ?, ?, ?
+//    )");
+//    $qry->bindParam(1, $id);
+//    //$user = array('name' => 'test', 'location' => array(9.74379 , 47.4124));
+//    $qry->bindParam(2, $user);
+//    $qry->bindParam(3, $text);
+//    $qry->bindParam(4, $now);
+//    $qry->bindParam(5, $image_ref);
+//    $qry->bindParam(6, $likeCount);
+//    $state = $qry->execute();
+//
+//    if ($state) {
+//        $app->refreshTable('guestbook.posts');
+//        $qry = $app->conn->prepare("SELECT p.*, c.name as country, c.geometry as area
+//            FROM guestbook.posts AS p, guestbook.countries AS c
+//            WHERE within(p.user['location'], c.geometry) AND p.id = ?");
+//        $qry->bindParam(1, $id);
+//        $qry->execute();
+//        $result = $qry->fetchAll(PDO::FETCH_ASSOC);
+//        $app->success(201, $result);
+//    } else {
+//        $app->resource_error(500, $app->conn->errorInfo());
+//    }
+//})->name('post-post');
 
 /**
  * insert a project.
@@ -154,7 +145,6 @@ $app->post('/projects', function() use ($app)
     $year        = $data->year;
 //    $image_ref   = $data->image_ref;
 
-    debug_to_console($data);
 
     if (empty($title)) {
         $app->argument_required('Argument "title" is required');
@@ -209,43 +199,80 @@ $app->post('/projects', function() use ($app)
 /**
  * sets the text of a post
  */
-$app->put('/post/:id', function($id) use ($app)
-{
-    $data = json_decode($app->request->getBody());
+//$app->put('/post/:id', function($id) use ($app)
+//{
+//    $data = json_decode($app->request->getBody());
+//
+//    if(!$data || !isset($data->text)) {
+//        $app->argument_required('Argument "text" is required');
+//        return;
+//    }
+//
+//    $qry = $app->conn->prepare("UPDATE guestbook.posts SET text=? WHERE id=?");
+//    $qry->bindParam(1, $data->text);
+//    $qry->bindParam(2, $id);
+//    $state = $qry->execute();
+//
+//    if ($state) {
+//        $app->refreshTable("guestbook.posts");
+//        $qry = $app->conn->prepare("SELECT p.*, c.name as country, c.geometry as area
+//            FROM guestbook.posts AS p, guestbook.countries AS c
+//            WHERE within(p.user['location'], c.geometry) AND p.id = ?");
+//        $qry->bindParam(1, $id);
+//        $result = $qry->fetch(PDO::FETCH_ASSOC);
+//        $app->success(200, $result);
+//    } else {
+//        $app->resource_error(500, $app->conn->errorInfo());
+//    }
+//})->name('post-put');
 
-    if(!$data || !isset($data->text)) {
-        $app->argument_required('Argument "text" is required');
+
+/**
+ * edits a post with a given id.
+ */
+$app->put('/project/:id/edit', function($id) use ($app)
+{
+    $data        = json_decode($app->request->getBody());
+    $title       = $data->title;
+    $description = $data->description;
+    $url         = $data->url;
+    $year        = $data->year;
+//    $image_ref   = $data->image_ref;
+
+    if (empty($title)) {
+        $app->argument_required('Argument "title" is required');
+        return;
+    } else if (empty($description)) {
+        $app->argument_required('Argument "description" is required');
+        return;
+    }else if (empty($url)) {
+        $app->argument_required('Argument "url" is required');
+        return;
+    }else if (empty($year)) {
+        $app->argument_required('Argument "year" is required');
         return;
     }
-
-    $qry = $app->conn->prepare("UPDATE guestbook.posts SET text=? WHERE id=?");
-    $qry->bindParam(1, $data->text);
-    $qry->bindParam(2, $id);
+    $qry       = $app->conn->prepare("UPDATE showcase.projects
+                                      SET title = ?, description =?, url=?, year=?
+                                      WHERE id=?");
+    $qry->bindParam(1, $title);
+    $qry->bindParam(2, $description);
+    $qry->bindParam(3, $url);
+    $qry->bindParam(4, $year);
+    $qry->bindParam(5, $id);
     $state = $qry->execute();
-
-    if ($state) {
-        $app->refreshTable("guestbook.posts");
-        $qry = $app->conn->prepare("SELECT p.*, c.name as country, c.geometry as area
-            FROM guestbook.posts AS p, guestbook.countries AS c
-            WHERE within(p.user['location'], c.geometry) AND p.id = ?");
-        $qry->bindParam(1, $id);
-        $result = $qry->fetch(PDO::FETCH_ASSOC);
-        $app->success(200, $result);
-    } else {
-        $app->resource_error(500, $app->conn->errorInfo());
-    }
-})->name('post-put');
+})->name('project-put');
 
 /**
  * deletes a post with a given id.
  */
-$app->delete('/post/:id', function($id) use ($app)
+$app->delete('/projects/:id', function($id) use ($app)
 {
     if (empty($id)) {
-        $app->not_found('Please provide a post id: /post/<id>');
+        $app->not_found('Please provide a post id: /projects/<id>');
         return;
     }
-    $qry = $app->conn->prepare("SELECT * FROM guestbook.posts WHERE id = ?");
+    $qry = $app->conn->prepare("SELECT * FROM showcase.projects WHERE id = ?");
     $qry->bindParam(1, $id);
     $qry->execute();
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
@@ -254,7 +281,7 @@ $app->delete('/post/:id', function($id) use ($app)
         return;
     }
 
-    $qry = $app->conn->prepare("DELETE FROM guestbook.posts WHERE id=?");
+    $qry = $app->conn->prepare("DELETE FROM showcase.projects WHERE id=?");
     $qry->bindParam(1, $id);
     $state = $qry->execute();
 
@@ -264,55 +291,55 @@ $app->delete('/post/:id', function($id) use ($app)
       // nothing deleted?
       $app->not_found("Post with id=\"{$id}\" not deleted");
     }
-})->name('post-delete');
+})->name('project-delete');
 
 /**
  * increments the number of likes for a given post.
  */
-$app->put('/post/:id/like', function($id) use ($app)
-{
-    if (empty($id)) {
-        $app->not_found('Please provide a post id: /post/<id>/like');
-        return;
-    }
-    $qry = $app->conn->prepare("SELECT * FROM guestbook.posts WHERE id=?");
-    $qry->bindParam(1, $id);
-    $result = $qry->execute();
-    $row    = $qry->fetch(PDO::FETCH_ASSOC);
-
-    if ($row) {
-        $qryU = $app->conn->prepare("UPDATE guestbook.posts SET like_count = like_count + 1 WHERE id=?");
-        $qryU->bindParam(1, $id);
-        $state = $qryU->execute();
-
-        if ($state) {
-            $app->refreshTable("guestbook.posts");
-            $qryS = $app->conn->prepare("SELECT p.*, c.name as country, c.geometry as area
-                FROM guestbook.posts AS p, guestbook.countries AS c
-                WHERE within(p.user['location'], c.geometry) AND p.id = ?");
-            $qryS->bindParam(1, $id);
-            $result = $qryS->fetch(PDO::FETCH_ASSOC);
-            $app->success(200, $result);
-        } else {
-            $app->resource_error(500, 'update statement went wrong');
-        }
-    } else {
-        $app->not_found("Post with id=\"{$id}\" not found");
-    }
-})->name('post-like-put');
+//$app->put('/post/:id/like', function($id) use ($app)
+//{
+//    if (empty($id)) {
+//        $app->not_found('Please provide a post id: /post/<id>/like');
+//        return;
+//    }
+//    $qry = $app->conn->prepare("SELECT * FROM guestbook.posts WHERE id=?");
+//    $qry->bindParam(1, $id);
+//    $result = $qry->execute();
+//    $row    = $qry->fetch(PDO::FETCH_ASSOC);
+//
+//    if ($row) {
+//        $qryU = $app->conn->prepare("UPDATE guestbook.posts SET like_count = like_count + 1 WHERE id=?");
+//        $qryU->bindParam(1, $id);
+//        $state = $qryU->execute();
+//
+//        if ($state) {
+//            $app->refreshTable("guestbook.posts");
+//            $qryS = $app->conn->prepare("SELECT p.*, c.name as country, c.geometry as area
+//                FROM guestbook.posts AS p, guestbook.countries AS c
+//                WHERE within(p.user['location'], c.geometry) AND p.id = ?");
+//            $qryS->bindParam(1, $id);
+//            $result = $qryS->fetch(PDO::FETCH_ASSOC);
+//            $app->success(200, $result);
+//        } else {
+//            $app->resource_error(500, 'update statement went wrong');
+//        }
+//    } else {
+//        $app->not_found("Post with id=\"{$id}\" not found");
+//    }
+//})->name('post-like-put');
 
 /**
  * Get a list of all posts.
  */
-$app->get('/posts', function() use ($app)
-{
-    $qry = $app->conn->prepare("SELECT p.*, c.name as country, c.geometry as area
-            FROM guestbook.posts AS p, guestbook.countries AS c
-            WHERE within(p.user['location'], c.geometry)");
-    $qry->execute();
-    $result = $qry->fetchAll(PDO::FETCH_ASSOC);
-    $app->success(200, $result);
-})->name('posts-get');
+//$app->get('/posts', function() use ($app)
+//{
+//    $qry = $app->conn->prepare("SELECT p.*, c.name as country, c.geometry as area
+//            FROM guestbook.posts AS p, guestbook.countries AS c
+//            WHERE within(p.user['location'], c.geometry)");
+//    $qry->execute();
+//    $result = $qry->fetchAll(PDO::FETCH_ASSOC);
+//    $app->success(200, $result);
+//})->name('posts-get');
 
 
 

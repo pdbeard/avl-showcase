@@ -8,14 +8,57 @@
   </p>
   <p class="lead">{{ project.description }}</p>
   <p>URL: <span class="label label-info">{{ project.url }}</span></p>
-  <!--<p class="pull-right">
+  <p>ID: <span class="label label-info">{{ project.id }}</span></p>
+
+<div  ng-init="isEdit=false"
+      ng-show="isEdit">
+               <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text"
+                     class="form-control"
+                     id="title"
+                     ng-model="project.title" />
+            </div>
+            <div class="form-group">
+              <label for="text">Project Description</label>
+              <textarea class="form-control"
+                        id="description"
+                        rows="4"
+                        ng-model="project.description"></textarea>
+            </div>
+            <div class="row">
+              <div class="form-group form-group col-lg-6">
+                <label for="year">Year</label>
+                <input class="form-control"
+                          id="year"
+                          ng-model="project.year" />
+              </div>
+              <div class="form-group form-group col-lg-6">
+                <label for="year">URL</label>
+                <input type="text"
+                          class="form-control"
+                          id="url"
+                          ng-model="project.url"/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-lg-6">
+                <button type="submit"
+                        class="btn btn-success btn-lg btn-block"
+                        ng-click="guestbookCtlr.editPost(project)"
+                        >Submit</button>
+              </div>
+            </div>
+</div>
+
+   <p class="pull-right">
     <button type="button"
             class="btn btn-sm btn-primary"
-            ng-click="guestbookCtlr.editPost(post)" disabled>Edit</button>
+            ng-click="isEdit = !isEdit">Edit</button>
     <button type="button"
             class="btn btn-sm btn-danger"
-            ng-click="guestbookCtlr.deletePost(post)">Delete</button>
-  </p>-->
+            ng-click="guestbookCtlr.deletePost(project)">Delete</button>
+  </p>
   <!--<p>
     <button type="button"
             class="btn btn-sm btn-default"

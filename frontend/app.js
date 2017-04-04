@@ -21,6 +21,10 @@ angular.module('app', [])
         // DELETE
       return $http.delete(url);
     };
+//    this.edit = function () {
+//        // DELETE
+//      return $http.edit(url);
+//    };
   })
   .service('Location', ($q) => {
     const getLocation = function (success, error) {
@@ -86,15 +90,15 @@ angular.module('app', [])
       query_string: '',
     };
 
-    const loadPosts = function () {
-      const api = new Api('/posts');
-      api.get().then((response) => {
-        $scope.posts = response.data;
-      }, (e) => {
-        console.warn(e);
-        $scope.posts = [];
-      });
-    };
+//    const loadPosts = function () {
+//      const api = new Api('/posts');
+//      api.get().then((response) => {
+//        $scope.posts = response.data;
+//      }, (e) => {
+//        console.warn(e);
+//        $scope.posts = [];
+//      });
+//    };
 
     const loadProjects = function () {
       const api = new Api('/projects');
@@ -117,7 +121,7 @@ angular.module('app', [])
       //   window.alert(e.message);
       // });
       // load existing posts
-      loadPosts();
+//      loadPosts();
       // load existing projects
       loadProjects();
     };
@@ -144,19 +148,19 @@ angular.module('app', [])
       return d.promise;
     };
 
-    const submitPost = function () {
-      const api = new Api('/posts');
-      api.post($scope.formdata).then((response) => {
-        const posts = response.data;
-        for (let i = 0; i < posts.length; i += 1) {
-          $scope.posts.unshift(posts[0]);
-        }
-        resetForm();
-      }, (e) => {
-        console.warn(e);
-        window.alert('Creating the post failed.');
-      });
-    };
+//    const submitPost = function () {
+//      const api = new Api('/posts');
+//      api.post($scope.formdata).then((response) => {
+//        const posts = response.data;
+//        for (let i = 0; i < posts.length; i += 1) {
+//          $scope.posts.unshift(posts[0]);
+//        }
+//        resetForm();
+//      }, (e) => {
+//        console.warn(e);
+//        window.alert('Creating the post failed.');
+//      });
+//    };
 
     const submitProject = function () {
       const api = new Api('/projects');
@@ -232,17 +236,25 @@ angular.module('app', [])
     };
 
     // edit existing post
-    this.editPost = function (post) {
-      console.warn('editPost() is not implemented');
+    this.editPost = function (project) {
+      const api = new Api(`/project/${project.id}/edit`);
+      console.log("Project: " + project);
+      api.put(project).then((response) => {
+        console.log("Response Data: "+ response.data)
+        resetForm();
+      }, (e) => {
+        console.warn(e);
+        window.alert('Editing the post failed.');
+      });
     };
 
 
     // delete existing post
-    this.deletePost = function (post) {
-      const idx = objectArrayIndexOf($scope.posts, 'id', post.id);
-      const api = new Api(`/post/${post.id}`);
+    this.deletePost = function (project) {
+      const idx = objectArrayIndexOf($scope.projects, 'id', project.id);
+      const api = new Api(`/projects/${project.id}`);
       api.delete().then((response) => {
-        $scope.posts.splice(idx, 1);
+        $scope.projects.splice(idx, 1);
       }, (e) => {
         console.warn(e);
         window.alert('Deleting the post failed.');
