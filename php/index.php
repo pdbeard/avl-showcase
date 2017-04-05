@@ -519,10 +519,12 @@ $app->post('/search', function() use ($app)
     $qry = $app->conn->prepare("SELECT p.*, p._score as _score
             FROM showcase.projects AS p
             WHERE match((p.title, p.description, p.year), ?)
+            OR ? = any(p.tags)
             OR ? = any(p.campus_ids)
             ORDER BY _score DESC");
     $qry->bindParam(1, $data->query_string);
-    $qry->bindParam(2, $campus_id);
+    $qry->bindParam(2, $data->query_string);
+    $qry->bindParam(3, $campus_id);
     $qry->execute();
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
     $app->success(200, $result);

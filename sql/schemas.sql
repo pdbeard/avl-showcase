@@ -33,7 +33,8 @@ CREATE TABLE showcase.projects (
     description STRING INDEX USING FULLTEXT WITH (analyzer = 'english'),
     year STRING,
     url STRING,
-    campus_ids ARRAY(INTEGER)
+    campus_ids ARRAY(INTEGER),
+    tags ARRAY(STRING)
 ) WITH (number_of_replicas = 0);
 
 -- campuses table

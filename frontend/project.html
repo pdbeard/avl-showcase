@@ -14,6 +14,10 @@
     <span ng-repeat="name in project.campus_names">{{ name }}, </span>
     </p>
   <p>URL: <span class="label label-info">{{ project.url }}</span></p>
+  <p ng-if="project.tags.length">
+    <ng-pluralize count="project.tags.length"
+      when="{1: 'Tag', 'other': 'Tags', 'NaN': 'error, yo!'}"></ng-pluralize>:
+    <span ng-repeat="tag in project.tags">{{ tag }}, </span></p>
   <p>ID: <span class="label label-info">{{ project.id }}</span></p>
 
 <div  ng-init="isEdit=false"
