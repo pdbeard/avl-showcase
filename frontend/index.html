@@ -67,28 +67,31 @@
                      class="form-control"
                      id="title"
                      ng-model="formdata.title"
-                     placeholder="Title" />
+                     placeholder="Enter the title" />
             </div>
             <div class="form-group">
               <label for="text">Project Description</label>
               <textarea class="form-control"
                         id="description"
                         rows="4"
-                        ng-model="formdata.description"></textarea>
+                        ng-model="formdata.description"
+                        placeholder="Enter a short description of the project"></textarea>
             </div>
             <div class="row">
               <div class="form-group form-group col-lg-6">
                 <label for="year">Year</label>
                 <input class="form-control"
                           id="year"
-                          ng-model="formdata.year" />
+                          ng-model="formdata.year"
+                          placeholder="Enter year as YYYY" />
               </div>
               <div class="form-group form-group col-lg-6">
                 <label for="year">URL</label>
                 <input type="text"
                           class="form-control"
                           id="url"
-                          ng-model="formdata.url;" />
+                          ng-model="formdata.url;"
+                          placeholder="Enter the project page URL" />
               </div>
             </div>
             <div class="row">
@@ -102,6 +105,14 @@
                     ng-model="formdata.campus_checkbox[$index].checked">{{campus.name}}
                 </label>
               </div>
+            </div>
+            <div class="form-group">
+              <label for="title">Tags</label>
+              <input type="text"
+                     class="form-control"
+                     id="tags"
+                     ng-model="formdata.tags"
+                     placeholder="Enter tags separated by commas" />
             </div>
             <div class="row">
 <!--

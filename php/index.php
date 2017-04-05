@@ -144,6 +144,7 @@ $app->post('/projects', function() use ($app)
     $url         = $data->url;
     $year        = $data->year;
     $campus_ids  = $data->campus_ids;
+    $tags        = $data->tags;
 //    $image_ref   = $data->image_ref;
 
     // error_log($campus_ids[0] . "\n", 3, "/var/tmp/my-errors.log");
@@ -163,6 +164,9 @@ $app->post('/projects', function() use ($app)
     }else if (empty($campus_ids)) {
         $app->argument_required('Argument "campus_ids" is required');
         return;
+    }else if (empty($tags)) {
+        $app->argument_required('Argument "tags" is required');
+        return;
     }
 //else if (empty($user->location)) {
 //        $app->argument_required('Argument "location" is required');
@@ -173,9 +177,9 @@ $app->post('/projects', function() use ($app)
     $now       = time() * 1000;
     $likeCount = 0;
     $qry       = $app->conn->prepare("INSERT INTO showcase.projects (
-      id, title, description, url, year, campus_ids
+      id, title, description, url, year, campus_ids, tags
     ) VALUES (
-      ?, ?, ?, ?, ?, ?
+      ?, ?, ?, ?, ?, ?, ?
     )");
     $qry->bindParam(1, $id);
     //$user = array('name' => 'test', 'location' => array(9.74379 , 47.4124));
@@ -184,6 +188,7 @@ $app->post('/projects', function() use ($app)
     $qry->bindParam(4, $url);
     $qry->bindParam(5, $year);
     $qry->bindParam(6, $campus_ids);
+    $qry->bindParam(7, $tags);
     $state = $qry->execute();
 
 
@@ -244,6 +249,7 @@ $app->put('/project/:id/edit', function($id) use ($app)
     $url         = $data->url;
     $year        = $data->year;
     $campus_ids  = $data->campus_ids;
+    $tags        = $data->tags;
 //    $image_ref   = $data->image_ref;
 
     error_log($campus_ids[1] . "\n", 3, "/var/tmp/my-errors.log");
@@ -263,16 +269,21 @@ $app->put('/project/:id/edit', function($id) use ($app)
     }else if (empty($campus_ids)) {
         $app->argument_required('Argument "campus_ids" is required');
         return;
+    }else if (empty($tags)) {
+        $app->argument_required('Argument "tags" is required');
+        return;
     }
-    $qry       = $app->conn->prepare("UPDATE showcase.projects
-                                      SET title = ?, description =?, url=?, year=?, campus_ids=?
-                                      WHERE id=?");
+
+    $qry = $app->conn->prepare("UPDATE showcase.projects
+                                SET title = ?, description =?, url=?, year=?, campus_ids=?, tags=?
+                                WHERE id=?");
     $qry->bindParam(1, $title);
     $qry->bindParam(2, $description);
     $qry->bindParam(3, $url);
     $qry->bindParam(4, $year);
     $qry->bindParam(5, $campus_ids);
-    $qry->bindParam(6, $id);
+    $qry->bindParam(6, $tags);
+    $qry->bindParam(7, $id);
     $state = $qry->execute();
 })->name('project-put');
 

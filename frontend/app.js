@@ -78,6 +78,7 @@ angular.module('app', [])
       text: null,
       image_ref: null,
       campus_checkbox: [],
+      tags: '',
     };
     // const locationCache = null;
     const SEARCH_API = new Api('/search');
@@ -224,6 +225,9 @@ angular.module('app', [])
     const submitProject = function () {
       const api = new Api('/projects');
 
+      // convert tags string into array
+      $scope.formdata.tags = $scope.formdata.tags.split(/\s*,\s*/);
+
       // add campuses to campus_ids if checked
       $scope.formdata.campus_ids = [];
       $scope.formdata.campus_checkbox.forEach((checkbox) => {
@@ -277,7 +281,7 @@ angular.module('app', [])
     });
 
 
-    // create new post
+    // create new project
     this.submitForm = function () {
 //      if (!$scope.formdata.user.location) return;
       if ($scope.imagedata) {
@@ -310,6 +314,9 @@ angular.module('app', [])
     this.editPost = function (project) {
       const api = new Api(`/project/${project.id}/edit`);
       const projectWithNewCampusIds = angular.copy(project);
+
+      // convert tags string into array
+      projectWithNewCampusIds.tags = projectWithNewCampusIds.tags.split(/\s*,\s*/);
 
       // add campuses to campus_ids if checked
       projectWithNewCampusIds.campus_ids = [];
