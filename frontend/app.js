@@ -77,8 +77,9 @@ angular.module('app', [])
       },
       text: null,
       image_ref: null,
+      campus_checkbox: [],
     };
-    const locationCache = null;
+    // const locationCache = null;
     const SEARCH_API = new Api('/search');
 
     $scope.posts = [];
@@ -98,7 +99,8 @@ angular.module('app', [])
         const campusIndices = project.campus_ids.map(id =>
           objectArrayIndexOf($scope.campuses, 'id', id));
 
-        projectWithCampusNames.campus_names = campusIndices.map(index => $scope.campuses[index].name);
+        projectWithCampusNames.campus_names = campusIndices.map(
+          index => $scope.campuses[index].name);
       }
 
       return projectWithCampusNames;
@@ -173,6 +175,7 @@ angular.module('app', [])
     // reset input form but refill location from cache
     const resetForm = function () {
       $scope.formdata = angular.copy(EMPTY);
+      $scope.formdata.campus_checkbox = angular.copy($scope.campuses);
 //      $scope.formdata.user.location = angular.copy(locationCache);
       $scope.imagedata = null;
     };
@@ -209,7 +212,6 @@ angular.module('app', [])
     const submitProject = function () {
       const api = new Api('/projects');
       $scope.formdata.campus_ids = [];
-      console.log($scope.formdata);
       $scope.formdata.campus_checkbox.forEach((checkbox) => {
         if (checkbox.checked) {
           $scope.formdata.campus_ids.push(checkbox.id);
