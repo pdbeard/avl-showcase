@@ -25,12 +25,28 @@ DROP BLOB TABLE IF EXISTS guestbook_images;
 CREATE BLOB TABLE guestbook_images
 WITH (number_of_replicas='0-2');
 
+-- custom text analyzer
+CREATE ANALYZER myanalyzer (
+  TOKENIZER standard,-- or try edge_ngram for suggest-type search
+  TOKEN_FILTERS (
+    lowercase,
+    stop,
+    kstem,
+    synonym WITH (
+      synonyms = [
+        'u s a,united states,united states of america => usa',
+        'i-pod, i pod => ipod'
+      ]
+    )
+  )
+);
+
 -- projects table
 DROP TABLE IF EXISTS showcase.projects;
 CREATE TABLE showcase.projects (
-    id STRING PRIMARY KEY,
-    title STRING INDEX USING FULLTEXT WITH (analyzer = 'english'),
-    description STRING INDEX USING FULLTEXT WITH (analyzer = 'english'),
+    id STRING INDEX OFF PRIMARY KEY,
+    title STRING INDEX USING FULLTEXT WITH (analyzer = 'myanalyzer'),
+    description STRING INDEX USING FULLTEXT WITH (analyzer = 'myanalyzer'),
     year STRING,
     url STRING,
     campus_ids ARRAY(INTEGER),
