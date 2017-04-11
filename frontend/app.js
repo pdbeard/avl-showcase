@@ -69,7 +69,11 @@ angular.module('app', [])
       });
     },
   }))
+
   .controller('GuestbookController', function ($scope, $q, apiHost, Api, Location, objectArrayIndexOf) {
+
+    this.isAuthorized = {admin:false}
+
     const EMPTY = {
       user: {
         name: null,
