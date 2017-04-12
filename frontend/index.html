@@ -129,10 +129,10 @@
                 ng-if="projects.length === 0 && search.query_string.length > 0">No projects for search "{{ search.query_string }}" found.</div>
             <div class="post-list">
             
-                    <div class="post-item"
-                        id="project-{{ project.id }}"
-                        ng-repeat="project in projects track by project.id"
-                        ng-include="'project.html'"></div>
+                    <div class="col-lg-5 post-item"
+                         id="project-{{ project.id }}"
+                         ng-repeat="project in projects track by project.id"
+                         ng-include="'project.html'"></div>
             
             </div>
           </div>
