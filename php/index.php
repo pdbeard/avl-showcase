@@ -250,7 +250,7 @@ $app->put('/project/:id/edit', function($id) use ($app)
     $year        = $data->year;
     $campus_ids  = $data->campus_ids;
     $tags        = $data->tags;
-//    $image_ref   = $data->image_ref;
+    $image_ref   = $data->image_ref;
 
     error_log($campus_ids[1] . "\n", 3, "/var/tmp/my-errors.log");
 
@@ -272,10 +272,13 @@ $app->put('/project/:id/edit', function($id) use ($app)
     }else if (empty($tags)) {
         $app->argument_required('Argument "tags" is required');
         return;
+    }else if (empty($image_ref)) {
+        $app->argument_required('Argument "image_ref" is required');
+        return;
     }
 
     $qry = $app->conn->prepare("UPDATE showcase.projects
-                                SET title = ?, description =?, url=?, year=?, campus_ids=?, tags=?
+                                SET title = ?, description =?, url=?, year=?, campus_ids=?, tags=?, image_ref=?
                                 WHERE id=?");
     $qry->bindParam(1, $title);
     $qry->bindParam(2, $description);
@@ -283,7 +286,8 @@ $app->put('/project/:id/edit', function($id) use ($app)
     $qry->bindParam(4, $year);
     $qry->bindParam(5, $campus_ids);
     $qry->bindParam(6, $tags);
-    $qry->bindParam(7, $id);
+    $qry->bindParam(7, $image_ref);
+    $qry->bindParam(8, $id);
     $state = $qry->execute();
 })->name('project-put');
 

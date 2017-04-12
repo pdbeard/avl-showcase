@@ -341,22 +341,16 @@ angular.module('app', [])
 
     // create new project
     this.submitEditForm = function (project) {
-      console.log('submitEditForm');
-      console.log($scope);
-      console.log(project);
       if (project.imagedata) {
-        console.log(project);
         const projectWithNewImage = angular.copy(project);
         uploadBlob(project.imagedata).then((response) => {
           projectWithNewImage.image_ref = response.data.digest;
-          console.log(projectWithNewImage);
           editPost(projectWithNewImage);
         }, (e) => {
           console.warn(e);
           window.alert('Image upload failed.');
         });
       } else {
-        console.log('no imagedata');
         editPost(project);
       }
     };
