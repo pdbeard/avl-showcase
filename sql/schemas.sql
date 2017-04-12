@@ -50,7 +50,8 @@ CREATE TABLE showcase.projects (
     year STRING,
     url STRING,
     campus_ids ARRAY(INTEGER),
-    tags ARRAY(STRING)
+    tags ARRAY(STRING),
+    image_ref STRING
 ) WITH (number_of_replicas = 0);
 
 -- campuses table
@@ -59,3 +60,8 @@ CREATE TABLE showcase.campuses (
   id INTEGER,
   name STRING
 ) WITH (number_of_replicas = 0);
+
+-- images blob table
+DROP BLOB TABLE IF EXISTS project_images;
+CREATE BLOB TABLE project_images
+WITH (number_of_replicas = 0);

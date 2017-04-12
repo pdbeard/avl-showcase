@@ -1,7 +1,8 @@
 <div class="stop-clicks"  ng-class="{ 'hidden': !showDetails }">
     <div class="row shadow-3 project-details" ng-class="{ 'hidden': !showDetails }">
         <div class = "col col-sm-5">
-           <img class="image-thumbnail" src="assets/160x120.png" alt=""></img>
+           <img ng-if="!project.image_ref" src="assets/160x120.png" alt="" class="image-thumbnail">
+           <img ng-if="project.image_ref" ng-src="{{ apiHost }}/image/{{ project.image_ref }}" class="image-thumbnail">
         </div>
         <div class ="col col-sm-7">
             <h1>
@@ -12,8 +13,6 @@
                         ng-click="showDetails = !showDetails">Close</button>
 
             </h1>
-            <p ng-if="post.image_ref">
-                <img ng-src="{{ apiHost }}/image/{{ post.image_ref }}" /></p>
             <p class="lead">{{ project.description }}</p>
             <p>Campus: {{project.campus_id}}</p>
             <p>
@@ -24,7 +23,7 @@
             <p ng-if="project.tags.length">
                 <ng-pluralize count="project.tags.length"
                               when="{1: 'Tag', 'other': 'Tags', 'NaN': 'error, yo!'}"></ng-pluralize>:
-                <span  class="label label-info" 
+                <span  class="label label-info"
                        ng-repeat="tag in project.tags">{{ tag }}</span></p>
             <!--<p>ID: <span>{{ project.id }}</span></p>-->
         </div>
@@ -35,19 +34,18 @@
 <div class ="project-thumbnail shadow-1 row">
     <a href="#" ng-click="showDetails = !showDetails">
         <div class = "col col-sm-5" style="padding-left:0px;">
-          <img class="image-thumbnail" src="assets/160x120.png" alt=""></img>
+          <img ng-if="!project.image_ref" src="assets/160x120.png" alt="" class="image-thumbnail">
+          <img ng-if="project.image_ref" ng-src="{{ apiHost }}/image/{{ project.image_ref }}" class="image-thumbnail">
         </div>
         <div class ="col col-sm-7">
             <h3>
                 <b>{{ project.title }}</b></h3>
-            <p ng-if="post.image_ref">
-                <img ng-src="{{ apiHost }}/image/{{ post.image_ref }}" /></p>
             <small class="text-muted">{{ project.description | limitTo: 60 }}{{project.description.length > 20 ? '...' : ''}}</small>
             <!--<p>Campus: {{project.campus_id}}</p>-->
             <p>URL: <span>{{ project.url }}</span></p>
         </div>
     </a>
-    
+
     <!--Edit Project-->
     <div class ="col col-sm-12" ng-show="guestbookCtrl.isAuthorized.admin">
         <div  ng-init="isEdit=false"
@@ -85,7 +83,7 @@
                 <div class="form-group form-group col-lg-12">
                     <label>Campus</label>
                     <br>
-                    <label class="checkbox-inline" 
+                    <label class="checkbox-inline"
                             ng-repeat="campus in campuses">
                     <input type="checkbox"
                             id="inlineCheckbox1"
@@ -99,14 +97,20 @@
                 <input type="text"
                         class="form-control"
                         id="tags"
-                        ng-model="project.tags" />
+                        ng-model="project.tagsString" />
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="blob">Add an Image</label>
+              <input type="file" id="blob" accept="image/*" blob="project.imagedata" />
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
                 <button type="submit"
                         class="btn btn-success btn-lg btn-block"
-                        ng-click="guestbookCtlr.editPost(project)">Submit</button>
-                </div>
+                        ng-click="guestbookCtlr.submitEditForm(project)">
+                  Submit
+                </button>
+              </div>
             </div>
         </div>
         <p class="pull-right">

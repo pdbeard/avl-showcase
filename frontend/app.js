@@ -74,12 +74,12 @@ angular.module('app', [])
 
 
 
+
     this.isAuthorized = {admin:false}
     $scope.successTextAlert ="That seemed to work!";
     $scope.showSuccessAlert = false;
     $scope.failTextAlert ="Something went wrong!";
     $scope.showFailAlert = false;
-
 
 
 
@@ -116,6 +116,9 @@ angular.module('app', [])
         // add campuses array to project
         const projectWithCampuses = angular.copy(project);
         projectWithCampuses.campuses = angular.copy($scope.campuses);
+
+        // convert tags array to string
+        projectWithCampuses.tagsString = projectWithCampuses.tags.join();
 
         // set checked = true if the campus is in the campus_ids array
         projectWithCampuses.campuses = projectWithCampuses.campuses.map((campus) => {
@@ -312,18 +315,15 @@ angular.module('app', [])
 
     // create new project
     this.submitForm = function () {
-//      if (!$scope.formdata.user.location) return;
       if ($scope.imagedata) {
         uploadBlob($scope.imagedata).then((response) => {
           $scope.formdata.image_ref = response.data.digest;
-//          submitPost();
           submitProject();
         }, (e) => {
           console.warn(e);
           window.alert('Image upload failed.');
         });
       } else {
-//        submitPost();
         submitProject();
       }
     };
@@ -340,12 +340,12 @@ angular.module('app', [])
     // };
 
     // edit existing post
-    this.editPost = function (project) {
+    const editPost = function (project) {
       const api = new Api(`/project/${project.id}/edit`);
       const projectWithNewCampusIds = angular.copy(project);
 
       // convert tags string into array
-      projectWithNewCampusIds.tags = projectWithNewCampusIds.tags.split(/\s*,\s*/);
+      projectWithNewCampusIds.tags = projectWithNewCampusIds.tagsString.split(/\s*,\s*/);
 
       // add campuses to campus_ids if checked
       projectWithNewCampusIds.campus_ids = [];
@@ -366,6 +366,22 @@ angular.module('app', [])
       });
     };
 
+
+    // create new project
+    this.submitEditForm = function (project) {
+      if (project.imagedata) {
+        const projectWithNewImage = angular.copy(project);
+        uploadBlob(project.imagedata).then((response) => {
+          projectWithNewImage.image_ref = response.data.digest;
+          editPost(projectWithNewImage);
+        }, (e) => {
+          console.warn(e);
+          window.alert('Image upload failed.');
+        });
+      } else {
+        editPost(project);
+      }
+    };
 
     // delete existing post
     this.deletePost = function (project) {
