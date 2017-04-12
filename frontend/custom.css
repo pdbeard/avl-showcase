@@ -96,3 +96,9 @@ form {
     border-bottom: 0;
   }
 }
+
+/* constrain images to container in project template */
+.projectImg {
+  width: 100%;
+  object-fit:contain;
+}

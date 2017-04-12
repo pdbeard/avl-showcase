@@ -1,7 +1,8 @@
 <div class ="thumbnail row">
 <div class = "col col-sm-5">
-  <img src="assets/160x120.png" alt=""></img>
-  </div>
+  <img ng-if="!project.image_ref" src="assets/160x120.png" alt="" class="projectImg" />
+  <img ng-if="project.image_ref" ng-src="{{ apiHost }}/image/{{ project.image_ref }}" class="projectImg" />
+</div>
 <div class ="col col-sm-7">
 
 
@@ -9,11 +10,10 @@
     <b>{{ project.title }}</b>
     from <em>{{ project.year }}</em>
   </p>
-  <p ng-if="post.image_ref">
-    <img ng-src="{{ apiHost }}/image/{{ post.image_ref }}" />
-  </p>
+  <!--<p>
+    <img ng-src="{{ apiHost }}/image/{{ project.image_ref }}" />
+  </p>-->
   <p class="lead">{{ project.description | limitTo: 30 }}{{project.description.length > 20 ? '...' : ''}}</p>
-  <!--<p>Campus: {{project.campus_id}}</p>-->
   <p>
     <ng-pluralize count="project.campus_names.length"
       when="{1: 'Campus', 'other': 'Campuses', 'NaN': 'error, yo!'}"></ng-pluralize>:

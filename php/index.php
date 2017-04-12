@@ -145,7 +145,7 @@ $app->post('/projects', function() use ($app)
     $year        = $data->year;
     $campus_ids  = $data->campus_ids;
     $tags        = $data->tags;
-//    $image_ref   = $data->image_ref;
+    $image_ref   = $data->image_ref;
 
     // error_log($campus_ids[0] . "\n", 3, "/var/tmp/my-errors.log");
 
@@ -167,19 +167,18 @@ $app->post('/projects', function() use ($app)
     }else if (empty($tags)) {
         $app->argument_required('Argument "tags" is required');
         return;
+    }else if (empty($image_ref)) {
+        $app->argument_required('Argument "image_ref" is required');
+        return;
     }
-//else if (empty($user->location)) {
-//        $app->argument_required('Argument "location" is required');
-//        return;
-//    }
 
     $id        = uniqid();
     $now       = time() * 1000;
     $likeCount = 0;
     $qry       = $app->conn->prepare("INSERT INTO showcase.projects (
-      id, title, description, url, year, campus_ids, tags
+      id, title, description, url, year, campus_ids, tags, image_ref
     ) VALUES (
-      ?, ?, ?, ?, ?, ?, ?
+      ?, ?, ?, ?, ?, ?, ?, ?
     )");
     $qry->bindParam(1, $id);
     //$user = array('name' => 'test', 'location' => array(9.74379 , 47.4124));
@@ -189,6 +188,7 @@ $app->post('/projects', function() use ($app)
     $qry->bindParam(5, $year);
     $qry->bindParam(6, $campus_ids);
     $qry->bindParam(7, $tags);
+    $qry->bindParam(8, $image_ref);
     $state = $qry->execute();
 
 
@@ -406,7 +406,7 @@ $app->get('/projects', function() use ($app)
  */
 $app->get('/images', function() use ($app)
 {
-    $qry = $app->conn->prepare("SELECT digest, last_modified FROM blob.guestbook_images");
+    $qry = $app->conn->prepare("SELECT digest, last_modified FROM blob.project_images");
     $qry->execute();
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
     $app->success(200, $result);
@@ -424,7 +424,7 @@ $app->post('/images', function() use ($app)
     }
     $content = base64_decode($data->blob);
     $digest  = sha1($content);
-    $ch      = curl_init("{$app->config['blob_url']}guestbook_images/{$digest}");
+    $ch      = curl_init("{$app->config['blob_url']}project_images/{$digest}");
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -449,7 +449,7 @@ $app->get('/image/:digest', function($digest) use ($app)
         $app->not_found('Please provide an image digest: /image/<digest>');
         return;
     }
-    $ch     = curl_init("{$app->config['blob_url']}guestbook_images/{$digest}");
+    $ch     = curl_init("{$app->config['blob_url']}project_images/{$digest}");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
     if (!$result || is_bool($result)) {
@@ -472,7 +472,7 @@ $app->delete('/image/:digest', function($digest) use ($app)
         $app->not_found('Please provide an image digest: /image/<digest>');
         return;
     }
-    $ch = curl_init("{$app->config['blob_url']}guestbook_images/{$digest}");
+    $ch = curl_init("{$app->config['blob_url']}project_images/{$digest}");
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
     $result = curl_exec($ch);
     $info   = curl_getinfo($ch);
