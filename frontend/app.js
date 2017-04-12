@@ -108,6 +108,9 @@ angular.module('app', [])
         const projectWithCampuses = angular.copy(project);
         projectWithCampuses.campuses = angular.copy($scope.campuses);
 
+        // convert tags array to string
+        projectWithCampuses.tagsString = projectWithCampuses.tags.join();
+
         // set checked = true if the campus is in the campus_ids array
         projectWithCampuses.campuses = projectWithCampuses.campuses.map((campus) => {
           const campusWithChecked = angular.copy(campus);
@@ -163,6 +166,7 @@ angular.module('app', [])
       api.get().then((response) => {
         $scope.projects = response.data;
         addCampusStuffToProjects();
+        console.log($scope.projects[1]);
       }, (e) => {
         console.warn(e);
         $scope.projects = [];
@@ -320,7 +324,7 @@ angular.module('app', [])
       const projectWithNewCampusIds = angular.copy(project);
 
       // convert tags string into array
-      projectWithNewCampusIds.tags = projectWithNewCampusIds.tags.split(/\s*,\s*/);
+      projectWithNewCampusIds.tags = projectWithNewCampusIds.tagsString.split(/\s*,\s*/);
 
       // add campuses to campus_ids if checked
       projectWithNewCampusIds.campus_ids = [];

@@ -24,7 +24,7 @@
             <p ng-if="project.tags.length">
                 <ng-pluralize count="project.tags.length"
                               when="{1: 'Tag', 'other': 'Tags', 'NaN': 'error, yo!'}"></ng-pluralize>:
-                <span  class="label label-info" 
+                <span  class="label label-info"
                        ng-repeat="tag in project.tags">{{ tag }}</span></p>
             <!--<p>ID: <span>{{ project.id }}</span></p>-->
         </div>
@@ -47,7 +47,7 @@
             <p>URL: <span>{{ project.url }}</span></p>
         </div>
     </a>
-    
+
     <!--Edit Project-->
     <div class ="col col-sm-12" ng-show="guestbookCtrl.isAuthorized.admin">
         <div  ng-init="isEdit=false"
@@ -85,7 +85,7 @@
                 <div class="form-group form-group col-lg-12">
                     <label>Campus</label>
                     <br>
-                    <label class="checkbox-inline" 
+                    <label class="checkbox-inline"
                             ng-repeat="campus in campuses">
                     <input type="checkbox"
                             id="inlineCheckbox1"
@@ -99,7 +99,7 @@
                 <input type="text"
                         class="form-control"
                         id="tags"
-                        ng-model="project.tags" />
+                        ng-model="project.tagsString" />
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
