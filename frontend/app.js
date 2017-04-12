@@ -72,7 +72,16 @@ angular.module('app', [])
 
   .controller('GuestbookController', function ($scope, $q, apiHost, Api, Location, objectArrayIndexOf) {
 
+
+
     this.isAuthorized = {admin:false}
+    $scope.successTextAlert ="That seemed to work!";
+    $scope.showSuccessAlert = false;
+    $scope.failTextAlert ="Something went wrong!";
+    $scope.showFailAlert = false;
+
+
+
 
     const EMPTY = {
       user: {
@@ -155,6 +164,9 @@ angular.module('app', [])
       }, (e) => {
         console.warn(e);
         $scope.campuses = [];
+
+        // $scope.failTextAlert ="error";
+        // $scope.showFailAlert = true;
       });
     };
 
@@ -166,6 +178,9 @@ angular.module('app', [])
       }, (e) => {
         console.warn(e);
         $scope.projects = [];
+
+        // $scope.failTextAlert ="Creating the projected failed.";
+        // $scope.showFailAlert = true;
       });
     };
 
@@ -194,7 +209,9 @@ angular.module('app', [])
       $scope.formdata = angular.copy(EMPTY);
       $scope.formdata.campus_checkbox = angular.copy($scope.campuses);
 //      $scope.formdata.user.location = angular.copy(locationCache);
+
       $scope.imagedata = null;
+      $scope.showSuccessAlert = true;
     };
 
     const uploadBlob = function (blob) {
@@ -245,10 +262,15 @@ angular.module('app', [])
         for (let i = 0; i < projects.length; i += 1) {
           $scope.projects.unshift(projects[0]);
         }
+        $scope.successTextAlert ="Project added";
         resetForm();
       }, (e) => {
-        console.warn(e);
-        window.alert('Creating the post failed.');
+        // console.warn(e);
+        // window.alert('Creating the post failed.');
+
+        $scope.failTextAlert ="Creating the project failed.";
+        $scope.showFailAlert = true;
+
       });
     };
 
@@ -269,6 +291,9 @@ angular.module('app', [])
         }
       }, (e) => {
         console.warn(e);
+        $scope.failTextAlert ="Creating the project failed.";
+        $scope.showFailAlert = true;
+
         $scope.projects = [];
       });
     };
@@ -331,10 +356,13 @@ angular.module('app', [])
       });
 
       api.put(projectWithNewCampusIds).then((response) => {
+        $scope.successTextAlert ="Project edited";
         resetForm();
       }, (e) => {
-        console.warn(e);
-        window.alert('Editing the post failed.');
+        // console.warn(e);
+        // window.alert('Editing the post failed.');
+        $scope.failTextAlert ="Editing the post failed. ";
+        $scope.showFailAlert = true;
       });
     };
 
@@ -344,10 +372,14 @@ angular.module('app', [])
       const idx = objectArrayIndexOf($scope.projects, 'id', project.id);
       const api = new Api(`/projects/${project.id}`);
       api.delete().then((response) => {
+        $scope.successTextAlert ="Project Deleted!";
+        $scope.showSuccessAlert =true;
         $scope.projects.splice(idx, 1);
       }, (e) => {
-        console.warn(e);
-        window.alert('Deleting the post failed.');
+        // console.warn(e);
+        // window.alert('Deleting the post failed.');
+        $scope.failTextAlert ="Deleting the projected failed.";
+        $scope.showFailAlert = true;
       });
     };
 

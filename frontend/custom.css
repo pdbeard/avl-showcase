@@ -89,7 +89,13 @@ form {
   }
   /* Space out the masthead */
   .header {
+    background-color: white;
+    left:0;
+    top:0;
+    position: fixed;
+    z-index: 40;
     margin-bottom: 30px;
+    width:100%;
   }
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
