@@ -94,14 +94,10 @@
               <input type="text" class="form-control" id="tags" ng-model="formdata.tags" placeholder="Enter tags separated by commas" />
             </div>
             <div class="row">
-
               <div class="form-group col-lg-6">
                 <label for="blob">Add an Image</label>
-                <input type="file" id="blob" accept="image/gif" blob="imagedata" />
-                <p class="help-block">Only <em>gifs</em> are supported.</p>
+                <input type="file" id="blob" accept="image/*" blob="imagedata" />
               </div>
-
-
               <div class="form-group col-lg-6">
                 <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="guestbookCtlr.submitForm()">
                   <!--ng-disabled=" !formdata.user.name || !formdata.description-->

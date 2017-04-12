@@ -287,18 +287,15 @@ angular.module('app', [])
 
     // create new project
     this.submitForm = function () {
-//      if (!$scope.formdata.user.location) return;
       if ($scope.imagedata) {
         uploadBlob($scope.imagedata).then((response) => {
           $scope.formdata.image_ref = response.data.digest;
-//          submitPost();
           submitProject();
         }, (e) => {
           console.warn(e);
           window.alert('Image upload failed.');
         });
       } else {
-//        submitPost();
         submitProject();
       }
     };
@@ -315,7 +312,7 @@ angular.module('app', [])
     // };
 
     // edit existing post
-    this.editPost = function (project) {
+    const editPost = function (project) {
       const api = new Api(`/project/${project.id}/edit`);
       const projectWithNewCampusIds = angular.copy(project);
 
@@ -338,6 +335,28 @@ angular.module('app', [])
       });
     };
 
+
+    // create new project
+    this.submitEditForm = function (project) {
+      console.log('submitEditForm');
+      console.log($scope);
+      console.log(project);
+      if (project.imagedata) {
+        console.log(project);
+        const projectWithNewImage = angular.copy(project);
+        uploadBlob(project.imagedata).then((response) => {
+          projectWithNewImage.image_ref = response.data.digest;
+          console.log(projectWithNewImage);
+          editPost(projectWithNewImage);
+        }, (e) => {
+          console.warn(e);
+          window.alert('Image upload failed.');
+        });
+      } else {
+        console.log('no imagedata');
+        editPost(project);
+      }
+    };
 
     // delete existing post
     this.deletePost = function (project) {

@@ -77,12 +77,17 @@
                      id="tags"
                      ng-model="project.tags" />
             </div>
+            <div class="form-group col-lg-6">
+              <label for="blob">Add an Image</label>
+              <input type="file" id="blob" accept="image/*" blob="project.imagedata" />
+            </div>
             <div class="row">
               <div class="form-group col-lg-6">
                 <button type="submit"
                         class="btn btn-success btn-lg btn-block"
-                        ng-click="guestbookCtlr.editPost(project)"
-                        >Submit</button>
+                        ng-click="guestbookCtlr.submitEditForm(project)">
+                  Submit
+                </button>
               </div>
             </div>
 </div>
