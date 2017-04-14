@@ -14,12 +14,17 @@
 
             </h1>
             <p class="lead">{{ project.description }}</p>
-            <p>Campus: {{project.campus_id}}</p>
+            <p>
+                <ng-pluralize count="project.people.length"
+                              when="{1: 'Person', 'other': 'People', 'NaN': 'error, yo!'}"></ng-pluralize>:
+                <span ng-repeat="person in project.people">{{ person.name_first }} {{ person.name_last }}, </span>
+            </p>
             <p>
                 <ng-pluralize count="project.campus_names.length"
                               when="{1: 'Campus', 'other': 'Campuses', 'NaN': 'error, yo!'}"></ng-pluralize>:
-                <span ng-repeat="name in project.campus_names">{{ name }}, </span></p>
-            <p>URL: <span>{{ project.url }}</span></p>
+                <span ng-repeat="name in project.campus_names">{{ name }}, </span>
+            </p>
+            <p>URL: <a ng-href="{{project.url}}" target="_blank">{{ project.url }}</a></p>
             <p ng-if="project.tags.length">
                 <ng-pluralize count="project.tags.length"
                               when="{1: 'Tag', 'other': 'Tags', 'NaN': 'error, yo!'}"></ng-pluralize>:

@@ -51,7 +51,8 @@ CREATE TABLE showcase.projects (
     url STRING,
     campus_ids ARRAY(INTEGER),
     tags ARRAY(STRING),
-    image_ref STRING
+    image_ref STRING,
+    people ARRAY(OBJECT(STRICT) as (name_first STRING, name_last STRING))
 ) WITH (number_of_replicas = 0);
 
 -- campuses table
