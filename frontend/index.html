@@ -75,6 +75,30 @@
                 </div>
               </div>
               <div class="row">
+                <div class="form-group col-lg-12">
+                  <label>People</label>
+                  <button class="btn btn-default"
+                    ng-click="formdata.peopleObjects.push({name_first: '', name_last: ''})">Add person</button>
+                </div>
+              </div>
+              <div class="row" ng-repeat="person in formdata.peopleObjects">
+                <div class="form-group form-group col-lg-6">
+                  <label for="year">First</label>
+                  <input class="form-control"
+                            id="year"
+                            ng-model="person.name_first"
+                            placeholder="First name" />
+                </div>
+                <div class="form-group form-group col-lg-6">
+                  <label for="year">Last</label>
+                  <input type="text"
+                            class="form-control"
+                            id="url"
+                            ng-model="person.name_last"
+                            placeholder="Last name" />
+                </div>
+              </div>
+              <div class="row">
                 <div class="form-group form-group col-lg-12">
                   <label>Campus</label>
                   <br>

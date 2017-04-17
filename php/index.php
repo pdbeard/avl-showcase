@@ -146,8 +146,11 @@ $app->post('/projects', function() use ($app)
     $campus_ids  = $data->campus_ids;
     $tags        = $data->tags;
     $image_ref   = $data->image_ref;
+    $people      = $data->people;
 
-    // error_log($campus_ids[0] . "\n", 3, "/var/tmp/my-errors.log");
+    // error_log(print_r($people, TRUE) . " ttt\n", 3, "/var/tmp/my-errors.log");
+    // error_log($people[0]->name_first . " fff\n", 3, "/var/tmp/my-errors.log");
+    // error_log(json_encode($people) . " fff\n", 3, "/var/tmp/my-errors.log");
 
     if (empty($title)) {
         $app->argument_required('Argument "title" is required');
@@ -170,18 +173,20 @@ $app->post('/projects', function() use ($app)
     }else if (empty($image_ref)) {
         $app->argument_required('Argument "image_ref" is required');
         return;
+    }else if (empty($people)) {
+        $app->argument_required('Argument "people" is required');
+        return;
     }
 
     $id        = uniqid();
     $now       = time() * 1000;
     $likeCount = 0;
     $qry       = $app->conn->prepare("INSERT INTO showcase.projects (
-      id, title, description, url, year, campus_ids, tags, image_ref
+      id, title, description, url, year, campus_ids, tags, image_ref, people
     ) VALUES (
-      ?, ?, ?, ?, ?, ?, ?, ?
+      ?, ?, ?, ?, ?, ?, ?, ?, ?
     )");
     $qry->bindParam(1, $id);
-    //$user = array('name' => 'test', 'location' => array(9.74379 , 47.4124));
     $qry->bindParam(2, $title);
     $qry->bindParam(3, $description);
     $qry->bindParam(4, $url);
@@ -189,6 +194,7 @@ $app->post('/projects', function() use ($app)
     $qry->bindParam(6, $campus_ids);
     $qry->bindParam(7, $tags);
     $qry->bindParam(8, $image_ref);
+    $qry->bindParam(9, $people);
     $state = $qry->execute();
 
 
@@ -251,8 +257,9 @@ $app->put('/project/:id/edit', function($id) use ($app)
     $campus_ids  = $data->campus_ids;
     $tags        = $data->tags;
     $image_ref   = $data->image_ref;
+    $people      = $data->people;
 
-    error_log($campus_ids[1] . "\n", 3, "/var/tmp/my-errors.log");
+    // error_log($campus_ids[1] . "\n", 3, "/var/tmp/my-errors.log");
 
     if (empty($title)) {
         $app->argument_required('Argument "title" is required');
@@ -275,10 +282,13 @@ $app->put('/project/:id/edit', function($id) use ($app)
     }else if (empty($image_ref)) {
         $app->argument_required('Argument "image_ref" is required');
         return;
+    }else if (empty($people)) {
+        $app->argument_required('Argument "people" is required');
+        return;
     }
 
     $qry = $app->conn->prepare("UPDATE showcase.projects
-                                SET title = ?, description =?, url=?, year=?, campus_ids=?, tags=?, image_ref=?
+                                SET title = ?, description =?, url=?, year=?, campus_ids=?, tags=?, image_ref=?, people=?
                                 WHERE id=?");
     $qry->bindParam(1, $title);
     $qry->bindParam(2, $description);
@@ -287,7 +297,8 @@ $app->put('/project/:id/edit', function($id) use ($app)
     $qry->bindParam(5, $campus_ids);
     $qry->bindParam(6, $tags);
     $qry->bindParam(7, $image_ref);
-    $qry->bindParam(8, $id);
+    $qry->bindParam(8, $people);
+    $qry->bindParam(9, $id);
     $state = $qry->execute();
 })->name('project-put');
 

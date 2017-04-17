@@ -83,6 +83,7 @@ angular.module('app', [])
       image_ref: null,
       campus_checkbox: [],
       tags: '',
+      peopleObjects: [],
     };
     // const locationCache = null;
     const SEARCH_API = new Api('/search');
@@ -110,6 +111,16 @@ angular.module('app', [])
 
         // convert tags array to string
         projectWithCampuses.tagsString = projectWithCampuses.tags.join();
+
+        // convert people string array to object array
+        projectWithCampuses.peopleObjects = projectWithCampuses.people.map((person) => {
+          const splitPerson = person.split('_');
+
+          return {
+            name_first: splitPerson[0],
+            name_last: splitPerson[1],
+          };
+        });
 
         // set checked = true if the campus is in the campus_ids array
         projectWithCampuses.campuses = projectWithCampuses.campuses.map((campus) => {
@@ -232,6 +243,9 @@ angular.module('app', [])
     const submitProject = function () {
       const api = new Api('/projects');
 
+      // convert people objects into strings
+      $scope.formdata.people = $scope.formdata.peopleObjects.map(person => `${person.name_first}_${person.name_last}`);
+
       // convert tags string into array
       $scope.formdata.tags = $scope.formdata.tags.split(/\s*,\s*/);
 
@@ -318,6 +332,9 @@ angular.module('app', [])
     const editPost = function (project) {
       const api = new Api(`/project/${project.id}/edit`);
       const projectWithNewCampusIds = angular.copy(project);
+
+      // convert people objects into strings
+      projectWithNewCampusIds.people = projectWithNewCampusIds.peopleObjects.map(person => `${person.name_first}_${person.name_last}`);
 
       // convert tags string into array
       projectWithNewCampusIds.tags = projectWithNewCampusIds.tagsString.split(/\s*,\s*/);
