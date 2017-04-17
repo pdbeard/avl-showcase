@@ -547,10 +547,12 @@ $app->post('/search', function() use ($app)
             WHERE match((p.title, p.description, p.year), ?)
             OR ? = any(p.tags)
             OR ? = any(p.campus_ids)
+            OR ? = any(p.people)
             ORDER BY _score DESC");
     $qry->bindParam(1, $data->query_string);
     $qry->bindParam(2, $data->query_string);
     $qry->bindParam(3, $campus_id);
+    $qry->bindParam(4, $data->query_string);
     $qry->execute();
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
     $app->success(200, $result);
