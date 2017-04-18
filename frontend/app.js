@@ -112,9 +112,12 @@ angular.module('app', [])
         // convert tags array to string
         projectWithCampuses.tagsString = projectWithCampuses.tags.join();
 
+        // convert people string to string array
+        projectWithCampuses.peopleStrings = projectWithCampuses.people.split(';');
+
         // convert people string array to object array
-        projectWithCampuses.peopleObjects = projectWithCampuses.people.map((person) => {
-          const splitPerson = person.split('_');
+        projectWithCampuses.peopleObjects = projectWithCampuses.peopleStrings.map((person) => {
+          const splitPerson = person.split('--');
 
           return {
             name_first: splitPerson[0],
@@ -244,7 +247,10 @@ angular.module('app', [])
       const api = new Api('/projects');
 
       // convert people objects into strings
-      $scope.formdata.people = $scope.formdata.peopleObjects.map(person => `${person.name_first}_${person.name_last}`);
+      $scope.formdata.people = $scope.formdata.peopleObjects.map(person => `${person.name_first}--${person.name_last}`);
+
+      // convert people strings into single string
+      $scope.formdata.people = $scope.formdata.people.join(';');
 
       // convert tags string into array
       $scope.formdata.tags = $scope.formdata.tags.split(/\s*,\s*/);
@@ -334,7 +340,10 @@ angular.module('app', [])
       const projectWithNewCampusIds = angular.copy(project);
 
       // convert people objects into strings
-      projectWithNewCampusIds.people = projectWithNewCampusIds.peopleObjects.map(person => `${person.name_first}_${person.name_last}`);
+      projectWithNewCampusIds.people = projectWithNewCampusIds.peopleObjects.map(person => `${person.name_first}--${person.name_last}`);
+
+      // convert people strings into single string
+      projectWithNewCampusIds.people = projectWithNewCampusIds.people.join(';');
 
       // convert tags string into array
       projectWithNewCampusIds.tags = projectWithNewCampusIds.tagsString.split(/\s*,\s*/);

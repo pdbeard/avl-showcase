@@ -402,9 +402,6 @@ $app->get('/campuses', function() use ($app)
  */
 $app->get('/projects', function() use ($app)
 {
-//    $data        = json_decode($app->request->getBody());
-//    debug_to_console( $data );
-
     $qry = $app->conn->prepare("SELECT p.*
             FROM showcase.projects AS p");
     $qry->execute();
@@ -544,10 +541,9 @@ $app->post('/search', function() use ($app)
     // lastly, do final query
     $qry = $app->conn->prepare("SELECT p.*, p._score as _score
             FROM showcase.projects AS p
-            WHERE match((p.title, p.description, p.year), ?)
+            WHERE match((p.title, p.description, p.year, p.people), ?)
             OR ? = any(p.tags)
             OR ? = any(p.campus_ids)
-            OR ? = any(p.people)
             ORDER BY _score DESC");
     $qry->bindParam(1, $data->query_string);
     $qry->bindParam(2, $data->query_string);

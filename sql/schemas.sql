@@ -52,7 +52,7 @@ CREATE TABLE showcase.projects (
     campus_ids ARRAY(INTEGER),
     tags ARRAY(STRING),
     image_ref STRING,
-    people ARRAY(STRING)
+    people STRING INDEX USING FULLTEXT WITH (analyzer = 'myanalyzer')
 ) WITH (number_of_replicas = 0);
 
 -- campuses table
