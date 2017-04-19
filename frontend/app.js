@@ -83,6 +83,7 @@ angular.module('app', [])
       image_ref: null,
       campus_checkbox: [],
       category_checkbox: [],
+      discipline_checkbox: [],
       tags: '',
       peopleObjects: [],
     };
@@ -92,6 +93,7 @@ angular.module('app', [])
     $scope.posts = [];
     $scope.campuses = [];
     $scope.categories = [];
+    $scope.disciplines = [];
     $scope.projects = [];
     $scope.imagedata = null;
     $scope.formdata = angular.copy(EMPTY);
@@ -111,6 +113,7 @@ angular.module('app', [])
         const projectWithCampuses = angular.copy(project);
         projectWithCampuses.campuses = angular.copy($scope.campuses);
         projectWithCampuses.categories = angular.copy($scope.categories);
+        projectWithCampuses.disciplines = angular.copy($scope.disciplines);
 
         // convert tags array to string
         projectWithCampuses.tagsString = projectWithCampuses.tags.join();
@@ -150,6 +153,17 @@ angular.module('app', [])
           return categoryWithChecked;
         });
 
+        // set checked = true if the discipline is in the discipline_ids array
+        projectWithCampuses.disciplines = projectWithCampuses.disciplines.map((discipline) => {
+          const disciplineWithChecked = angular.copy(discipline);
+          if (project.discipline_ids &&
+              project.discipline_ids.find(id => id === disciplineWithChecked.id)) {
+            disciplineWithChecked.checked = true;
+          }
+
+          return disciplineWithChecked;
+        });
+
         // add campus names to projects
         // need this to list names in template
         if (projectWithCampuses.campus_ids) {
@@ -172,6 +186,18 @@ angular.module('app', [])
           // get the name of each project
           projectWithCampuses.category_names = categoryIndices.map(
             index => $scope.categories[index].name);
+        }
+
+        // add category names to projects
+        // need this to list names in template
+        if (projectWithCampuses.discipline_ids) {
+          // get the index of each discipline in the disciplines array
+          const disciplineIndices = projectWithCampuses.discipline_ids.map(id =>
+            objectArrayIndexOf($scope.disciplines, 'id', id));
+
+          // get the name of each project
+          projectWithCampuses.discipline_names = disciplineIndices.map(
+            index => $scope.disciplines[index].name);
         }
 
         return projectWithCampuses;
@@ -214,6 +240,19 @@ angular.module('app', [])
       });
     };
 
+    const loadDisciplines = function () {
+      const api = new Api('/disciplines');
+      api.get().then((response) => {
+        $scope.disciplines = response.data;
+
+        // add campus info to the form for checkboxes
+        $scope.formdata.discipline_checkbox = angular.copy($scope.disciplines);
+      }, (e) => {
+        console.warn(e);
+        $scope.disciplines = [];
+      });
+    };
+
     const loadProjects = function () {
       const api = new Api('/projects');
       api.get().then((response) => {
@@ -244,6 +283,9 @@ angular.module('app', [])
       // load category lookup table
       loadCategories();
 
+      // load discipline lookup table
+      loadDisciplines();
+
       // load existing projects
       loadProjects();
     };
@@ -253,6 +295,7 @@ angular.module('app', [])
       $scope.formdata = angular.copy(EMPTY);
       $scope.formdata.campus_checkbox = angular.copy($scope.campuses);
       $scope.formdata.category_checkbox = angular.copy($scope.categories);
+      $scope.formdata.discipline_checkbox = angular.copy($scope.disciplines);
 //      $scope.formdata.user.location = angular.copy(locationCache);
       $scope.imagedata = null;
     };
@@ -311,6 +354,14 @@ angular.module('app', [])
       $scope.formdata.category_checkbox.forEach((checkbox) => {
         if (checkbox.checked) {
           $scope.formdata.category_ids.push(checkbox.id);
+        }
+      });
+
+      // add disciplines to discipline_ids if checked
+      $scope.formdata.discipline_ids = [];
+      $scope.formdata.discipline_checkbox.forEach((checkbox) => {
+        if (checkbox.checked) {
+          $scope.formdata.discipline_ids.push(checkbox.id);
         }
       });
 
@@ -412,6 +463,14 @@ angular.module('app', [])
       projectWithNewCampusIds.categories.forEach((category) => {
         if (category.checked) {
           projectWithNewCampusIds.category_ids.push(category.id);
+        }
+      });
+
+      // add disciplines to discipline_ids if checked
+      projectWithNewCampusIds.discipline_ids = [];
+      projectWithNewCampusIds.disciplines.forEach((discipline) => {
+        if (discipline.checked) {
+          projectWithNewCampusIds.discipline_ids.push(discipline.id);
         }
       });
 

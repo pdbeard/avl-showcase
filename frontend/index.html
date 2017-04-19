@@ -122,6 +122,18 @@
                   </label>
                 </div>
               </div>
+              <div class="row">
+                <div class="form-group form-group col-lg-12">
+                  <label>Discipline</label>
+                  <br>
+                  <label class="checkbox-inline" ng-repeat="discipline in disciplines">
+                    <input type="checkbox"
+                      id="inlineCheckbox2"
+                      value="{{discipline.id}}"
+                      ng-model="formdata.discipline_checkbox[$index].checked">{{discipline.name}}
+                  </label>
+                </div>
+              </div>
                 <div class="form-group">
                   <label for="title">Tags</label>
                   <input type="text"

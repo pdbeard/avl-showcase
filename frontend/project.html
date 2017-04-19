@@ -29,6 +29,11 @@
                               when="{1: 'Category', 'other': 'Categories', 'NaN': 'error, yo!'}"></ng-pluralize>:
                 <span ng-repeat="name in project.category_names">{{ name }}, </span>
             </p>
+            <p ng-if="project.discipline_names.length">
+                <ng-pluralize count="project.discipline_names.length"
+                              when="{1: 'Discipline', 'other': 'Disciplines', 'NaN': 'error, yo!'}"></ng-pluralize>:
+                <span ng-repeat="name in project.discipline_names">{{ name }}, </span>
+            </p>
             <p>URL: <a ng-href="{{project.url}}" target="_blank">{{ project.url }}</a></p>
             <p ng-if="project.tags.length">
                 <ng-pluralize count="project.tags.length"
@@ -135,6 +140,19 @@
                             id="inlineCheckbox1"
                             value="{{category.id}}"
                             ng-model="project.categories[$index].checked">{{category.name}}
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group form-group col-lg-12">
+                    <label>Discipline</label>
+                    <br>
+                    <label class="checkbox-inline"
+                            ng-repeat="discipline in disciplines">
+                    <input type="checkbox"
+                            id="inlineCheckbox1"
+                            value="{{discipline.id}}"
+                            ng-model="project.disciplines[$index].checked">{{discipline.name}}
                     </label>
                 </div>
             </div>
