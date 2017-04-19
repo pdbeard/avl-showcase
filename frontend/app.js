@@ -103,26 +103,24 @@ angular.module('app', [])
     };
 
     /**
-     * Add campus names and the campuses array to each project
+     * Add stuff to each project to facilitate checkboxes, ng-repeats, etc
      */
-    const addCampusStuffToProjects = () => {
-      // add a copy of the campuses array to each project
-      // need this to manage state of checkboxes
+    const addStuffToProjects = () => {
       $scope.projects = $scope.projects.map((project) => {
-        // add campuses and categories arrays to project
-        const projectWithCampuses = angular.copy(project);
-        projectWithCampuses.campuses = angular.copy($scope.campuses);
-        projectWithCampuses.categories = angular.copy($scope.categories);
-        projectWithCampuses.disciplines = angular.copy($scope.disciplines);
+        // add campuses, categories, and disciplines arrays to project
+        const newProject = angular.copy(project);
+        newProject.campuses = angular.copy($scope.campuses);
+        newProject.categories = angular.copy($scope.categories);
+        newProject.disciplines = angular.copy($scope.disciplines);
 
         // convert tags array to string
-        projectWithCampuses.tagsString = projectWithCampuses.tags.join();
+        newProject.tagsString = newProject.tags.join();
 
         // convert people string to string array
-        projectWithCampuses.peopleStrings = projectWithCampuses.people.split(';');
+        newProject.peopleStrings = newProject.people.split(';');
 
         // convert people string array to object array
-        projectWithCampuses.peopleObjects = projectWithCampuses.peopleStrings.map((person) => {
+        newProject.peopleObjects = newProject.peopleStrings.map((person) => {
           const splitPerson = person.split('--');
 
           return {
@@ -132,7 +130,7 @@ angular.module('app', [])
         });
 
         // set checked = true if the campus is in the campus_ids array
-        projectWithCampuses.campuses = projectWithCampuses.campuses.map((campus) => {
+        newProject.campuses = newProject.campuses.map((campus) => {
           const campusWithChecked = angular.copy(campus);
           if (project.campus_ids &&
               project.campus_ids.find(id => id === campusWithChecked.id)) {
@@ -143,7 +141,7 @@ angular.module('app', [])
         });
 
         // set checked = true if the category is in the category_ids array
-        projectWithCampuses.categories = projectWithCampuses.categories.map((category) => {
+        newProject.categories = newProject.categories.map((category) => {
           const categoryWithChecked = angular.copy(category);
           if (project.category_ids &&
               project.category_ids.find(id => id === categoryWithChecked.id)) {
@@ -154,7 +152,7 @@ angular.module('app', [])
         });
 
         // set checked = true if the discipline is in the discipline_ids array
-        projectWithCampuses.disciplines = projectWithCampuses.disciplines.map((discipline) => {
+        newProject.disciplines = newProject.disciplines.map((discipline) => {
           const disciplineWithChecked = angular.copy(discipline);
           if (project.discipline_ids &&
               project.discipline_ids.find(id => id === disciplineWithChecked.id)) {
@@ -166,41 +164,41 @@ angular.module('app', [])
 
         // add campus names to projects
         // need this to list names in template
-        if (projectWithCampuses.campus_ids) {
+        if (newProject.campus_ids) {
           // get the index of each campus in the campuses array
-          const campusIndices = projectWithCampuses.campus_ids.map(id =>
+          const campusIndices = newProject.campus_ids.map(id =>
             objectArrayIndexOf($scope.campuses, 'id', id));
 
           // get the name of each project
-          projectWithCampuses.campus_names = campusIndices.map(
+          newProject.campus_names = campusIndices.map(
             index => $scope.campuses[index].name);
         }
 
         // add category names to projects
         // need this to list names in template
-        if (projectWithCampuses.category_ids) {
+        if (newProject.category_ids) {
           // get the index of each category in the categoryes array
-          const categoryIndices = projectWithCampuses.category_ids.map(id =>
+          const categoryIndices = newProject.category_ids.map(id =>
             objectArrayIndexOf($scope.categories, 'id', id));
 
           // get the name of each project
-          projectWithCampuses.category_names = categoryIndices.map(
+          newProject.category_names = categoryIndices.map(
             index => $scope.categories[index].name);
         }
 
         // add category names to projects
         // need this to list names in template
-        if (projectWithCampuses.discipline_ids) {
+        if (newProject.discipline_ids) {
           // get the index of each discipline in the disciplines array
-          const disciplineIndices = projectWithCampuses.discipline_ids.map(id =>
+          const disciplineIndices = newProject.discipline_ids.map(id =>
             objectArrayIndexOf($scope.disciplines, 'id', id));
 
           // get the name of each project
-          projectWithCampuses.discipline_names = disciplineIndices.map(
+          newProject.discipline_names = disciplineIndices.map(
             index => $scope.disciplines[index].name);
         }
 
-        return projectWithCampuses;
+        return newProject;
       });
     };
 
@@ -257,7 +255,7 @@ angular.module('app', [])
       const api = new Api('/projects');
       api.get().then((response) => {
         $scope.projects = response.data;
-        addCampusStuffToProjects();
+        addStuffToProjects();
       }, (e) => {
         console.warn(e);
         $scope.projects = [];
@@ -390,7 +388,7 @@ angular.module('app', [])
       SEARCH_API.post($scope.search).then((response) => {
         $scope.projects = response.data;
         if ($scope.projects.length > 0) {
-          addCampusStuffToProjects();
+          addStuffToProjects();
         }
       }, (e) => {
         console.warn(e);
@@ -437,44 +435,44 @@ angular.module('app', [])
     // };
 
     // edit existing post
-    const editPost = function (project) {
+    const editProject = function (project) {
       const api = new Api(`/project/${project.id}/edit`);
-      const projectWithNewCampusIds = angular.copy(project);
+      const editedProject = angular.copy(project);
 
       // convert people objects into strings
-      projectWithNewCampusIds.people = projectWithNewCampusIds.peopleObjects.map(person => `${person.name_first}--${person.name_last}`);
+      editedProject.people = editedProject.peopleObjects.map(person => `${person.name_first}--${person.name_last}`);
 
       // convert people strings into single string
-      projectWithNewCampusIds.people = projectWithNewCampusIds.people.join(';');
+      editedProject.people = editedProject.people.join(';');
 
       // convert tags string into array
-      projectWithNewCampusIds.tags = projectWithNewCampusIds.tagsString.split(/\s*,\s*/);
+      editedProject.tags = editedProject.tagsString.split(/\s*,\s*/);
 
       // add campuses to campus_ids if checked
-      projectWithNewCampusIds.campus_ids = [];
-      projectWithNewCampusIds.campuses.forEach((campus) => {
+      editedProject.campus_ids = [];
+      editedProject.campuses.forEach((campus) => {
         if (campus.checked) {
-          projectWithNewCampusIds.campus_ids.push(campus.id);
+          editedProject.campus_ids.push(campus.id);
         }
       });
 
       // add categories to category_ids if checked
-      projectWithNewCampusIds.category_ids = [];
-      projectWithNewCampusIds.categories.forEach((category) => {
+      editedProject.category_ids = [];
+      editedProject.categories.forEach((category) => {
         if (category.checked) {
-          projectWithNewCampusIds.category_ids.push(category.id);
+          editedProject.category_ids.push(category.id);
         }
       });
 
       // add disciplines to discipline_ids if checked
-      projectWithNewCampusIds.discipline_ids = [];
-      projectWithNewCampusIds.disciplines.forEach((discipline) => {
+      editedProject.discipline_ids = [];
+      editedProject.disciplines.forEach((discipline) => {
         if (discipline.checked) {
-          projectWithNewCampusIds.discipline_ids.push(discipline.id);
+          editedProject.discipline_ids.push(discipline.id);
         }
       });
 
-      api.put(projectWithNewCampusIds).then((response) => {
+      api.put(editedProject).then((response) => {
         resetForm();
       }, (e) => {
         console.warn(e);
@@ -489,13 +487,13 @@ angular.module('app', [])
         const projectWithNewImage = angular.copy(project);
         uploadBlob(project.imagedata).then((response) => {
           projectWithNewImage.image_ref = response.data.digest;
-          editPost(projectWithNewImage);
+          editProject(projectWithNewImage);
         }, (e) => {
           console.warn(e);
           window.alert('Image upload failed.');
         });
       } else {
-        editPost(project);
+        editProject(project);
       }
     };
 
