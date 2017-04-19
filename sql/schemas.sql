@@ -50,6 +50,7 @@ CREATE TABLE showcase.projects (
     year STRING,
     url STRING,
     campus_ids ARRAY(INTEGER),
+    category_ids ARRAY(INTEGER),
     tags ARRAY(STRING),
     image_ref STRING,
     people STRING INDEX USING FULLTEXT WITH (analyzer = 'myanalyzer')
@@ -59,7 +60,14 @@ CREATE TABLE showcase.projects (
 DROP TABLE IF EXISTS showcase.campuses;
 CREATE TABLE showcase.campuses (
   id INTEGER,
-  name STRING
+  name STRING INDEX USING FULLTEXT WITH (analyzer = 'myanalyzer')
+) WITH (number_of_replicas = 0);
+
+-- categories table
+DROP TABLE IF EXISTS showcase.categories;
+CREATE TABLE showcase.categories (
+  id INTEGER,
+  name STRING INDEX USING FULLTEXT WITH (analyzer = 'myanalyzer')
 ) WITH (number_of_replicas = 0);
 
 -- images blob table

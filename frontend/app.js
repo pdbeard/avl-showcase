@@ -82,6 +82,7 @@ angular.module('app', [])
       text: null,
       image_ref: null,
       campus_checkbox: [],
+      category_checkbox: [],
       tags: '',
       peopleObjects: [],
     };
@@ -90,6 +91,7 @@ angular.module('app', [])
 
     $scope.posts = [];
     $scope.campuses = [];
+    $scope.categories = [];
     $scope.projects = [];
     $scope.imagedata = null;
     $scope.formdata = angular.copy(EMPTY);
@@ -105,9 +107,10 @@ angular.module('app', [])
       // add a copy of the campuses array to each project
       // need this to manage state of checkboxes
       $scope.projects = $scope.projects.map((project) => {
-        // add campuses array to project
+        // add campuses and categories arrays to project
         const projectWithCampuses = angular.copy(project);
         projectWithCampuses.campuses = angular.copy($scope.campuses);
+        projectWithCampuses.categories = angular.copy($scope.categories);
 
         // convert tags array to string
         projectWithCampuses.tagsString = projectWithCampuses.tags.join();
@@ -136,6 +139,17 @@ angular.module('app', [])
           return campusWithChecked;
         });
 
+        // set checked = true if the category is in the category_ids array
+        projectWithCampuses.categories = projectWithCampuses.categories.map((category) => {
+          const categoryWithChecked = angular.copy(category);
+          if (project.category_ids &&
+              project.category_ids.find(id => id === categoryWithChecked.id)) {
+            categoryWithChecked.checked = true;
+          }
+
+          return categoryWithChecked;
+        });
+
         // add campus names to projects
         // need this to list names in template
         if (projectWithCampuses.campus_ids) {
@@ -146,6 +160,18 @@ angular.module('app', [])
           // get the name of each project
           projectWithCampuses.campus_names = campusIndices.map(
             index => $scope.campuses[index].name);
+        }
+
+        // add category names to projects
+        // need this to list names in template
+        if (projectWithCampuses.category_ids) {
+          // get the index of each category in the categoryes array
+          const categoryIndices = projectWithCampuses.category_ids.map(id =>
+            objectArrayIndexOf($scope.categories, 'id', id));
+
+          // get the name of each project
+          projectWithCampuses.category_names = categoryIndices.map(
+            index => $scope.categories[index].name);
         }
 
         return projectWithCampuses;
@@ -172,6 +198,19 @@ angular.module('app', [])
       }, (e) => {
         console.warn(e);
         $scope.campuses = [];
+      });
+    };
+
+    const loadCategories = function () {
+      const api = new Api('/categories');
+      api.get().then((response) => {
+        $scope.categories = response.data;
+
+        // add campus info to the form for checkboxes
+        $scope.formdata.category_checkbox = angular.copy($scope.categories);
+      }, (e) => {
+        console.warn(e);
+        $scope.categories = [];
       });
     };
 
@@ -202,6 +241,9 @@ angular.module('app', [])
       // load campus lookup table
       loadCampuses();
 
+      // load category lookup table
+      loadCategories();
+
       // load existing projects
       loadProjects();
     };
@@ -210,6 +252,7 @@ angular.module('app', [])
     const resetForm = function () {
       $scope.formdata = angular.copy(EMPTY);
       $scope.formdata.campus_checkbox = angular.copy($scope.campuses);
+      $scope.formdata.category_checkbox = angular.copy($scope.categories);
 //      $scope.formdata.user.location = angular.copy(locationCache);
       $scope.imagedata = null;
     };
@@ -260,6 +303,14 @@ angular.module('app', [])
       $scope.formdata.campus_checkbox.forEach((checkbox) => {
         if (checkbox.checked) {
           $scope.formdata.campus_ids.push(checkbox.id);
+        }
+      });
+
+      // add categories to category_ids if checked
+      $scope.formdata.category_ids = [];
+      $scope.formdata.category_checkbox.forEach((checkbox) => {
+        if (checkbox.checked) {
+          $scope.formdata.category_ids.push(checkbox.id);
         }
       });
 
@@ -356,6 +407,14 @@ angular.module('app', [])
         }
       });
 
+      // add categories to category_ids if checked
+      projectWithNewCampusIds.category_ids = [];
+      projectWithNewCampusIds.categories.forEach((category) => {
+        if (category.checked) {
+          projectWithNewCampusIds.category_ids.push(category.id);
+        }
+      });
+
       api.put(projectWithNewCampusIds).then((response) => {
         resetForm();
       }, (e) => {
@@ -365,7 +424,7 @@ angular.module('app', [])
     };
 
 
-    // create new project
+    // edit project
     this.submitEditForm = function (project) {
       if (project.imagedata) {
         const projectWithNewImage = angular.copy(project);

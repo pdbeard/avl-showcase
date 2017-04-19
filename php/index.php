@@ -138,15 +138,16 @@ $app->get('/', function() use ($app)
  */
 $app->post('/projects', function() use ($app)
 {
-    $data        = json_decode($app->request->getBody());
-    $title       = $data->title;
-    $description = $data->description;
-    $url         = $data->url;
-    $year        = $data->year;
-    $campus_ids  = $data->campus_ids;
-    $tags        = $data->tags;
-    $image_ref   = $data->image_ref;
-    $people      = $data->people;
+    $data          = json_decode($app->request->getBody());
+    $title         = $data->title;
+    $description   = $data->description;
+    $url           = $data->url;
+    $year          = $data->year;
+    $campus_ids    = $data->campus_ids;
+    $category_ids  = $data->category_ids;
+    $tags          = $data->tags;
+    $image_ref     = $data->image_ref;
+    $people        = $data->people;
 
     // error_log(print_r($people, TRUE) . " ttt\n", 3, "/var/tmp/my-errors.log");
     // error_log($people[0]->name_first . " fff\n", 3, "/var/tmp/my-errors.log");
@@ -167,6 +168,9 @@ $app->post('/projects', function() use ($app)
     }else if (empty($campus_ids)) {
         $app->argument_required('Argument "campus_ids" is required');
         return;
+    }else if (empty($category_ids)) {
+        $app->argument_required('Argument "category_ids" is required');
+        return;
     }else if (empty($tags)) {
         $app->argument_required('Argument "tags" is required');
         return;
@@ -182,9 +186,9 @@ $app->post('/projects', function() use ($app)
     $now       = time() * 1000;
     $likeCount = 0;
     $qry       = $app->conn->prepare("INSERT INTO showcase.projects (
-      id, title, description, url, year, campus_ids, tags, image_ref, people
+      id, title, description, url, year, campus_ids, category_ids, tags, image_ref, people
     ) VALUES (
-      ?, ?, ?, ?, ?, ?, ?, ?, ?
+      ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     )");
     $qry->bindParam(1, $id);
     $qry->bindParam(2, $title);
@@ -192,9 +196,10 @@ $app->post('/projects', function() use ($app)
     $qry->bindParam(4, $url);
     $qry->bindParam(5, $year);
     $qry->bindParam(6, $campus_ids);
-    $qry->bindParam(7, $tags);
-    $qry->bindParam(8, $image_ref);
-    $qry->bindParam(9, $people);
+    $qry->bindParam(7, $category_ids);
+    $qry->bindParam(8, $tags);
+    $qry->bindParam(9, $image_ref);
+    $qry->bindParam(10, $people);
     $state = $qry->execute();
 
 
@@ -249,15 +254,16 @@ $app->post('/projects', function() use ($app)
  */
 $app->put('/project/:id/edit', function($id) use ($app)
 {
-    $data        = json_decode($app->request->getBody());
-    $title       = $data->title;
-    $description = $data->description;
-    $url         = $data->url;
-    $year        = $data->year;
-    $campus_ids  = $data->campus_ids;
-    $tags        = $data->tags;
-    $image_ref   = $data->image_ref;
-    $people      = $data->people;
+    $data          = json_decode($app->request->getBody());
+    $title         = $data->title;
+    $description   = $data->description;
+    $url           = $data->url;
+    $year          = $data->year;
+    $campus_ids    = $data->campus_ids;
+    $category_ids  = $data->category_ids;
+    $tags          = $data->tags;
+    $image_ref     = $data->image_ref;
+    $people        = $data->people;
 
     // error_log($campus_ids[1] . "\n", 3, "/var/tmp/my-errors.log");
 
@@ -276,6 +282,9 @@ $app->put('/project/:id/edit', function($id) use ($app)
     }else if (empty($campus_ids)) {
         $app->argument_required('Argument "campus_ids" is required');
         return;
+    }else if (empty($category_ids)) {
+        $app->argument_required('Argument "category_ids" is required');
+        return;
     }else if (empty($tags)) {
         $app->argument_required('Argument "tags" is required');
         return;
@@ -288,17 +297,18 @@ $app->put('/project/:id/edit', function($id) use ($app)
     }
 
     $qry = $app->conn->prepare("UPDATE showcase.projects
-                                SET title = ?, description =?, url=?, year=?, campus_ids=?, tags=?, image_ref=?, people=?
+                                SET title = ?, description =?, url=?, year=?, campus_ids=?, category_ids=?, tags=?, image_ref=?, people=?
                                 WHERE id=?");
     $qry->bindParam(1, $title);
     $qry->bindParam(2, $description);
     $qry->bindParam(3, $url);
     $qry->bindParam(4, $year);
     $qry->bindParam(5, $campus_ids);
-    $qry->bindParam(6, $tags);
-    $qry->bindParam(7, $image_ref);
-    $qry->bindParam(8, $people);
-    $qry->bindParam(9, $id);
+    $qry->bindParam(6, $category_ids);
+    $qry->bindParam(7, $tags);
+    $qry->bindParam(8, $image_ref);
+    $qry->bindParam(9, $people);
+    $qry->bindParam(10, $id);
     $state = $qry->execute();
 })->name('project-put');
 
@@ -393,6 +403,18 @@ $app->get('/campuses', function() use ($app)
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
     $app->success(200, $result);
 })->name('campuses-get');
+
+/**
+ * Get a list of all categories.
+ */
+$app->get('/categories', function() use ($app)
+{
+    $qry = $app->conn->prepare("SELECT c.*
+            FROM showcase.categories AS c");
+    $qry->execute();
+    $result = $qry->fetchAll(PDO::FETCH_ASSOC);
+    $app->success(200, $result);
+})->name('categories-get');
 
 
 
@@ -536,6 +558,16 @@ $app->post('/search', function() use ($app)
     $result_campus = $qry_campus->fetchAll(PDO::FETCH_ASSOC);
     $campus_id = $result_campus[0]['id'] ? $result_campus[0]['id'] : -1; // use -1 if no id found
 
+    // then check if input matches a category
+    $qry_category = $app->conn->prepare("SELECT c.id, c._score
+            FROM showcase.categories AS c
+            WHERE match(c.name, ?)
+            ORDER BY c._score DESC");
+    $qry_category->bindParam(1, $data->query_string);
+    $qry_category->execute();
+    $result_category = $qry_category->fetchAll(PDO::FETCH_ASSOC);
+    $category_id = $result_category[0]['id'] ? $result_category[0]['id'] : -1; // use -1 if no id found
+
     // error_log($campus_id . "\n", 3, "/var/tmp/my-errors.log");
 
     // lastly, do final query
@@ -544,11 +576,12 @@ $app->post('/search', function() use ($app)
             WHERE match((p.title, p.description, p.year, p.people), ?)
             OR ? = any(p.tags)
             OR ? = any(p.campus_ids)
+            OR ? = any(p.category_ids)
             ORDER BY _score DESC");
     $qry->bindParam(1, $data->query_string);
     $qry->bindParam(2, $data->query_string);
     $qry->bindParam(3, $campus_id);
-    $qry->bindParam(4, $data->query_string);
+    $qry->bindParam(4, $category_id);
     $qry->execute();
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
     $app->success(200, $result);

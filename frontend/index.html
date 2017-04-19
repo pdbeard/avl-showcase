@@ -110,6 +110,18 @@
                   </label>
                 </div>
               </div>
+              <div class="row">
+                <div class="form-group form-group col-lg-12">
+                  <label>Category</label>
+                  <br>
+                  <label class="checkbox-inline" ng-repeat="category in categories">
+                    <input type="checkbox"
+                      id="inlineCheckbox2"
+                      value="{{category.id}}"
+                      ng-model="formdata.category_checkbox[$index].checked">{{category.name}}
+                  </label>
+                </div>
+              </div>
                 <div class="form-group">
                   <label for="title">Tags</label>
                   <input type="text"
