@@ -7,6 +7,13 @@ Cream #EDEBEB
 
 
 /* Space out content a bit */
+
+.crimson{
+  background-color:#990000;
+  padding:2em 0em 1em 6em;
+}
+.quote{}
+
 body {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -22,7 +29,7 @@ body {
 
 /* Custom page header */
 .header {
-  padding-bottom: 20px;
+  /*padding-bottom: 20px;*/
   border-bottom: 1px solid #e5e5e5;
 }
 /* Make the masthead heading the same height as the navigation */
@@ -72,11 +79,47 @@ form {
 
 /* Supporting marketing content */
 .marketing {
-  margin: 40px 0;
+  /*margin: 150px 0;*/
+}
+
+.push-down{
+  margin-top:200px;
 }
 .marketing p + h4 {
   margin-top: 28px;
 }
+
+.project-details {
+    position:relative;
+    max-height: 100%;
+    max-width:100%;
+    left:0;
+    right:0;
+    top:30%;
+    bottom:0;
+    margin:auto;
+    overflow-y:auto;
+    z-index: 100;
+    background-color:#fefefa;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+    
+    border:2px solid#e5e5e5;
+}
+
+
+  .header {
+    background-color: white;
+    left:0;
+    top:0;
+    position: fixed;
+    z-index: 40;
+    margin-bottom: 30px;
+    width:100%;
+  }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
@@ -88,7 +131,7 @@ form {
     padding-left: 0;
   }
   /* Space out the masthead */
-  .header {
+  /*.header {
     background-color: white;
     left:0;
     top:0;
@@ -96,10 +139,15 @@ form {
     z-index: 40;
     margin-bottom: 30px;
     width:100%;
-  }
+  }*/
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+  .project-details {
+    max-width:60%;
+    max-height:50%;
+    border:none;
   }
 }
 
@@ -122,24 +170,6 @@ form {
 }
 
 
-.project-details {
-    position:fixed;
-    max-height: 50%;
-    max-width:50%;
-    left:0;
-    right:0;
-    top:0;
-    bottom:0;
-    margin:auto;
-    overflow-y:auto;
-    z-index: 100;
-    background-color:#fefefa;
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    -ms-transition: all 1s ease;
-    transition: all 1s ease;
-}
 
 .project-details.hidden {
     max-height:0%;
@@ -171,9 +201,67 @@ form {
 
 .image-thumbnail{
   max-width:100%;
+  /*max-height:100%;*/
+
   height:auto;
   padding-left:0px;
 }
+
+.addblock{
+  /*position:static;
+  display:block;*/
+  /*margin-bottom:0px;*/
+  /*float:none;*/
+  /*text-align:center;*/
+  /*white-space:no-wrap;*/
+
+  padding-left:0px;
+  padding-right:0px;
+  /*padding-top:3vh;*/
+
+  /*width:inherit;*/
+  /*width:100%;*/
+}
+.addblock:before{
+  /*content:'';
+  display:inline-block;
+  height:100%;
+  vertical-align:middle;
+  margin-right:-.25*/
+}
+
+
+.image-thumbnail-detailed{
+  /*max-width:100%;*/
+  /*max-height:100%;*/
+  /*display:block;*/
+
+  /*position:static;*/
+  
+  /*padding-top:2.3vw;*/
+  /*margin-top:2.3vw;*/
+  
+  /*margin:auto;*/
+  /*position:absolute;*/
+  /*top:0; left:0; bottom: 0; right: 0;*/
+
+  /*max-height:100%;*/
+  width:100%;
+   /*vertical-align: middle;*/
+
+  /*padding-right:0px !important;*/
+  /*padding-left:0px !important; */
+
+  
+
+}
+
+
+col-centered{
+  float:none;
+  margin:0 auto;
+}
+
 
 
 .shadow-1 {
