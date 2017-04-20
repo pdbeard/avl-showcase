@@ -1,8 +1,13 @@
+
+
 <div class="stop-clicks"  ng-class="{ 'hidden': !showDetails }">
+
+
+
     <div class="row shadow-3 project-details" ng-class="{ 'hidden': !showDetails }">
-        <div class = "col col-sm-5">
-           <img ng-if="!project.image_ref" src="assets/160x120.png" alt="" class="image-thumbnail">
-           <img ng-if="project.image_ref" ng-src="{{ apiHost }}/image/{{ project.image_ref }}" class="image-thumbnail">
+        <div class = "col col-sm-5 addblock">
+           <img ng-if="!project.image_ref" src="assets/160x120.png" alt="" class="image-thumbnail-detailed">
+           <img ng-if="project.image_ref" ng-src="{{ apiHost }}/image/{{ project.image_ref }}" class="image-thumbnail-detailed">
         </div>
         <div class ="col col-sm-7">
             <h1>
@@ -28,6 +33,7 @@
             <!--<p>ID: <span>{{ project.id }}</span></p>-->
         </div>
     </div><!--END PROJECT DETAILS-->
+
 </div>
 
 
@@ -121,5 +127,7 @@
                 class="btn btn-sm btn-danger"
                 ng-click="guestbookCtlr.deletePost(project)">Delete</button>
         </p>
+
     </div><!--admin show-->
 </div>
+

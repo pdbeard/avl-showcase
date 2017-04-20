@@ -5,28 +5,90 @@
     <meta charset="utf-8" />
     <title>AVL Showcase Prototype</title>
     <link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
+    <!--<link type="text/css" href="//assets.iu.edu/web/3.x/css/iu-framework.min.css">-->
+    <link type="text/css" rel ="stylesheet" href="https://assets.iu.edu/brand/3.x/brand.css"/>
+    <link type="text/css" rel ="stylesheet" href="https://assets.iu.edu/brand/legacy/brand.css"/>
+    
+    
+    <!--  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    -->
+
     <link type="text/css" rel="stylesheet" href="custom.css" />
     <script type="application/javascript" src="angular.js"></script>
     <script type="application/javascript" src="app.js"></script>
   </head>
   <body>
 
+
     <div class="container">
+      
       <div ng-controller="GuestbookController as guestbookCtlr">
         <div class="header clearfix">
-          <nav>
-            <ul class="nav nav-pills pull-right">
-            <button type="button"
-              class="btn btn-sm btn-warning"
-              ng-click="guestbookCtrl.isAuthorized.admin = !guestbookCtrl.isAuthorized.admin">Admin Mode</button>
-            </ul>
-          </nav>
-          <h3 class="">AVL Showcase</h3>
-        </div>
+          <div id="branding-bar-v1" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
+            <div class="bar">
+              <div class="wrapper">
+                <p class="campus">
+                  <a href="https://www.indiana.edu" title="Indiana University Bloomington">
+                    <img src="//assets.iu.edu/brand/legacy/trident-large.png" height="73" width="64" alt="" />
+                    <span class="show-on-desktop" itemprop="name">Indiana University Bloomington</span>
+                    <span class="show-on-tablet" itemprop="name">Indiana University Bloomington</span>
+                    <span class="show-on-mobile" itemprop="name">IU Bloomington</span>
+                  </a>
+                </p>
+                <button type="button"
+                        class="btn btn-sm btn-warning"
+                        ng-click="guestbookCtrl.isAuthorized.admin = !guestbookCtrl.isAuthorized.admin">Admin Mode</button>
+  
+              </div>
+            </div>
+          </div>
+          <center><h1 class="">AVL Showcase</h1></center>
 
+              <div class="row crimson">
+                <div class="col col-sm-6 col-sm-offset-5">
+                  <form id="search-form" class="form-inline clearfix">
+                      <div class="form-group">
+                            <input type="text"
+                                  class="form-control"
+                                  id="query_string"
+                                  ng-model="search.query_string"
+                                  placeholder="Search projects" ></input>
+                            <button type="button" class="btn btn-danger"
+                                    ng-if="search.query_string.length > 0"
+                                    ng-click="guestbookCtlr.clearSearch()">x</button>
+                      </div>
+                  </form>
+                </div>
+              </div> <!--row-->
+                  <!--Alerts-->
+                  <div class= "row">
+                    <div class=" col col-sm-2 align-self-center alert alert-success"
+                          role="alert"  
+                          ng-show="showSuccessAlert">
+                      <button type="button" 
+                              class="close" 
+                              data-ng-click="showSuccessAlert = !showSuccessAlert" >×</button>
+                      <strong>Done!</strong> {{successTextAlert}}
+                    </div>
+                    <div class=" col align-self-center alert alert-danger"
+                          role="alert"  
+                          ng-show="showFailAlert">
+                      <button type="button" 
+                              class="close" 
+                              data-ng-click="showFailAlert = !showFailAlert" >×</button>
+                      <strong>Oh no!</strong> {{failTextAlert}}
+                    </div>
+                  </div>
+   
+        </div> <!--header-->
+<div class="push-down"></div>
         <div class="row marketing">
           <div class="col-lg-12">
-            <form id="search-form" class="form-inline clearfix">
+            <!--<form id="search-form" class="form-inline clearfix">
               <div class="form-group">
                 <input type="text"
                       class="form-control"
@@ -37,7 +99,7 @@
                         ng-if="search.query_string.length > 0"
                         ng-click="guestbookCtlr.clearSearch()">x</button>
               </div>
-            </form>
+            </form>-->
 
               <!--Add new item form-->
               <div ng-show="guestbookCtrl.isAuthorized.admin">
@@ -126,19 +188,31 @@
             <div class="alert alert-warning"
                 ng-if="projects.length === 0 && search.query_string.length > 0">No projects for search "{{ search.query_string }}" found.</div>
             <div class="post-list">
+            
+                    <div class="col-lg-12 post-item"
 
-                    <div class="col-lg-5 post-item"
                          id="project-{{ project.id }}"
-                         ng-repeat="project in projects track by project.id"
+                         ng-repeat="project in projects|limitTo:2 track by project.id"
                          ng-include="'project.html'"></div>
 
             </div>
           </div>
         </div>
       </div>
-      <footer class="footer">
-        <p>&copy; 2015-2016 <a href="https://crate.io">Crate.IO</a></p>
-      </footer>
     </div> <!-- /container -->
+    <footer id="footer" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
+        <div class="row pad">
+
+            <p class="tagline">Fulfilling <span>the</span> Promise</p>
+
+            <p class="signature">
+                <a href="https://www.iu.edu" class="signature-link">Indiana University</a>
+            </p>
+
+            <p class="copyright">
+            <a href="https://www.iu.edu/copyright/index.html">Copyright</a> &#169; 2017 <span class="line-break-small">The Trustees of <a href="https://www.iu.edu/" itemprop="url"><span itemprop="name">Indiana University</span></a></span><span class="hide-on-mobile"> | </span><span class="line-break"><a href="/privacy" id="privacy-policy-link">Privacy Notice</a> | <a href="https://accessibility.iu.edu/help" id="accessibility-link" title="Having trouble accessing this web page because of a disability? Visit this page for assistance.">Accessibility Help</a></span>
+            </p>
+        </div>
+    </footer>
   </body>
 </html>
