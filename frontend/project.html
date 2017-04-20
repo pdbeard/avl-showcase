@@ -19,12 +19,27 @@
 
             </h1>
             <p class="lead">{{ project.description }}</p>
-            <p>Campus: {{project.campus_id}}</p>
+            <p>
+                <ng-pluralize count="project.peopleObjects.length"
+                              when="{1: 'Person', 'other': 'People', 'NaN': 'error, yo!'}"></ng-pluralize>:
+                <span ng-repeat="person in project.peopleObjects">{{ person.name_first }} {{ person.name_last }}, </span>
+            </p>
             <p>
                 <ng-pluralize count="project.campus_names.length"
                               when="{1: 'Campus', 'other': 'Campuses', 'NaN': 'error, yo!'}"></ng-pluralize>:
-                <span ng-repeat="name in project.campus_names">{{ name }}, </span></p>
-            <p>URL: <span>{{ project.url }}</span></p>
+                <span ng-repeat="name in project.campus_names">{{ name }}, </span>
+            </p>
+            <p ng-if="project.category_names.length">
+                <ng-pluralize count="project.category_names.length"
+                              when="{1: 'Category', 'other': 'Categories', 'NaN': 'error, yo!'}"></ng-pluralize>:
+                <span ng-repeat="name in project.category_names">{{ name }}, </span>
+            </p>
+            <p ng-if="project.discipline_names.length">
+                <ng-pluralize count="project.discipline_names.length"
+                              when="{1: 'Discipline', 'other': 'Disciplines', 'NaN': 'error, yo!'}"></ng-pluralize>:
+                <span ng-repeat="name in project.discipline_names">{{ name }}, </span>
+            </p>
+            <p>URL: <a ng-href="{{project.url}}" target="_blank">{{ project.url }}</a></p>
             <p ng-if="project.tags.length">
                 <ng-pluralize count="project.tags.length"
                               when="{1: 'Tag', 'other': 'Tags', 'NaN': 'error, yo!'}"></ng-pluralize>:
@@ -47,8 +62,7 @@
             <h3>
                 <b>{{ project.title }}</b></h3>
             <small class="text-muted">{{ project.description | limitTo: 60 }}{{project.description.length > 20 ? '...' : ''}}</small>
-            <!--<p>Campus: {{project.campus_id}}</p>-->
-            <p>URL: <span>{{ project.url }}</span></p>
+            <p>URL: <a ng-href="{{project.url}}" target="_blank">{{ project.url }}</a></p>
         </div>
     </a>
 
@@ -86,6 +100,30 @@
                 </div>
             </div>
             <div class="row">
+              <div class="form-group col-lg-12">
+                <label>People</label>
+                <button class="btn btn-default"
+                  ng-click="project.peopleObjects.push({name_first: '', name_last: ''})">Add person</button>
+              </div>
+            </div>
+            <div class="row" ng-repeat="person in project.peopleObjects">
+              <div class="form-group form-group col-lg-6">
+                <label for="year">First</label>
+                <input class="form-control"
+                          id="year"
+                          ng-model="person.name_first"
+                          placeholder="First name" />
+              </div>
+              <div class="form-group form-group col-lg-6">
+                <label for="year">Last</label>
+                <input type="text"
+                          class="form-control"
+                          id="url"
+                          ng-model="person.name_last"
+                          placeholder="Last name" />
+              </div>
+            </div>
+            <div class="row">
                 <div class="form-group form-group col-lg-12">
                     <label>Campus</label>
                     <br>
@@ -95,6 +133,32 @@
                             id="inlineCheckbox1"
                             value="{{campus.id}}"
                             ng-model="project.campuses[$index].checked">{{campus.name}}
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group form-group col-lg-12">
+                    <label>Category</label>
+                    <br>
+                    <label class="checkbox-inline"
+                            ng-repeat="category in categories">
+                    <input type="checkbox"
+                            id="inlineCheckbox1"
+                            value="{{category.id}}"
+                            ng-model="project.categories[$index].checked">{{category.name}}
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group form-group col-lg-12">
+                    <label>Discipline</label>
+                    <br>
+                    <label class="checkbox-inline"
+                            ng-repeat="discipline in disciplines">
+                    <input type="checkbox"
+                            id="inlineCheckbox1"
+                            value="{{discipline.id}}"
+                            ng-model="project.disciplines[$index].checked">{{discipline.name}}
                     </label>
                 </div>
             </div>
