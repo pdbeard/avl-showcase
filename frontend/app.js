@@ -81,6 +81,7 @@ angular.module('app', [])
     $scope.failTextAlert ="Something went wrong!";
     $scope.showFailAlert = false;
 
+    $scope.showDetails =false;
 
 
     const EMPTY = {

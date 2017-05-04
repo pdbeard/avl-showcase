@@ -17,6 +17,7 @@ Cream #EDEBEB
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+  overflow:auto;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -148,6 +149,13 @@ form {
     max-width:60%;
     max-height:50%;
     border:none;
+    opacity:100%;
+    visibility:visible;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
   }
 }
 
@@ -166,18 +174,45 @@ form {
     z-index:50;
 }
 .stop-clicks.hidden{
-
+    position:static;
+    z-index:-1000;
 }
 
 
 
-.project-details.hidden {
+.project-details-hidden {
     max-height:0%;
+    overflow:hidden;
+    visibility:hidden;
     -webkit-transition: all 1s ease;
     -moz-transition: all 1s ease;
     -o-transition: all 1s ease;
     -ms-transition: all 1s ease;
     transition: all 1s ease;
+}
+.add-project {
+    /*max-width:60%;*/
+    max-height:1000px;
+    border:none;
+
+    overflow:hidden;
+    visibility:visible;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
+  }
+.add-project-hidden {
+    overflow:hidden;
+    height:auto;
+    max-height:0;
+    visibility:hidden;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
 }
 
 
