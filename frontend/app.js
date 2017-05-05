@@ -313,7 +313,6 @@ angular.module('app', [])
 //      $scope.formdata.user.location = angular.copy(locationCache);
 
       $scope.imagedata = null;
-      $scope.showSuccessAlert = true;
     };
 
     const uploadBlob = function (blob) {
@@ -388,12 +387,15 @@ angular.module('app', [])
         }
         $scope.successTextAlert ="Project added";
         resetForm();
+
+        $scope.showSuccessAlert = true;
       }, (e) => {
         // console.warn(e);
         // window.alert('Creating the post failed.');
 
         $scope.failTextAlert ="Creating the project failed.";
         $scope.showFailAlert = true;
+        resetForm();
 
       });
     };
@@ -501,11 +503,14 @@ angular.module('app', [])
       api.put(editedProject).then((response) => {
         $scope.successTextAlert ="Project edited";
         resetForm();
+
+        $scope.showSuccessAlert = true; 
       }, (e) => {
         // console.warn(e);
         // window.alert('Editing the post failed.');
         $scope.failTextAlert ="Editing the post failed. ";
         $scope.showFailAlert = true;
+        resetForm();
       });
     };
 
@@ -552,3 +557,6 @@ angular.module('app', [])
     // initialize controller
     init();
   });
+
+
+  
