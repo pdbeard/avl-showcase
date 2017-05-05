@@ -190,12 +190,24 @@ form {
     -ms-transition: all 1s ease;
     transition: all 1s ease;
 }
+.bring-forward{
+  z-index:150;
+}
 .add-project {
     /*max-width:60%;*/
-    max-height:1000px;
-    border:none;
-
-    overflow:hidden;
+    max-height:50%;
+    max-width:50vw;
+    border: 3px solid black;
+    padding:10px;
+    left:0;
+    right:0;
+    top:20%;
+    bottom:0;
+    margin:auto;
+    position:relative;
+    background-color:white;
+    z-index:101;
+    overflow-y:auto;
     visibility:visible;
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
@@ -207,6 +219,8 @@ form {
     overflow:hidden;
     height:auto;
     max-height:0;
+     max-width:50vw;
+     margin:auto;
     visibility:hidden;
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;

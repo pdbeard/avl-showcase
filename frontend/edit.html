@@ -1,95 +1,105 @@
+<div class="form-group">
+  <label for="title">Title</label>
+  <input type="text" class="form-control" id="title" ng-model="formdata.title" placeholder="Enter the title" />
+</div>
+<div class="form-group">
+  <label for="text">Project Description</label>
+  <textarea class="form-control" id="description" rows="4" ng-model="formdata.description" placeholder="Enter a short description of the project"></textarea>
+</div>
+<div class="row">
+  <div class="form-group form-group col-lg-6">
+    <label for="year">Year</label>
+    <input class="form-control" id="year" ng-model="formdata.year" placeholder="Enter year as YYYY" />
+  </div>
+  <div class="form-group form-group col-lg-6">
+    <label for="year">URL</label>
+    <input type="text" class="form-control" id="url" ng-model="formdata.url;" placeholder="Enter the project page URL" />
+  </div>
+</div>
+<div class="row">
+  <div class="form-group col-lg-12">
+    <label>People</label>
+    <button class="btn btn-default" ng-click="formdata.peopleObjects.push({name_first: '', name_last: ''})">Add person</button>
+  </div>
+</div>
+<div class="row" ng-repeat="person in formdata.peopleObjects">
+  <div class="form-group form-group col-lg-6">
+    <label for="year">First</label>
+    <input class="form-control" id="year" ng-model="person.name_first" placeholder="First name" />
+  </div>
+  <div class="form-group form-group col-lg-6">
+    <label for="year">Last</label>
+    <input type="text" class="form-control" id="url" ng-model="person.name_last" placeholder="Last name" />
+  </div>
+</div>
+<div class="row">
 
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" class="form-control" id="title" ng-model="formdata.title" placeholder="Enter the title" />
-  </div>
-  <div class="form-group">
-    <label for="text">Project Description</label>
-    <textarea class="form-control" id="description" rows="4" ng-model="formdata.description" placeholder="Enter a short description of the project"></textarea>
-  </div>
-  <div class="row">
-    <div class="form-group form-group col-lg-6">
-      <label for="year">Year</label>
-      <input class="form-control" id="year" ng-model="formdata.year" placeholder="Enter year as YYYY" />
-    </div>
-    <div class="form-group form-group col-lg-6">
-      <label for="year">URL</label>
-      <input type="text" class="form-control" id="url" ng-model="formdata.url;" placeholder="Enter the project page URL" />
-    </div>
-  </div>
-  <div class="row">
-    <div class="form-group col-lg-12">
-      <label>People</label>
-      <button class="btn btn-default" ng-click="formdata.peopleObjects.push({name_first: '', name_last: ''})">Add person</button>
-    </div>
-  </div>
-  <div class="row" ng-repeat="person in formdata.peopleObjects">
-    <div class="form-group form-group col-lg-6">
-      <label for="year">First</label>
-      <input class="form-control" id="year" ng-model="person.name_first" placeholder="First name" />
-    </div>
-    <div class="form-group form-group col-lg-6">
-      <label for="year">Last</label>
-      <input type="text" class="form-control" id="url" ng-model="person.name_last" placeholder="Last name" />
-    </div>
-  </div>
-  <div class="row">
-    <div class="form-group form-group col-lg-12">
-        <div class="btn-group">
-  <button class="btn btn-primary">Checked option</button>
+
+
+  <!--<div class="btn-group">
+  <button class="btn btn-primary">Campus</button>
   <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
     <ul class="dropdown-menu">
-      <li><input type="checkbox" id="ID" name="NAME" value="VALUE"><label for="ID">Label</label></li>
-      <!-- Other items -->
-    </ul>
-</div>
-      <label>Campus</label>
-      <br>
-      <label class="checkbox-inline" ng-repeat="campus in campuses">
+      <li  ng-repeat="campus in campuses">
+          <input type="checkbox"
+                      id="{{campus.id}}"
+                      value="{{campus.id}}"
+                      ng-model="formdata.campus_checkbox[$index].checked">
+          <label for="{{campus.id}}">{{campus.name}}</label>
+    </li>
+ </ul>
+</div>-->
+
+
+  <div class="form-group form-group col-lg-12">
+
+    <label>Campus</label>
+    <br>
+    <label class="checkbox-inline" ng-repeat="campus in campuses">
                     <input type="checkbox"
                       id="inlineCheckbox1"
                       value="{{campus.id}}"
                       ng-model="formdata.campus_checkbox[$index].checked">{{campus.name}}
                   </label>
-    </div>
   </div>
-  <div class="row">
-    <div class="form-group form-group col-lg-12">
-      <label>Category</label>
-      <br>
-      <label class="checkbox-inline" ng-repeat="category in categories">
+</div>
+<div class="row">
+  <div class="form-group form-group col-lg-12">
+    <label>Category</label>
+    <br>
+    <label class="checkbox-inline" ng-repeat="category in categories">
                     <input type="checkbox"
                       id="inlineCheckbox2"
                       value="{{category.id}}"
                       ng-model="formdata.category_checkbox[$index].checked">{{category.name}}
                   </label>
-    </div>
   </div>
-  <div class="row">
-    <div class="form-group form-group col-lg-12">
-      <label>Discipline</label>
-      <br>
-      <label class="checkbox-inline" ng-repeat="discipline in disciplines">
+</div>
+<div class="row">
+  <div class="form-group form-group col-lg-12">
+    <label>Discipline</label>
+    <br>
+    <label class="checkbox-inline" ng-repeat="discipline in disciplines">
                     <input type="checkbox"
                       id="inlineCheckbox2"
                       value="{{discipline.id}}"
                       ng-model="formdata.discipline_checkbox[$index].checked">{{discipline.name}}
                   </label>
-    </div>
   </div>
-  <div class="form-group">
-    <label for="title">Tags</label>
-    <input type="text" class="form-control" id="tags" ng-model="formdata.tags" placeholder="Enter tags separated by commas" />
+</div>
+<div class="form-group">
+  <label for="title">Tags</label>
+  <input type="text" class="form-control" id="tags" ng-model="formdata.tags" placeholder="Enter tags separated by commas" />
+</div>
+<div class="row">
+  <div class="form-group col-lg-6">
+    <label for="blob">Add an Image</label>
+    <input type="file" id="blob" accept="image/*" blob="imagedata" />
   </div>
-  <div class="row">
-    <div class="form-group col-lg-6">
-      <label for="blob">Add an Image</label>
-      <input type="file" id="blob" accept="image/*" blob="imagedata" />
-    </div>
 
-    <div class="form-group col-lg-6">
-      <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="guestbookCtlr.submitForm()">Submit
+  <div class="form-group col-lg-6">
+    <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="guestbookCtlr.submitForm()">Submit
                     </button>
-    </div>
   </div>
+</div>
 <!--End Add new item-->
