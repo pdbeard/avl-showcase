@@ -25,6 +25,7 @@
   <link type="text/css" rel="stylesheet" href="custom.css" />
   <script type="application/javascript" src="angular.js"></script>
   <script type="application/javascript" src="app.js"></script>
+  
 </head>
 
 <body>
@@ -59,13 +60,12 @@
           <div class="col col-sm-6 col-sm-offset-5">
             <form id="search-form" class="form-inline clearfix">
               <div class="form-group">
-                <input type="text" class="form-control" id="query_string" ng-model="search.query_string" placeholder="Search projects"></input>
+                <input type="text" class="form-control" id="query_string" ng-model="search.query_string" placeholder="Search projects" />
                 <button type="button" class="btn btn-danger" ng-if="search.query_string.length > 0" ng-click="guestbookCtlr.clearSearch()">x</button>
               </div>
             </form>
           </div>
-        </div>
-        <!--row-->
+        </div><!--row-->
         <!--Alerts-->
         <div class="row">
           <div class=" col col-sm-2 col-sm-offset-5 alert alert-success" role="alert" ng-show="showSuccessAlert">
@@ -81,139 +81,173 @@
       </div>
       <!--header-->
       <div class="push-down"></div>
-
       <div class="row marketing">
-
         <div class="stop-clicks" ng-class="{ 'hidden': !addProject }">
           <div ng-class="addProject ? 'add-project' :'add-project-hidden'">
-            <div class="row">
-              <h1 class="col-lg-6">Add New Project</h1>
-              <button type="button" class="col-lg-1 col-lg-offset-5 btn btn-sm btn-danger" ng-click="addProject =! addProject">X</button>
-            </div>
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" class="form-control" id="title" ng-model="formdata.title" placeholder="Enter the title" />
-            </div>
-            <div class="form-group">
-              <label for="text">Project Description</label>
-              <textarea class="form-control" id="description" rows="4" ng-model="formdata.description" placeholder="Enter a short description of the project"></textarea>
-            </div>
-            <div class="row">
-              <div class="form-group form-group col-lg-6">
-                <label for="year">Year</label>
-                <input class="form-control" id="year" ng-model="formdata.year" placeholder="Enter year as YYYY" />
+            <form name="mainForm" class="form-horizontal" novalidate>
+              <div class="row">
+                <h1 class="col-sm-6">Add New Project</h1>
+                <button type="button" class="col-lg-1 col-lg-offset-5 btn btn-sm btn-danger" ng-click="addProject =! addProject">X</button>
               </div>
-              <div class="form-group form-group col-lg-6">
-                <label for="year">URL</label>
-                <input type="text" class="form-control" id="url" ng-model="formdata.url;" placeholder="Enter the project page URL" />
+              <div class="form-group">
+                <label class="col-sm-1 control-label">Title</label>
+                <div class="col-sm-5">
+                  <input  type = "text"
+                          class = "form-control"
+                          id="title"
+                          name = "uTitle"
+                          ng-model = "formdata.title"
+                          required="">
+                  <div ng-show="mainForm.$submitted || mainForm.uTitle.$touched">
+                    <div ng-show="mainForm.uTitle.$error.required">Please choose a title.</div>
+                  </div>
+                </div>
+
+
+                <div>
+                  <div class="btn-group">
+                    <button class="btn btn-primary">Campus</button>
+                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li ng-repeat="campus in campuses">
+                        <input type="checkbox" id="{{campus.id}}" value="{{campus.id}}" ng-model="formdata.campus_checkbox[$index].checked">
+                        <label for="{{campus.id}}">{{campus.name}}</label>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="btn-group">
+                    <button class="btn btn-primary">Category</button>
+                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li ng-repeat="category in categories">
+                        <input type="checkbox" id="{{cateogry.id}}" value="{{category.id}}" ng-model="formdata.category_checkbox[$index].checked">
+                        <label for="{{category.id}}">{{category.name}}</label>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="btn-group">
+                    <button class="btn btn-primary">Discipline -------------------------------------------------- </button>
+                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li ng-repeat="discipline in disciplines">
+                        <input type="checkbox" id="{{discipline.id}}" value="{{discipline.id}}" ng-model="formdata.discipline_checkbox[$index].checked">
+                        <label for="{{discipline.id}}">{{discipline.name}}</label>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+
               </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-lg-12">
-                <label>People</label>
+              <div class="form-group">
+                <label class="col-sm-1 control-label">Project Description</label>
+                <div class ="col-sm-10">
+                  <textarea class="form-control" id="description" rows="4" ng-model="formdata.description" name="uDescription" placeholder="Enter a short description of the project"></textarea>
+                  <div ng-show="mainForm.$submitted || mainForm.uDescription.$touched">
+                    <div ng-show="mainForm.uDescription.$error.required">Please type a description.</div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <label class="col-sm-1 control-label">Year</label>
+                <div class="col-sm-10">
+                  <input  type = "text"
+                          class = "form-control"
+                          id="year"
+                          name = "uYear"
+                          ng-model = "formdata.year"
+                          placeholder="Enter year as YYYY"
+                          required="">
+                  <div ng-show="mainForm.$submitted || mainForm.uYear.$touched">
+                    <div ng-show="mainForm.uYear.$error.required">Please choose a year.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-1 control-label">URL</label>
+                <div class="col-sm-10">
+                  <input  type = "text"
+                          class = "form-control"
+                          id="URL"
+                          name = "uURL"
+                          ng-model = "formdata.URL"
+                          placeholder="Enter the project page URL"
+                          required="">
+                  <div ng-show="mainForm.$submitted || mainForm.uURL.$touched">
+                    <div ng-show="mainForm.uURL.$error.required">Please share a URL.</div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="form-group">
+                <label class="col-sm-1 control-label">People</label>
                 <button class="btn btn-default" ng-click="formdata.peopleObjects.push({name_first: '', name_last: ''})">Add person</button>
               </div>
-            </div>
-            <div class="row" ng-repeat="person in formdata.peopleObjects">
-              <div class="form-group form-group col-lg-6">
-                <label for="year">First</label>
-                <input class="form-control" id="year" ng-model="person.name_first" placeholder="First name" />
-              </div>
-              <div class="form-group form-group col-lg-6">
-                <label for="year">Last</label>
-                <input type="text" class="form-control" id="url" ng-model="person.name_last" placeholder="Last name" />
-              </div>
-            </div>
-
-
-            <div class="form-group form-group col-lg-12">
-              <!--
-              <div class="form-group form-group col-lg-12">
-
-                <label>Campus</label>
-                <br>
-                <label class="checkbox-inline" ng-repeat="campus in campuses">
-                                <input type="checkbox"
-                                  id="inlineCheckbox1"
-                                  value="{{campus.id}}"
-                                  ng-model="formdata.campus_checkbox[$index].checked">{{campus.name}}
-                              </label>
-              </div>
-              -->
-              <div class="btn-group">
-                <button class="btn btn-primary">Campus</button>
-                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li ng-repeat="campus in campuses">
-                    <input type="checkbox" id="{{campus.id}}" value="{{campus.id}}" ng-model="formdata.campus_checkbox[$index].checked">
-                    <label for="{{campus.id}}">{{campus.name}}</label>
-                  </li>
-                </ul>
-              </div>
-              <div class="btn-group">
-                <button class="btn btn-primary">Category</button>
-                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li ng-repeat="category in categories">
-                    <input type="checkbox" id="{{cateogry.id}}" value="{{category.id}}" ng-model="formdata.category_checkbox[$index].checked">
-                    <label for="{{category.id}}">{{category.name}}</label>
-                  </li>
-                </ul>
-              </div>
-              <div class="btn-group">
-                <button class="btn btn-primary">Discipline -------------------------------------------------- </button>
-                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="false"><span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li ng-repeat="discipline in disciplines">
-                    <input type="checkbox" id="{{discipline.id}}" value="{{discipline.id}}" ng-model="formdata.discipline_checkbox[$index].checked">
-                    <label for="{{discipline.id}}">{{discipline.name}}</label>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="title">Tags</label>
-              <input type="text" class="form-control" id="tags" ng-model="formdata.tags" placeholder="Enter tags separated by commas" />
-            </div>
-            <div class="row">
-              <div class="form-group col-lg-6">
-                <label for="blob">Add an Image</label>
-                <input type="file" id="blob" accept="image/*" blob="imagedata" />
+              <div class="form-group" ng-repeat="person in formdata.peopleObjects">
+                <label class="col-sm-2 control-label">First</label>
+                <div class="col-sm-4">
+                  <input class="form-control" id="first-name" ng-model="person.name_first" name = "uFirstname" placeholder="First name" />
+                  <div ng-show="mainForm.$submitted || mainForm.uFirstname.$touched">
+                    <div ng-show="mainForm.uFirstname.$error.required">Please input a first name.</div>
+                  </div>
+                </div>
+                <label class="col-sm-1 control-label">Last</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" id="last-name" ng-model="person.name_last" name = "uLastname" placeholder="Last name" />
+                  <div ng-show="mainForm.$submitted || mainForm.uLastname.$touched">
+                    <div ng-show="mainForm.uLastname.$error.required">Please input a last name.</div>
+                  </div>
+                </div>
               </div>
 
-              <div class="form-group col-lg-6">
-                <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="guestbookCtlr.submitForm(); addProject =! addProject">Submit
-                    </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-12">
-          <!--<form id="search-form" class="form-inline clearfix">
+
               <div class="form-group">
-                <input type="text"
-                      class="form-control"
-                      id="query_string"
-                      ng-model="search.query_string"
-                      placeholder="Search projects" />
-                <button type="button" class="btn btn-danger"
-                        ng-if="search.query_string.length > 0"
-                        ng-click="guestbookCtlr.clearSearch()">x</button>
+                <label class="col-sm-1 control-label">Tags</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="tags" ng-model="formdata.tags" placeholder="Enter tags separated by commas" />
+                </div>
               </div>
-            </form>-->
+   
+              <div class="form-group">
+                <label class="col-sm-1 control-label">Add an Image</label>
+                <input type="file" id="blob" accept="image/*" blob="imagedata" />
 
-          <!--Add new item form-->
-          <!--<div ng-show="guestbookCtrl.isAuthorized.admin"
-                   ng-include="'edit.html'">
-              </div>-->
-          <!--End Add new item-->
-        </div>
-        <!--col-->
-      </div>
-      <!--row-->
+                <div class="col-sm-offset-5 col-sm-2">
+                    <button type="button" ng-click="guestbookCtlr.resetForm()" class="btn btn-primary">Reset</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <!--<button type="submit" class="btn btn-success btn-lg btn-block" ng-click="guestbookCtlr.submitForm(); addProject =! addProject">Submit</button>-->
+                </div>
 
+              </div>
+            </form>
+          </div> <!--addProject-->
+        </div><!--Stop Clicks-->
+      </div> <!--Row Marketing-->
+      <div class="col-lg-12">
+        <!--<form id="search-form" class="form-inline clearfix">
+            <div class="form-group">
+              <input type="text"
+                    class="form-control"
+                    id="query_string"
+                    ng-model="search.query_string"
+                    placeholder="Search projects" />
+              <button type="button" class="btn btn-danger"
+                      ng-if="search.query_string.length > 0"
+                      ng-click="guestbookCtlr.clearSearch()">x</button>
+            </div>
+          </form>-->
+
+        <!--Add new item form-->
+        <!--<div ng-show="guestbookCtrl.isAuthorized.admin"
+                  ng-include="'edit.html'">
+            </div>-->
+        <!--End Add new item-->
+      </div><!--col-->
       <div class="row marketing">
-
         <div class="col-lg-12">
           <h2 class="post-item">
             <span ng-show="search.query_string.length > 0">Search Results: </span>{{ projects.length }}
@@ -230,8 +264,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- /container -->
+  </div><!-- /container -->
   <footer id="footer" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
     <div class="row pad">
 
