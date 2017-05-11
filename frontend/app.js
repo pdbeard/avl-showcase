@@ -69,7 +69,12 @@ angular.module('app', [])
       });
     },
   }))
-
+  .filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        return input.slice(start);
+    }
+  })
   .controller('GuestbookController', function ($scope, $q, apiHost, Api, Location, objectArrayIndexOf) {
 
 
@@ -80,8 +85,15 @@ angular.module('app', [])
     $scope.showSuccessAlert = false;
     $scope.failTextAlert ="Something went wrong!";
     $scope.showFailAlert = false;
-
     $scope.showDetails =false;
+
+
+    $scope.currentPage = 0;
+    $scope.pageSize = 8;
+    // $scope.projects = [];
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.projects.length/$scope.pageSize);                
+    }
 
 
     const EMPTY = {
@@ -272,9 +284,6 @@ angular.module('app', [])
       }, (e) => {
         console.warn(e);
         $scope.projects = [];
-
-        // $scope.failTextAlert ="Creating the projected failed.";
-        // $scope.showFailAlert = true;
       });
     };
 
