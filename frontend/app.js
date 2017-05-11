@@ -421,6 +421,7 @@ angular.module('app', [])
     const searchProjects = function () {
       SEARCH_API.post($scope.search).then((response) => {
         $scope.projects = response.data;
+        $scope.currentPage = 0;
         if ($scope.projects.length > 0) {
           addStuffToProjects();
         }
@@ -561,6 +562,7 @@ angular.module('app', [])
       $scope.search = {
         query_string: '',
       };
+    $scope.currentPage = 0;
     };
 
     // initialize controller
