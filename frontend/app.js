@@ -327,8 +327,20 @@ angular.module('app', [])
       $scope.formdata.category_checkbox = angular.copy($scope.categories);
       $scope.formdata.discipline_checkbox = angular.copy($scope.disciplines);
 //      $scope.formdata.user.location = angular.copy(locationCache);
+    };
 
-      $scope.formdata.imagedata = null;
+    this.clearForm = function(form) {
+      if (form) {
+        form.$setPristine();
+        form.$setUntouched();
+        resetForm();
+        clearAlerts();
+      }
+    };
+
+    const clearAlerts = function() {
+        $scope.showFailAlert = false;
+        $scope.showSuccessAlert = false;
     };
 
     const uploadBlob = function (blob) {
@@ -414,11 +426,9 @@ angular.module('app', [])
       }, (e) => {
         // console.warn(e);
         // window.alert('Creating the post failed.');
-
+        resetForm();
         $scope.failTextAlert ="Creating the project failed.";
         $scope.showFailAlert = true;
-        resetForm();
-
       });
     };
 
@@ -533,9 +543,10 @@ angular.module('app', [])
       }, (e) => {
         // console.warn(e);
         // window.alert('Editing the post failed.');
+        resetForm();
         $scope.failTextAlert ="Editing the post failed. ";
         $scope.showFailAlert = true;
-        resetForm();
+        
       });
     };
 

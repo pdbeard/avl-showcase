@@ -42,7 +42,7 @@
                 <button type="button" class="btn btn-sm btn-warning navbar-btn" ng-click="guestbookCtrl.isAuthorized.admin = !guestbookCtrl.isAuthorized.admin">Admin Mode</button>
                 <div ng-show="guestbookCtrl.isAuthorized.admin">
                   <button type="button" class="btn btn-primary navbar-btn" ng-click="guestbookCtrl.isAuthorized.edit=!guestbookCtrl.isAuthorized.edit">Add Projects (load template)</button>
-                  <button type="button" class="btn btn-primary navbar-btn" ng-click="addProject = !addProject">Add Projects (floating menu)</button>
+                  <!--<button type="button" class="btn btn-primary navbar-btn" ng-click="addProject = !addProject">Add Projects (floating menu)</button>-->
                 </div>
               </nav>
             </div>
@@ -63,25 +63,19 @@
         </div><!--row-->
         <!--Alerts-->
         <div class="row">
-          <div class=" col col-sm-2 col-sm-offset-5 alert alert-success" role="alert" ng-show="showSuccessAlert">
+          <div class="col col-sm-2 col-sm-offset-5 alert alert-success float-alert" role="alert" ng-show="showSuccessAlert">
             <button type="button" class="close" data-ng-click="showSuccessAlert = !showSuccessAlert">×</button>
             <strong>Done!</strong> {{successTextAlert}}
           </div>
-          <div class=" col align-self-center alert alert-danger" role="alert" ng-show="showFailAlert">
+          <div class="col col-sm-2 col-sm-offset-5 alert alert-danger float-alert" role="alert" ng-show="showFailAlert">
             <button type="button" class="close" data-ng-click="showFailAlert = !showFailAlert">×</button>
             <strong>Oh no!</strong> {{failTextAlert}}
           </div>
         </div>
-      </div>      <div class="push-down"></div>
-        
+      </div>      
+      <div class="push-down"></div>  
         <div ng-if ="!guestbookCtrl.isAuthorized.edit" ng-include="'main.html'"  autoscroll></div>
-        <div ng-if ="guestbookCtrl.isAuthorized.edit" ng-include="'edit.html'"  autoscroll></div>
-        
-
-
-
-
-        
+        <div ng-if ="guestbookCtrl.isAuthorized.edit" ng-include="'edit.html'"  autoscroll></div>  
     </div>
   </div><!-- /container -->
 

@@ -80,6 +80,14 @@ form {
   margin-bottom: 10px;
 }
 
+.float-alert{
+  /*position:absolute;
+  margin:15% 00% 0% 40%;
+  z-index:200;*/
+
+
+}
+
 /* Supporting marketing content */
 .marketing {
   /*margin: 150px 0;*/
