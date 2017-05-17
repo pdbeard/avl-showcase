@@ -271,7 +271,7 @@ form {
   /*position:inherit;  */
   width:  160px; 
   height: 123px; 
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }

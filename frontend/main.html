@@ -1,9 +1,15 @@
 
+      <!--header-->
+
+      <div class="row marketing">
+        <div class="stop-clicks" ng-class="{ 'hidden': !addProject }">
+          <div ng-class="addProject ? 'add-project' :'add-project-hidden'">
             <form name="mainForm" class="form-horizontal" novalidate>
               <div class="row">
                 <h1 class="col-sm-6">Add New Project</h1>
+                <button type="button" class="col-lg-1 col-lg-offset-5 btn btn-sm btn-danger" ng-click="addProject =! addProject">X</button>
               </div>
-              <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted }">
+              <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
                 <label class="col-sm-1 control-label">Title</label>
                 <div class="col-sm-5">
                   <input  type = "text"
@@ -12,7 +18,7 @@
                           name = "uTitle"
                           ng-model = "formdata.title"
                           required="">
-                  <div ng-show="mainForm.$submitted ">
+                  <div ng-show="mainForm.$submitted || mainForm.uTitle.$touched">
                     <div ng-show="mainForm.uTitle.$error.required" class="help-block">Please choose a title.</div>
                   </div>
                 </div>
@@ -115,12 +121,64 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="blob">Add an Image</label>
+                <label class="col-sm-1 control-label" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">Add an Image</label>
                 <input type="file" id="blob" accept="image/*" blob="formdata.imagedata" />
-              </div>
                 <div class="col-sm-offset-5 col-sm-2">
                     <button type="button" ng-click="guestbookCtlr.resetForm()" class="btn btn-primary">Reset</button>
                     <button type="submit" ng-click="guestbookCtlr.submitForm()" class="btn btn-primary">Submit</button>
+                    <!--<button type="submit" class="btn btn-success btn-lg btn-block" ng-click="guestbookCtlr.submitForm(); addProject =! addProject">Submit</button>-->
                 </div>
-
+              </div>
             </form>
+          </div> <!--addProject-->
+        </div><!--Stop Clicks-->
+      </div> <!--Row Marketing-->
+      <div class="col-lg-12">
+        <!--<form id="search-form" class="form-inline clearfix">
+            <div class="form-group">
+              <input type="text"
+                    class="form-control"
+                    id="query_string"
+                    ng-model="search.query_string"
+                    placeholder="Search projects" />
+              <button type="button" class="btn btn-danger"
+                      ng-if="search.query_string.length > 0"
+                      ng-click="guestbookCtlr.clearSearch()">x</button>
+            </div>
+          </form>-->
+
+        <!--Add new item form-->
+        <!--<div ng-show="guestbookCtrl.isAuthorized.admin"
+                  ng-include="'edit.html'">
+            </div>-->
+        <!--End Add new item-->
+      </div><!--col-->
+      <div class="row marketing">
+        <div class="col-sm-12">
+          <h2 class="post-item">
+            <span ng-show="search.query_string.length > 0">Search Results: </span>{{ projects.length }}
+            <ng-pluralize count="projects.length" when="{'0': 'Projects', 'one':'Project', 'other': 'Projects'}"></ng-pluralize>
+          </h2>
+          <div class="alert alert-info" ng-if="projects.length === 0 && search.query_string.length === 0">Be the first one to post something!</div>
+          <div class="alert alert-warning" ng-if="projects.length === 0 && search.query_string.length > 0">No projects for search "{{ search.query_string }}" found.</div>
+          <div class="row post-list">
+            <div class="col-sm-5 post-item" id="project-{{ project.id }}" ng-repeat="project in projects| startFrom:currentPage*pageSize | limitTo:pageSize track by project.id" ng-include="'project.html'">
+            </div>
+          </div>
+          <div class="col-sm-offset-5 pb-20">
+            <button class="btn btn-primary" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                Previous
+            </button>
+            {{currentPage+1}}/{{numberOfPages()}}
+            <button class="btn btn-primary" ng-disabled="currentPage >= projects.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                Next
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+

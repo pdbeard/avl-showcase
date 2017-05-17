@@ -80,7 +80,7 @@ angular.module('app', [])
 
 
 
-    this.isAuthorized = {admin:false}
+    this.isAuthorized = {admin:false,edit:false}
     $scope.successTextAlert ="That seemed to work!";
     $scope.showSuccessAlert = false;
     $scope.failTextAlert ="Something went wrong!";
@@ -95,6 +95,13 @@ angular.module('app', [])
         return Math.ceil($scope.projects.length/$scope.pageSize);                
     }
 
+    $scope.go = function ( path ) {
+      $Location.path( path );
+    };
+
+    $scope.log = function(message) {
+      $log.debug(message);
+    }
 
     const EMPTY = {
       user: {
@@ -321,7 +328,7 @@ angular.module('app', [])
       $scope.formdata.discipline_checkbox = angular.copy($scope.disciplines);
 //      $scope.formdata.user.location = angular.copy(locationCache);
 
-      $scope.imagedata = null;
+      $scope.formdata.imagedata = null;
     };
 
     const uploadBlob = function (blob) {
@@ -357,6 +364,7 @@ angular.module('app', [])
       const api = new Api('/projects');
 
       // convert people objects into strings
+
       $scope.formdata.people = $scope.formdata.peopleObjects.map(person => `${person.name_first}--${person.name_last}`);
 
       // convert people strings into single string
@@ -389,15 +397,20 @@ angular.module('app', [])
         }
       });
 
+
+      console.log("title: "+$scope.formdata.title);
+      console.log("people: "+$scope.formdata.people);
+      console.log("tags: "+$scope.formdata.tags);
+      console.log("category: "+$scope.formdata.category_ids);
+
       api.post($scope.formdata).then((response) => {
         const projects = response.data;
         for (let i = 0; i < projects.length; i += 1) {
           $scope.projects.unshift(projects[0]);
         }
         $scope.successTextAlert ="Project added";
-        resetForm();
-
         $scope.showSuccessAlert = true;
+        // resetForm();
       }, (e) => {
         // console.warn(e);
         // window.alert('Creating the post failed.');
@@ -448,8 +461,11 @@ angular.module('app', [])
 
     // create new project
     this.submitForm = function () {
-      if ($scope.imagedata) {
-        uploadBlob($scope.imagedata).then((response) => {
+      console.log($scope);
+      // $scope.imagedata=true;
+
+      if ($scope.formdata.imagedata) {
+        uploadBlob($scope.formdata.imagedata).then((response) => {
           $scope.formdata.image_ref = response.data.digest;
           submitProject();
         }, (e) => {
@@ -512,9 +528,8 @@ angular.module('app', [])
 
       api.put(editedProject).then((response) => {
         $scope.successTextAlert ="Project edited";
-        resetForm();
-
         $scope.showSuccessAlert = true; 
+        // resetForm();
       }, (e) => {
         // console.warn(e);
         // window.alert('Editing the post failed.');
