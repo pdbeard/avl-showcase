@@ -1,18 +1,30 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html class="no-js ie9" itemscope="itemscope" itemtype="http://schema.org/Webpage" lang="en" ng-app="app">
 
-<head>
+<head prefix="og: http://ogp.me/ns# profile: http://ogp.me/ns/profile# article: http://ogp.me/ns/article#">
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
   <title>AVL Showcase Prototype</title>
+
+  <link href="//www.iu.edu/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+  <link href="https://fonts.iu.edu/style.css?family=BentonSans:regular,bold|BentonSansCond:regular|GeorgiaPro:regular" media="screen" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" href="//assets.iu.edu/web/fonts/icon-font.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="//assets.iu.edu/brand/3.x/brand.css" type="text/css">
+  <!--<link href="https://assets.iu.edu/search/3.x/search.css" rel="stylesheet" type="text/css">-->
+  <link type="text/css" rel="stylesheet" href="//assets.iu.edu/web/3.x/css/iu-framework.min.css">
+  <!--<link href="https://styleguide.iu.edu/_assets/css/site.css" rel="stylesheet" type="text/css">-->
+
   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
     crossorigin="anonymous"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
 
-  <link type="text/css" rel="stylesheet" href="https://assets.iu.edu/brand/3.x/brand.css" />
-  <link type="text/css" rel="stylesheet" href="https://assets.iu.edu/brand/legacy/brand.css" />
-  <link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
-  <!--<link type="text/css" href="//assets.iu.edu/web/3.x/css/iu-framework.min.css">-->
-  <!--  
+  <!--<link type="text/css" rel="stylesheet" href="https://assets.iu.edu/brand/3.x/brand.css" />
+  <link type="text/css" rel="stylesheet" href="https://assets.iu.edu/brand/legacy/brand.css" />-->
+  <!--<link type="text/css" rel="stylesheet" href="bootstrap.min.css" />-->
+
+  <!--
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -27,7 +39,7 @@
   <div class="container">
     <div ng-controller="GuestbookController as guestbookCtlr">
       <div class="header clearfix">
-        <div id="branding-bar-v1" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
+        <!--<div id="branding-bar" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
           <div class="bar">
             <div class="wrapper">
               <p class="campus">
@@ -42,15 +54,42 @@
                 <button type="button" class="btn btn-sm btn-warning navbar-btn" ng-click="guestbookCtrl.isAuthorized.admin = !guestbookCtrl.isAuthorized.admin">Admin Mode</button>
                 <div ng-show="guestbookCtrl.isAuthorized.admin">
                   <button type="button" class="btn btn-primary navbar-btn" ng-click="guestbookCtrl.isAuthorized.edit=!guestbookCtrl.isAuthorized.edit">Add Projects (load template)</button>
-                  <!--<button type="button" class="btn btn-primary navbar-btn" ng-click="addProject = !addProject">Add Projects (floating menu)</button>-->
                 </div>
               </nav>
             </div>
           </div>
+        </div>-->
+        <div id="branding-bar" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity" role="complementary" aria-labelledby="campus-name">
+          <div class="row pad">
+              <img src="//assets.iu.edu/brand/3.x/trident-large.png" alt="IU" />
+              <p id="iu-campus">
+                <a href="https://www.iu.edu" title="Indiana University">
+                  <span id="campus-name" class="show-on-desktop" itemprop="name">Indiana University</span>
+                  <span class="show-on-tablet" itemprop="name">Indiana University</span>
+                  <span class="show-on-mobile" itemprop="name">IU</span>
+                </a>
+              </p>
+              <a href="#"
+                class="button "
+                title="Admin Mode"
+                ng-click="guestbookCtrl.isAuthorized.admin = !guestbookCtrl.isAuthorized.admin">
+                Admin Mode
+              </a>
+              <span ng-show="guestbookCtrl.isAuthorized.admin">
+                <a href="#"
+                  class="button "
+                  title="Add Project"
+                  ng-click="guestbookCtrl.isAuthorized.edit=!guestbookCtrl.isAuthorized.edit">
+                  Add Project
+                </a>
+              </span>
+          </div>
         </div>
-        <center>
-          <h1 class="">AVL Showcase</h1>
-        </center>
+        <header>
+          <div class="row pad">
+            <h1 class="">AVL Showcase</h1>
+          </div>
+        </header>
         <div class="row">
           <div class="col col-sm-6 col-sm-offset-5">
             <form id="search-form" class="form-inline clearfix">
@@ -72,10 +111,10 @@
             <strong>Oh no!</strong> {{failTextAlert}}
           </div>
         </div>
-      </div>      
-      <div class="push-down"></div>  
+      </div>
+      <div class="push-down"></div>
         <div ng-if ="!guestbookCtrl.isAuthorized.edit" ng-include="'main.html'"  autoscroll></div>
-        <div ng-if ="guestbookCtrl.isAuthorized.edit" ng-include="'edit.html'"  autoscroll></div>  
+        <div ng-if ="guestbookCtrl.isAuthorized.edit" ng-include="'edit.html'"  autoscroll></div>
     </div>
   </div><!-- /container -->
 
