@@ -1,5 +1,167 @@
-
-            <form name="mainForm" class="form-horizontal" novalidate>
+<section class="section">
+  <div class="row">
+    <form novalidate>
+      <fieldset class="fieldset">
+        <legend>Add new project</legend>
+        <p>Add a new project!</p>
+        <h3>Add New Project</h3>
+        <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted }">
+          <div class="form-item">
+            <div class="form-item-label">
+                <label for="title">Title</label>
+            </div>
+            <div class="form-item-input">
+                <input type="text" name="uTitle" id="title" ng-model="formdata.title" required="" placeholder="Enter a title">
+            </div>
+            <div ng-show="mainForm.$submitted ">
+              <div ng-show="mainForm.uTitle.$error.required" class="help-block">Please choose a title.</div>
+            </div>
+          </div>
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="campus">Campus</label>
+            </div>
+            <div class="form-item-input">
+              <ul>
+                <li ng-repeat="campus in campuses">
+                  <input type="checkbox" id="{{campus.id}}" value="{{campus.id}}" ng-model="formdata.campus_checkbox[$index].checked">
+                  <label for="{{campus.id}}">{{campus.name}}</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="campus">Category</label>
+            </div>
+            <div class="form-item-input">
+              <ul>
+                <li ng-repeat="category in categories">
+                  <input type="checkbox" id="{{cateogry.id}}" value="{{category.id}}" ng-model="formdata.category_checkbox[$index].checked">
+                  <label for="{{category.id}}">{{category.name}}</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="campus">Discipline</label>
+            </div>
+            <div class="form-item-input">
+              <ul>
+                <li ng-repeat="discipline in disciplines">
+                  <input type="checkbox" id="{{discipline.id}}" value="{{discipline.id}}" ng-model="formdata.discipline_checkbox[$index].checked">
+                  <label for="{{discipline.id}}">{{discipline.name}}</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="description">Description</label>
+            </div>
+            <div class="form-item-input">
+              <textarea id="description" rows="4" ng-model="formdata.description" name="uDescription" placeholder="Enter a short description of the project"></textarea>
+            </div>
+            <div ng-show="mainForm.$submitted || mainForm.uDescription.$touched">
+              <div ng-show="mainForm.uDescription.$error.required" class="help-block">Please type a description.</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="year">Year</label>
+            </div>
+            <div class="form-item-input">
+              <input  type = "text"
+                    class = "form-control"
+                    id="year"
+                    name = "uYear"
+                    ng-model = "formdata.year"
+                    placeholder="Enter year as YYYY"
+                    required="">
+            </div>
+            <div ng-show="mainForm.$submitted || mainForm.uYear.$touched">
+              <div ng-show="mainForm.uYear.$error.required" class="help-block">Please choose a year.</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="url">URL</label>
+            </div>
+            <div class="form-item-input">
+              <input  type = "text"
+                    class = "form-control"
+                    id="URL"
+                    name = "uURL"
+                    ng-model = "formdata.url"
+                    placeholder="Enter the project page URL"
+                    required="">
+            </div>
+            <div ng-show="mainForm.$submitted || mainForm.uURL.$touched">
+              <div ng-show="mainForm.uURL.$error.required" class="help-block" >Please share a URL.</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uFirstname.$touched }">
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="add_person">People</label>
+            </div>
+            <div class="form-item-input">
+              <a href="#" class="button invert" title="Add person" ng-click="formdata.peopleObjects.push({name_first: '', name_last: ''})">Add person</a>
+            </div>
+          </div>
+          <div class="grid halves form-item" ng-repeat="person in formdata.peopleObjects">
+            <div class="grid-item">
+              <div class="form-item-label">
+                <label>First</label>
+              </div>
+              <div class="form-item-input">
+                <input type="text" ng-model="person.name_first" name="uFirstname" placeholder="First name" />
+                <div ng-show="mainForm.$submitted || mainForm.uFirstname.$touched">
+                  <div ng-show="mainForm.uFirstname.$error.required" class="help-block">Please input a first name.</div>
+                </div>
+              </div>
+            </div>
+            <div class="grid-item">
+              <div class="form-item-label">
+                <label>Last</label>
+              </div>
+              <div class="form-item-input">
+                <input type="text" ng-model="person.name_last" name="uFirstname" placeholder="Last name" />
+                <div ng-show="mainForm.$submitted || mainForm.uLastname.$touched">
+                  <div ng-show="mainForm.uLastname.$error.required" class="help-block">Please input a last name.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uTags.$touched }">
+          <label class="col-sm-1 control-label" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">Tags</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="Tags" name = "uTags" ng-model="formdata.tags" placeholder="Enter tags separated by commas" />
+          </div>
+          <div ng-show="mainForm.$submitted || mainForm.uTags.$touched">
+              <div ng-show="mainForm.uTags.$error.required" class="help-block" >Please add Tags.</div>
+          </div>
+        </div>-->
+        <!--<div class="form-group">
+          <label for="blob">Add an Image</label>
+          <input type="file" id="blob" accept="image/*" blob="formdata.imagedata" />
+        </div>-->
+          <!--<div class="col-sm-offset-5 col-sm-2">
+              <button type="button" ng-click="guestbookCtlr.clearForm(mainForm)" class="btn btn-primary">Reset</button>
+              <button type="submit" ng-click="guestbookCtlr.submitForm()" class="btn btn-primary">Submit</button>
+          </div>-->
+        </fieldset>
+    </form>
+            <!--<form name="mainForm" class="form-horizontal" novalidate>
               <div class="row">
                 <h1 class="col-sm-6">Add New Project</h1>
               </div>
@@ -125,16 +287,6 @@
                     <button type="button" ng-click="guestbookCtlr.clearForm(mainForm)" class="btn btn-primary">Reset</button>
                     <button type="submit" ng-click="guestbookCtlr.submitForm()" class="btn btn-primary">Submit</button>
                 </div>
-                <!--Alerts-->
-                <!--<div class="row">
-                  <div class="col col-sm-2 col-sm-offset-5 alert alert-success float-alert" role="alert" ng-show="showSuccessAlert">
-                    <button type="button" class="close" data-ng-click="showSuccessAlert = !showSuccessAlert">×</button>
-                    <strong>Done!</strong> {{successTextAlert}}
-                  </div>
-                  <div class="col col-sm-2 col-sm-offset-5 alert alert-danger float-alert" role="alert" ng-show="showFailAlert">
-                    <button type="button" class="close" data-ng-click="showFailAlert = !showFailAlert">×</button>
-                    <strong>Oh no!</strong> {{failTextAlert}}
-                  </div>
-                </div>
-              </div> -->
-            </form>
+            </form>-->
+  </div>
+</section>
