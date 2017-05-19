@@ -38,7 +38,7 @@
 <body>
   <div class="container">
     <div ng-controller="GuestbookController as guestbookCtlr">
-      <div class="header clearfix">
+      <!--<div class="header clearfix">-->
         <!--<div id="branding-bar" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
           <div class="bar">
             <div class="wrapper">
@@ -69,52 +69,87 @@
                   <span class="show-on-mobile" itemprop="name">IU</span>
                 </a>
               </p>
-              <a href="#"
-                class="button "
-                title="Admin Mode"
-                ng-click="guestbookCtrl.isAuthorized.admin = !guestbookCtrl.isAuthorized.admin">
-                Admin Mode
-              </a>
-              <span ng-show="guestbookCtrl.isAuthorized.admin">
+              <span class="bg-crimson" style="background-color: transparent">
                 <a href="#"
                   class="button "
-                  title="Add Project"
-                  ng-click="guestbookCtrl.isAuthorized.edit=!guestbookCtrl.isAuthorized.edit">
-                  Add Project
+                  title="Admin Mode"
+                  ng-click="guestbookCtrl.isAuthorized.admin = !guestbookCtrl.isAuthorized.admin">
+                  Admin Mode
                 </a>
+                <span ng-show="guestbookCtrl.isAuthorized.admin">
+                  <a href="#"
+                    class="button "
+                    title="Add Project"
+                    ng-click="guestbookCtrl.isAuthorized.edit=!guestbookCtrl.isAuthorized.edit">
+                    Add Project
+                  </a>
+                </span>
               </span>
           </div>
         </div>
-        <header>
+        <!--<header>
           <div class="row pad">
             <h1 class="">AVL Showcase</h1>
           </div>
+        </header>-->
+        <header class="site-header" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity" role="banner">
+            <div class="row pad">
+                <h1><a class="title" href="" itemprop="department">AVL Showcase</a></h1>
+            </div>
         </header>
-        <div class="row">
-          <div class="col col-sm-6 col-sm-offset-5">
-            <form id="search-form" class="form-inline clearfix">
-              <div class="form-group">
-                <input type="text" class="form-control" id="query_string" ng-model="search.query_string" placeholder="Search projects" />
-                <button type="button" class="btn btn-danger" ng-if="search.query_string.length > 0" ng-click="guestbookCtlr.clearSearch()">x</button>
-              </div>
-            </form>
+        <main role="main" class="no-section-nav">
+          <section class="section">
+            <div class="row">
+              <form>
+                <!-- Add/remove a class of .fieldset to show/hide fieldset border -->
+                <fieldset class="fieldset">
+                    <!-- Add/remove a class of .show-for-sr to show/hide the legend element -->
+                    <!-- <legend class="show-for-sr">Instructions for the Form</legend> -->
+                    <legend>Search projects</legend>
+                    <p>Search for projects, yo</p>
+                    <div class="form-item">
+                        <div class="form-item-label">
+                            <label for="query_string">Search for projects:</label>
+                        </div>
+                        <div class="form-item-input">
+                            <input type="text" name="query_string" id="query_string" ng-model="search.query_string" placeholder="Search projects">
+                        </div>
+                    </div>
+                </fieldset>
+              </form>
+            </div>
+          </section>
+          <!--<div class="row">
+            <div class="col col-sm-6 col-sm-offset-5">
+              <form id="search-form" class="form-inline clearfix">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="query_string" ng-model="search.query_string" placeholder="Search projects" />
+                  <button type="button" class="btn btn-danger" ng-if="search.query_string.length > 0" ng-click="guestbookCtlr.clearSearch()">x</button>
+                </div>
+              </form>
+            </div>
+          </div>--><!--row-->
+          <!--Alerts-->
+          <div class="row">
+            <div class="col col-sm-2 col-sm-offset-5 alert alert-success float-alert" role="alert" ng-show="showSuccessAlert">
+              <button type="button" class="close" data-ng-click="showSuccessAlert = !showSuccessAlert">×</button>
+              <strong>Done!</strong> {{successTextAlert}}
+            </div>
+            <div class="col col-sm-2 col-sm-offset-5 alert alert-danger float-alert" role="alert" ng-show="showFailAlert">
+              <button type="button" class="close" data-ng-click="showFailAlert = !showFailAlert">×</button>
+              <strong>Oh no!</strong> {{failTextAlert}}
+            </div>
           </div>
-        </div><!--row-->
-        <!--Alerts-->
-        <div class="row">
-          <div class="col col-sm-2 col-sm-offset-5 alert alert-success float-alert" role="alert" ng-show="showSuccessAlert">
-            <button type="button" class="close" data-ng-click="showSuccessAlert = !showSuccessAlert">×</button>
-            <strong>Done!</strong> {{successTextAlert}}
-          </div>
-          <div class="col col-sm-2 col-sm-offset-5 alert alert-danger float-alert" role="alert" ng-show="showFailAlert">
-            <button type="button" class="close" data-ng-click="showFailAlert = !showFailAlert">×</button>
-            <strong>Oh no!</strong> {{failTextAlert}}
-          </div>
-        </div>
-      </div>
-      <div class="push-down"></div>
-        <div ng-if ="!guestbookCtrl.isAuthorized.edit" ng-include="'main.html'"  autoscroll></div>
-        <div ng-if ="guestbookCtrl.isAuthorized.edit" ng-include="'edit.html'"  autoscroll></div>
+
+          <div ng-if ="!guestbookCtrl.isAuthorized.edit" ng-include="'main.html'"  autoscroll></div>
+          <div ng-if ="guestbookCtrl.isAuthorized.edit" ng-include="'edit.html'"  autoscroll></div>
+        </main>
+      <!--</div>--><!--header clearfix -->
+      <!--<div class="push-down"></div>-->
+      <!--<section>-->
+        <!--<div ng-if ="!guestbookCtrl.isAuthorized.edit" ng-include="'main.html'"  autoscroll></div>
+        <div ng-if ="guestbookCtrl.isAuthorized.edit" ng-include="'edit.html'"  autoscroll></div>-->
+      <!--</section>-->
     </div>
   </div><!-- /container -->
 
