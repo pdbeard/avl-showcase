@@ -1,6 +1,4 @@
-
-
-<div class="stop-clicks"  ng-class="{ 'hidden': !showDetails }">
+<!--<div class="stop-clicks"  ng-class="{ 'hidden': !showDetails }">
 
     <div class="row shadow-3 " ng-class="showDetails ? 'project-details' :'project-details-hidden'">
         <div class = "col col-sm-5 addblock">
@@ -43,16 +41,17 @@
                               when="{1: 'Tag', 'other': 'Tags', 'NaN': 'error, yo!'}"></ng-pluralize>:
                 <span  class="label label-info"
                        ng-repeat="tag in project.tags">{{ tag }}</span></p>
-            <!--<p>ID: <span>{{ project.id }}</span></p>-->
         </div>
-    </div><!--END PROJECT DETAILS-->
+    </div>
 
-</div>
+</div>-->
 
 
-<div class ="project-thumbnail shadow-1 row">
+<!--<div class ="project-thumbnail shadow-1 row">-->
+<!--<div class="grid-item">-->
+  <div class="panel--interactive">
     <a href="#" ng-click="showDetails = !showDetails">
-        <div  class = "col col-sm-5" style="padding-left:0px;">
+        <!--<div  class = "col col-sm-5" style="padding-left:0px;">
           <img id="image-thumbnail" ng-if="!project.image_ref" alt="" style="background-image:url('assets/160x120.png')">
           <img id="image-thumbnail" ng-if="project.image_ref" ng-style="{'background-image':'url({{ apiHost }}/image/{{ project.image_ref }})'}" >
         </div>
@@ -61,11 +60,17 @@
                 <b>{{ project.title }}</b></h3>
             <small class="text-muted">{{ project.description | limitTo: 60 }}{{project.description.length > 20 ? '...' : ''}}</small>
             <p>URL: <a ng-href="{{project.url}}" target="_blank">{{ project.url | limitTo: 30 }}{{project.url.length > 20 ? '...' : ''}}</a></p>
-        </div>
+        </div>-->
+        <figure class="media image">
+          <img id="image-thumbnail" ng-if="!project.image_ref" alt="" style="background-image:url('assets/160x120.png')">
+          <img id="image-thumbnail" ng-if="project.image_ref" ng-style="{'background-image':'url({{ apiHost }}/image/{{ project.image_ref }})'}" >
+        </figure>
+        <h2 class="title">{{ project.title }}</h2>
+        <p>{{ project.description | limitTo: 60 }}{{project.description.length > 20 ? '...' : ''}}</p>
     </a>
 
     <!--Edit Project-->
-    <div class ="col col-sm-12" ng-show="guestbookCtrl.isAuthorized.admin">
+    <!--<div class ="col col-sm-12" ng-show="guestbookCtrl.isAuthorized.admin">
         <div  ng-init="isEdit=false"
               ng-show="isEdit">
             <div class="form-group">
@@ -190,6 +195,7 @@
                 ng-click="guestbookCtlr.deletePost(project)">Delete</button>
         </p>
 
-    </div><!--admin show-->
-</div>
+    </div>-->
+  </div>
+<!--</div>-->
 

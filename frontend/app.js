@@ -89,10 +89,10 @@ angular.module('app', [])
 
 
     $scope.currentPage = 0;
-    $scope.pageSize = 8;
+    $scope.pageSize = 9;
     // $scope.projects = [];
     $scope.numberOfPages=function(){
-        return Math.ceil($scope.projects.length/$scope.pageSize);                
+        return Math.ceil($scope.projects.length/$scope.pageSize);
     }
 
     $scope.go = function ( path ) {
@@ -538,7 +538,7 @@ angular.module('app', [])
 
       api.put(editedProject).then((response) => {
         $scope.successTextAlert ="Project edited";
-        $scope.showSuccessAlert = true; 
+        $scope.showSuccessAlert = true;
         // resetForm();
       }, (e) => {
         // console.warn(e);
@@ -546,7 +546,7 @@ angular.module('app', [])
         resetForm();
         $scope.failTextAlert ="Editing the post failed. ";
         $scope.showFailAlert = true;
-        
+
       });
     };
 
@@ -596,4 +596,4 @@ angular.module('app', [])
   });
 
 
-  
+
