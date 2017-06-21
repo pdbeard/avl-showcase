@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js ie9" itemscope="itemscope" itemtype="http://schema.org/Webpage" lang="en" ng-app="app">
+<html class="no-js ie9" itemscope="itemscope" itemtype="http://schema.org/Webpage" lang="en" ng-app="showcaseApp">
 
 <head prefix="og: http://ogp.me/ns# profile: http://ogp.me/ns/profile# article: http://ogp.me/ns/article#">
   <meta charset="utf-8" />
@@ -18,11 +18,15 @@
   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
     crossorigin="anonymous"></script>
   <link type="text/css" rel="stylesheet" href="custom.css" />
-  <script type="application/javascript" src="angular.js"></script>
-  <script type="application/javascript" src="app.js"></script>
+  <!--<script type="application/javascript" src="angular.js"></script>-->
+  <!--<script type="application/javascript" src="app.js"></script>-->
+  <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script type="application/javascript" src="app.module.js"></script>
+  <script type="application/javascript" src="project-list/project-list.module.js"></script>
+  <script type="application/javascript" src="project-list/project-list.component.js"></script>
 </head>
 
-<body ng-controller="GuestbookController as guestbookCtlr">
+<body>
   <div class="off-canvas-wrap" data-offcanvas>
     <div id="branding-bar" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity" role="complementary" aria-labelledby="campus-name">
       <div class="row pad">
@@ -58,14 +62,13 @@
           <h1><a class="title" href="" itemprop="department">AVL Showcase</a></h1>
         </div>
       </header>
+      <project-list></project-list>
+      <!--
       <main role="main" class="no-section-nav">
         <section class="section">
           <div class="row" id="search">
             <form>
-              <!-- Add/remove a class of .fieldset to show/hide fieldset border -->
               <fieldset class="fieldset">
-                <!-- Add/remove a class of .show-for-sr to show/hide the legend element -->
-                <!-- <legend class="show-for-sr">Instructions for the Form</legend> -->
                 <legend>Search projects</legend>
                 <p>Search for projects, yo</p>
                 <div class="form-item">
@@ -80,7 +83,6 @@
             </form>
           </div>
         </section>
-        <!--Alerts-->
         <section class="section bg-gray" id="alerts">
           <div class="row">
             <div class="col col-sm-2 col-sm-offset-5 alert alert-success float-alert" role="alert" ng-show="showSuccessAlert">
@@ -97,6 +99,7 @@
         <div ng-if="!guestbookCtrl.isAuthorized.edit" ng-include="'main.html'" autoscroll></div>
         <div ng-if="guestbookCtrl.isAuthorized.edit" ng-include="'edit.html'" autoscroll></div>
       </main>
+      -->
       <footer id="footer" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
         <div class="row pad">
 

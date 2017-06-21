@@ -1,0 +1,65 @@
+<main role="main" class="no-section-nav">
+  <section class="section">
+    <div class="row" id="search">
+      <form>
+        <fieldset class="fieldset">
+          <legend>Search projects</legend>
+          <p>Search for projects, yo</p>
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="query_string">Search for projects:</label>
+            </div>
+            <div class="form-item-input">
+              <input type="text" name="query_string" id="query_string" ng-model="search.query_string" placeholder="Search projects">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </section>
+  <section class="section bg-gray" id="alerts">
+    <div class="row">
+      <div class="col col-sm-2 col-sm-offset-5 alert alert-success float-alert" role="alert" ng-show="showSuccessAlert">
+        <button type="button" class="close" data-ng-click="showSuccessAlert = !showSuccessAlert">×</button>
+        <strong>Done!</strong> {{successTextAlert}}
+      </div>
+      <div class="col col-sm-2 col-sm-offset-5 alert alert-danger float-alert" role="alert" ng-show="showFailAlert">
+        <button type="button" class="close" data-ng-click="showFailAlert = !showFailAlert">×</button>
+        <strong>Oh no!</strong> {{failTextAlert}}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="row">
+      <h2 class="section-title">
+        <span ng-show="search.query_string.length > 0">Search Results: </span>{{ projects.length }}
+        <ng-pluralize count="projects.length" when="{'0': 'Projects', 'one':'Project', 'other': 'Projects'}"></ng-pluralize>
+      </h2>
+      <div class="alert alert-info" ng-if="projects.length === 0 && search.query_string.length === 0">Be the first one to post something!</div>
+      <div class="alert alert-warning" ng-if="projects.length === 0 && search.query_string.length > 0">No projects for search "{{ search.query_string }}" found</div>
+      <div class="grid thirds">
+        <!--<div class="grid-item" id="project-{{ project.id }}" ng-repeat="project in projects| startFrom:currentPage*pageSize | limitTo:pageSize track by project.id"
+          ng-include="'project.html'">
+        </div>-->
+        <div class="grid-item" id="project-{{ project.id }}" ng-repeat="project in $ctrl.projects track by project.id">
+          <div class="panel--interactive">
+            <a href="#" ng-click="showDetails = !showDetails">
+              <figure class="media image">
+                <img id="image-thumbnail" ng-if="!project.image_ref" alt="" style="background-image:url('assets/160x120.png')">
+                <img id="image-thumbnail" ng-if="project.image_ref" ng-style="{'background-image':'url({{ apiHost }}/image/{{ project.image_ref }})'}">
+              </figure>
+              <h2 class="title">{{ project.title }}</h2>
+              <p>{{ project.description | limitTo: 60 }}{{project.description.length > 20 ? '...' : ''}}</p>
+            </a>
+          </div>
+        </div>
+      </div>
+  </section>
+  <!--<section class="section">
+    <div style="text-align: center">
+      <a href="#" class="button " title="Previous" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</a>      {{currentPage+1}}/{{numberOfPages()}}
+      <a href="#" class="button " title="Next" ng-disabled="currentPage >= projects.length/pageSize - 1" ng-click="currentPage=currentPage+1">Next</a>
+    </div>
+  </section>-->
+</main>
