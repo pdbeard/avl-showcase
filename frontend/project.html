@@ -48,8 +48,7 @@
                             when="{1: 'Tag', 'other': 'Tags', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
             <dd>
-              <span  class="label label-info"
-                      ng-repeat="tag in project.tags">{{ tag }}</span>
+              <span ng-repeat="tag in project.tags">{{ tag }}, </span>
             </dd>
             <dt>URL</dt>
             <dd>
