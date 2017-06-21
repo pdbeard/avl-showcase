@@ -69,39 +69,35 @@ angular.module('app', [])
       });
     },
   }))
-  .filter('startFrom', function() {
+  .filter('startFrom', function () {
     return function(input, start) {
-        start = +start; //parse to int
-        return input.slice(start);
-    }
+      start = +start; // parse to int
+      return input.slice(start);
+    };
   })
-  .controller('GuestbookController', function ($scope, $q, apiHost, Api, Location, objectArrayIndexOf) {
-
-
-
-
-    this.isAuthorized = {admin:false,edit:false}
-    $scope.successTextAlert ="That seemed to work!";
+  .controller('GuestbookController', function GuestbookController($scope, $q, apiHost, Api, Location, objectArrayIndexOf) {
+    this.isAuthorized = { admin: false, edit: false };
+    $scope.successTextAlert = 'That seemed to work!';
     $scope.showSuccessAlert = false;
-    $scope.failTextAlert ="Something went wrong!";
+    $scope.failTextAlert = 'Something went wrong!';
     $scope.showFailAlert = false;
-    $scope.showDetails =false;
+    $scope.showDetails = false;
 
 
     $scope.currentPage = 0;
     $scope.pageSize = 9;
     // $scope.projects = [];
-    $scope.numberOfPages=function(){
-        return Math.ceil($scope.projects.length/$scope.pageSize);
-    }
-
-    $scope.go = function ( path ) {
-      $Location.path( path );
+    $scope.numberOfPages = function () {
+      return Math.ceil($scope.projects.length / $scope.pageSize);
     };
 
-    $scope.log = function(message) {
-      $log.debug(message);
-    }
+    $scope.go = function (path) {
+      Location.path(path);
+    };
+
+    // $scope.log = function (message) {
+    //   $log.debug(message);
+    // }
 
     const EMPTY = {
       user: {
@@ -295,18 +291,6 @@ angular.module('app', [])
     };
 
     const init = function () {
-      // // try to get location from browser
-      // var location = new Location();
-      // location.get().then(function(pos) {
-      //   locationCache = [pos.coords.longitude, pos.coords.latitude];
-      //   $scope.formdata.user.location = angular.copy(locationCache);
-      // }, function(e) {
-      //   console.warn(e);
-      //   window.alert(e.message);
-      // });
-      // load existing posts
-      // loadPosts();
-
       // load campus lookup table
       loadCampuses();
 
@@ -329,18 +313,18 @@ angular.module('app', [])
 //      $scope.formdata.user.location = angular.copy(locationCache);
     };
 
-    this.clearForm = function(form) {
+    const clearAlerts = function () {
+      $scope.showFailAlert = false;
+      $scope.showSuccessAlert = false;
+    };
+
+    this.clearForm = function (form) {
       if (form) {
         form.$setPristine();
         form.$setUntouched();
         resetForm();
         clearAlerts();
       }
-    };
-
-    const clearAlerts = function() {
-        $scope.showFailAlert = false;
-        $scope.showSuccessAlert = false;
     };
 
     const uploadBlob = function (blob) {
@@ -410,24 +394,24 @@ angular.module('app', [])
       });
 
 
-      console.log("title: "+$scope.formdata.title);
-      console.log("people: "+$scope.formdata.people);
-      console.log("tags: "+$scope.formdata.tags);
-      console.log("category: "+$scope.formdata.category_ids);
+      console.log(`title: ${$scope.formdata.title}`);
+      console.log(`people: ${$scope.formdata.people}`);
+      console.log(`tags: ${$scope.formdata.tags}`);
+      console.log(`category: ${$scope.formdata.category_ids}`);
 
       api.post($scope.formdata).then((response) => {
         const projects = response.data;
         for (let i = 0; i < projects.length; i += 1) {
           $scope.projects.unshift(projects[0]);
         }
-        $scope.successTextAlert ="Project added";
+        $scope.successTextAlert = 'Project added';
         $scope.showSuccessAlert = true;
         // resetForm();
       }, (e) => {
         // console.warn(e);
         // window.alert('Creating the post failed.');
         resetForm();
-        $scope.failTextAlert ="Creating the project failed.";
+        $scope.failTextAlert = 'Creating the project failed.';
         $scope.showFailAlert = true;
       });
     };
@@ -450,7 +434,7 @@ angular.module('app', [])
         }
       }, (e) => {
         console.warn(e);
-        $scope.failTextAlert ="Creating the project failed.";
+        $scope.failTextAlert = 'Creating the project failed.';
         $scope.showFailAlert = true;
 
         $scope.projects = [];
@@ -486,17 +470,6 @@ angular.module('app', [])
         submitProject();
       }
     };
-
-    // like an existing post
-    // this.likePost = function (post) {
-    //   const api = new Api(`/post/${post.id}/like`);
-    //   api.put().then((response) => {
-    //     post.like_count = response.data.like_count;
-    //   }, (e) => {
-    //     console.warn(e);
-    //     window.alert('Liking the post failed.');
-    //   });
-    // };
 
     // edit existing post
     const editProject = function (project) {
@@ -537,16 +510,15 @@ angular.module('app', [])
       });
 
       api.put(editedProject).then((response) => {
-        $scope.successTextAlert ="Project edited";
+        $scope.successTextAlert = 'Project edited.';
         $scope.showSuccessAlert = true;
         // resetForm();
       }, (e) => {
         // console.warn(e);
         // window.alert('Editing the post failed.');
         resetForm();
-        $scope.failTextAlert ="Editing the post failed. ";
+        $scope.failTextAlert = 'Editing the post failed.';
         $scope.showFailAlert = true;
-
       });
     };
 
@@ -572,13 +544,13 @@ angular.module('app', [])
       const idx = objectArrayIndexOf($scope.projects, 'id', project.id);
       const api = new Api(`/projects/${project.id}`);
       api.delete().then((response) => {
-        $scope.successTextAlert ="Project Deleted!";
-        $scope.showSuccessAlert =true;
+        $scope.successTextAlert = 'Project Deleted!';
+        $scope.showSuccessAlert = true;
         $scope.projects.splice(idx, 1);
       }, (e) => {
         // console.warn(e);
         // window.alert('Deleting the post failed.');
-        $scope.failTextAlert ="Deleting the projected failed.";
+        $scope.failTextAlert = 'Deleting the projected failed.';
         $scope.showFailAlert = true;
       });
     };
@@ -588,12 +560,10 @@ angular.module('app', [])
       $scope.search = {
         query_string: '',
       };
-    $scope.currentPage = 0;
+      $scope.currentPage = 0;
     };
 
     // initialize controller
     init();
   });
-
-
 

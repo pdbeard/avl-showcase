@@ -8,128 +8,80 @@
 
   <title>AVL Showcase Prototype</title>
 
-  <link href="//www.iu.edu/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-  <link href="https://fonts.iu.edu/style.css?family=BentonSans:regular,bold|BentonSansCond:regular|GeorgiaPro:regular" media="screen" rel="stylesheet" type="text/css"/>
+  <link href="//www.iu.edu/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="https://fonts.iu.edu/style.css?family=BentonSans:regular,bold|BentonSansCond:regular|GeorgiaPro:regular" media="screen"
+    rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="//assets.iu.edu/web/fonts/icon-font.css" media="screen" type="text/css">
   <link rel="stylesheet" href="//assets.iu.edu/brand/3.x/brand.css" type="text/css">
-  <!--<link href="https://assets.iu.edu/search/3.x/search.css" rel="stylesheet" type="text/css">-->
   <link type="text/css" rel="stylesheet" href="//assets.iu.edu/web/3.x/css/iu-framework.min.css">
-  <!--<link href="https://styleguide.iu.edu/_assets/css/site.css" rel="stylesheet" type="text/css">-->
 
   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
     crossorigin="anonymous"></script>
-  <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
-
-  <!--<link type="text/css" rel="stylesheet" href="https://assets.iu.edu/brand/3.x/brand.css" />
-  <link type="text/css" rel="stylesheet" href="https://assets.iu.edu/brand/legacy/brand.css" />-->
-  <!--<link type="text/css" rel="stylesheet" href="bootstrap.min.css" />-->
-
-  <!--
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    -->
   <link type="text/css" rel="stylesheet" href="custom.css" />
   <script type="application/javascript" src="angular.js"></script>
   <script type="application/javascript" src="app.js"></script>
 </head>
 
-<body>
-  <div class="container">
-    <div ng-controller="GuestbookController as guestbookCtlr">
-      <!--<div class="header clearfix">-->
-        <!--<div id="branding-bar" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
-          <div class="bar">
-            <div class="wrapper">
-              <p class="campus">
-                <a href="https://www.indiana.edu" title="Indiana University Bloomington">
-                  <img src="//assets.iu.edu/brand/legacy/trident-large.png" height="73" width="64" alt="" />
-                  <span class="show-on-desktop" itemprop="name">Indiana University Bloomington</span>
-                  <span class="show-on-tablet" itemprop="name">Indiana University Bloomington</span>
-                  <span class="show-on-mobile" itemprop="name">IU Bloomington</span>
-                </a>
-              </p>
-              <nav clsas="navbar navbar-default">
-                <button type="button" class="btn btn-sm btn-warning navbar-btn" ng-click="guestbookCtrl.isAuthorized.admin = !guestbookCtrl.isAuthorized.admin">Admin Mode</button>
-                <div ng-show="guestbookCtrl.isAuthorized.admin">
-                  <button type="button" class="btn btn-primary navbar-btn" ng-click="guestbookCtrl.isAuthorized.edit=!guestbookCtrl.isAuthorized.edit">Add Projects (load template)</button>
-                </div>
-              </nav>
-            </div>
-          </div>
-        </div>-->
-        <div id="branding-bar" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity" role="complementary" aria-labelledby="campus-name">
-          <div class="row pad">
-              <img src="//assets.iu.edu/brand/3.x/trident-large.png" alt="IU" />
-              <p id="iu-campus">
-                <a href="https://www.iu.edu" title="Indiana University">
-                  <span id="campus-name" class="show-on-desktop" itemprop="name">Indiana University</span>
-                  <span class="show-on-tablet" itemprop="name">Indiana University</span>
-                  <span class="show-on-mobile" itemprop="name">IU</span>
-                </a>
-              </p>
-              <span class="bg-crimson" style="background-color: transparent">
-                <a href="#"
-                  class="button "
-                  title="Admin Mode"
-                  ng-click="guestbookCtrl.isAuthorized.admin = !guestbookCtrl.isAuthorized.admin">
-                  Admin Mode
-                </a>
-                <span ng-show="guestbookCtrl.isAuthorized.admin">
-                  <a href="#"
-                    class="button "
-                    title="Add Project"
-                    ng-click="guestbookCtrl.isAuthorized.edit=!guestbookCtrl.isAuthorized.edit">
-                    Add Project
-                  </a>
-                </span>
-              </span>
-          </div>
+<body ng-controller="GuestbookController as guestbookCtlr">
+  <div class="off-canvas-wrap" data-offcanvas>
+    <div id="branding-bar" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity" role="complementary" aria-labelledby="campus-name">
+      <div class="row pad">
+        <img src="//assets.iu.edu/brand/3.x/trident-large.png" alt="IU" />
+        <p id="iu-campus">
+          <a href="https://www.iu.edu" title="Indiana University">
+            <span id="campus-name" class="show-on-desktop" itemprop="name">Indiana University</span>
+            <span class="show-on-tablet" itemprop="name">Indiana University</span>
+            <span class="show-on-mobile" itemprop="name">IU</span>
+          </a>
+        </p>
+        <span class="bg-crimson" style="background-color: transparent">
+          <a href="#"
+            class="button "
+            title="Admin Mode"
+            ng-click="guestbookCtrl.isAuthorized.admin = !guestbookCtrl.isAuthorized.admin">
+            Admin Mode
+          </a>
+          <span ng-show="guestbookCtrl.isAuthorized.admin">
+            <a href="#"
+              class="button "
+              title="Add Project"
+              ng-click="guestbookCtrl.isAuthorized.edit=!guestbookCtrl.isAuthorized.edit">
+              Add Project
+            </a>
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="inner-wrap">
+      <header class="site-header" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity" role="banner">
+        <div class="row pad">
+          <h1><a class="title" href="" itemprop="department">AVL Showcase</a></h1>
         </div>
-        <!--<header>
-          <div class="row pad">
-            <h1 class="">AVL Showcase</h1>
-          </div>
-        </header>-->
-        <header class="site-header" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity" role="banner">
-            <div class="row pad">
-                <h1><a class="title" href="" itemprop="department">AVL Showcase</a></h1>
-            </div>
-        </header>
-        <main role="main" class="no-section-nav">
-          <section class="section">
-            <div class="row">
-              <form>
-                <!-- Add/remove a class of .fieldset to show/hide fieldset border -->
-                <fieldset class="fieldset">
-                    <!-- Add/remove a class of .show-for-sr to show/hide the legend element -->
-                    <!-- <legend class="show-for-sr">Instructions for the Form</legend> -->
-                    <legend>Search projects</legend>
-                    <p>Search for projects, yo</p>
-                    <div class="form-item">
-                        <div class="form-item-label">
-                            <label for="query_string">Search for projects:</label>
-                        </div>
-                        <div class="form-item-input">
-                            <input type="text" name="query_string" id="query_string" ng-model="search.query_string" placeholder="Search projects">
-                        </div>
-                    </div>
-                </fieldset>
-              </form>
-            </div>
-          </section>
-          <!--<div class="row">
-            <div class="col col-sm-6 col-sm-offset-5">
-              <form id="search-form" class="form-inline clearfix">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="query_string" ng-model="search.query_string" placeholder="Search projects" />
-                  <button type="button" class="btn btn-danger" ng-if="search.query_string.length > 0" ng-click="guestbookCtlr.clearSearch()">x</button>
+      </header>
+      <main role="main" class="no-section-nav">
+        <section class="section">
+          <div class="row" id="search">
+            <form>
+              <!-- Add/remove a class of .fieldset to show/hide fieldset border -->
+              <fieldset class="fieldset">
+                <!-- Add/remove a class of .show-for-sr to show/hide the legend element -->
+                <!-- <legend class="show-for-sr">Instructions for the Form</legend> -->
+                <legend>Search projects</legend>
+                <p>Search for projects, yo</p>
+                <div class="form-item">
+                  <div class="form-item-label">
+                    <label for="query_string">Search for projects:</label>
+                  </div>
+                  <div class="form-item-input">
+                    <input type="text" name="query_string" id="query_string" ng-model="search.query_string" placeholder="Search projects">
+                  </div>
                 </div>
-              </form>
-            </div>
-          </div>--><!--row-->
-          <!--Alerts-->
+              </fieldset>
+            </form>
+          </div>
+        </section>
+        <!--Alerts-->
+        <section class="section bg-gray" id="alerts">
           <div class="row">
             <div class="col col-sm-2 col-sm-offset-5 alert alert-success float-alert" role="alert" ng-show="showSuccessAlert">
               <button type="button" class="close" data-ng-click="showSuccessAlert = !showSuccessAlert">×</button>
@@ -140,36 +92,30 @@
               <strong>Oh no!</strong> {{failTextAlert}}
             </div>
           </div>
+        </section>
 
-          <div ng-if ="!guestbookCtrl.isAuthorized.edit" ng-include="'main.html'"  autoscroll></div>
-          <div ng-if ="guestbookCtrl.isAuthorized.edit" ng-include="'edit.html'"  autoscroll></div>
-        </main>
-      <!--</div>--><!--header clearfix -->
-      <!--<div class="push-down"></div>-->
-      <!--<section>-->
-        <!--<div ng-if ="!guestbookCtrl.isAuthorized.edit" ng-include="'main.html'"  autoscroll></div>
-        <div ng-if ="guestbookCtrl.isAuthorized.edit" ng-include="'edit.html'"  autoscroll></div>-->
-      <!--</section>-->
+        <div ng-if="!guestbookCtrl.isAuthorized.edit" ng-include="'main.html'" autoscroll></div>
+        <div ng-if="guestbookCtrl.isAuthorized.edit" ng-include="'edit.html'" autoscroll></div>
+      </main>
+      <footer id="footer" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
+        <div class="row pad">
+
+          <p class="tagline">Fulfilling <span>the</span> Promise</p>
+
+          <p class="signature">
+            <a href="https://www.iu.edu" class="signature-link">Indiana University</a>
+          </p>
+
+          <p class="copyright">
+            <a href="https://www.iu.edu/copyright/index.html">Copyright</a> &#169; 2017 <span class="line-break-small">The Trustees of <a href="https://www.iu.edu/" itemprop="url"><span itemprop="name">Indiana University</span></a>
+            </span><span class="hide-on-mobile"> | </span><span class="line-break"><a href="/privacy" id="privacy-policy-link">Privacy Notice</a> | <a href="https://accessibility.iu.edu/help" id="accessibility-link" title="Having trouble accessing this web page because of a disability? Visit this page for assistance.">Accessibility Help</a></span>
+          </p>
+        </div>
+      </footer>
     </div>
-  </div><!-- /container -->
-
-
-  <!--<div class="push-down"></div>-->
-  <footer id="footer" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
-    <div class="row pad">
-
-      <p class="tagline">Fulfilling <span>the</span> Promise</p>
-
-      <p class="signature">
-        <a href="https://www.iu.edu" class="signature-link">Indiana University</a>
-      </p>
-
-      <p class="copyright">
-        <a href="https://www.iu.edu/copyright/index.html">Copyright</a> &#169; 2017 <span class="line-break-small">The Trustees of <a href="https://www.iu.edu/" itemprop="url"><span itemprop="name">Indiana University</span></a>
-        </span><span class="hide-on-mobile"> | </span><span class="line-break"><a href="/privacy" id="privacy-policy-link">Privacy Notice</a> | <a href="https://accessibility.iu.edu/help" id="accessibility-link" title="Having trouble accessing this web page because of a disability? Visit this page for assistance.">Accessibility Help</a></span>
-      </p>
-    </div>
-  </footer>
+    <!-- /.inner-wrap -->
+  </div>
+  <!-- /.off-canvas-wrap -->
 </body>
 
 </html>
