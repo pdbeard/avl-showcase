@@ -1,1 +1,1 @@
-angular.module('projectList', []);
+angular.module('projectList', ['api']);

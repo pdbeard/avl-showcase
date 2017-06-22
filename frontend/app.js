@@ -26,26 +26,6 @@ angular.module('app', [])
 //      return $http.edit(url);
 //    };
   })
-  .service('Location', ($q) => {
-    const getLocation = function (success, error) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success);
-      } else {
-        error(new Error('Your browser does not support HTML5 location.'));
-      }
-    };
-    return function () {
-      this.get = function () {
-        const d = $q.defer();
-        getLocation((position) => {
-          d.resolve(position);
-        }, (e) => {
-          d.reject(e);
-        });
-        return d.promise;
-      };
-    };
-  })
   .service('objectArrayIndexOf', () => function (arr, k, v) {
     // usage: objectArrayIndexOf([{id:2},{id:1},{id:3}], 'id', 1) -> 1
     for (let i = 0; i < arr.length; i += 1) {
@@ -75,7 +55,7 @@ angular.module('app', [])
       return input.slice(start);
     };
   })
-  .controller('GuestbookController', function GuestbookController($scope, $q, apiHost, Api, Location, objectArrayIndexOf) {
+  .controller('GuestbookController', function GuestbookController($scope, $q, apiHost, Api, objectArrayIndexOf) {
     this.isAuthorized = { admin: false, edit: false };
     $scope.successTextAlert = 'That seemed to work!';
     $scope.showSuccessAlert = false;
@@ -86,23 +66,13 @@ angular.module('app', [])
 
     $scope.currentPage = 0;
     $scope.pageSize = 9;
-    // $scope.projects = [];
     $scope.numberOfPages = function () {
       return Math.ceil($scope.projects.length / $scope.pageSize);
     };
 
-    $scope.go = function (path) {
-      Location.path(path);
-    };
-
-    // $scope.log = function (message) {
-    //   $log.debug(message);
-    // }
-
     const EMPTY = {
       user: {
         name: null,
-        location: null,
       },
       text: null,
       image_ref: null,
@@ -112,10 +82,9 @@ angular.module('app', [])
       tags: '',
       peopleObjects: [],
     };
-    // const locationCache = null;
+
     const SEARCH_API = new Api('/search');
 
-    $scope.posts = [];
     $scope.campuses = [];
     $scope.categories = [];
     $scope.disciplines = [];
@@ -227,16 +196,6 @@ angular.module('app', [])
       });
     };
 
-    // const loadPosts = function () {
-    //   const api = new Api('/posts');
-    //   api.get().then((response) => {
-    //     $scope.posts = response.data;
-    //   }, (e) => {
-    //     console.warn(e);
-    //     $scope.posts = [];
-    //   });
-    // };
-
     const loadCampuses = function () {
       const api = new Api('/campuses');
       api.get().then((response) => {
@@ -304,13 +263,12 @@ angular.module('app', [])
       loadProjects();
     };
 
-    // reset input form but refill location from cache
+    // reset input form
     const resetForm = function () {
       $scope.formdata = angular.copy(EMPTY);
       $scope.formdata.campus_checkbox = angular.copy($scope.campuses);
       $scope.formdata.category_checkbox = angular.copy($scope.categories);
       $scope.formdata.discipline_checkbox = angular.copy($scope.disciplines);
-//      $scope.formdata.user.location = angular.copy(locationCache);
     };
 
     const clearAlerts = function () {

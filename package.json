@@ -9,7 +9,12 @@
     "browser-sync": "^2.18.8",
     "eslint": "^3.18.0",
     "eslint-config-airbnb-base": "^11.1.2",
-    "eslint-plugin-import": "^2.2.0"
+    "eslint-plugin-import": "^2.2.0",
+    "jasmine-core": "^2.6.4",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.1.1",
+    "karma-firefox-launcher": "^1.0.1",
+    "karma-jasmine": "^1.1.0"
   },
   "eslintConfig": {
     "extends": "airbnb-base",
@@ -23,7 +28,9 @@
     }
   },
   "scripts": {
-    "serve": "node ./node_modules/browser-sync/bin/browser-sync start --server 'frontend' --files 'frontend'"
+    "serve": "node ./node_modules/browser-sync/bin/browser-sync start --server 'frontend' --files 'frontend'",
+    "test": "node ./node_modules/karma/bin/karma start karma.conf.js",
+    "test-single-run": "node ./node_modules/karma/bin/karma start karma.conf.js --single-run"
   },
   "dependencies": {
     "choices.js": "^2.7.7"
