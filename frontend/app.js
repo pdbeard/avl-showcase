@@ -374,15 +374,6 @@ angular.module('app', [])
       });
     };
 
-    // var searchPosts = function() {
-    //   SEARCH_API.post($scope.search).then(function(response) {
-    //     $scope.posts = response.data;
-    //   }, function(e) {
-    //     console.warn(e);
-    //     $scope.posts = [];
-    //   });
-    // };
-
     const searchProjects = function () {
       SEARCH_API.post($scope.search).then((response) => {
         $scope.projects = response.data;

@@ -1,8 +1,6 @@
 describe('projectList', () => {
-  // Load the module that contains the `projectList` component before each test
   beforeEach(module('projectList'));
 
-  // Test the controller
   describe('ProjectListController', () => {
     let $httpBackend;
     let ctrl;
@@ -27,6 +25,7 @@ describe('projectList', () => {
       { campus_ids: [9, 2], category_ids: [9, 6], discipline_ids: [], tags: [], id: '92902058ab0b59886feb773522610c52ccb1f8ac', title: 'Tampflex', description: 'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', year: 2010, url: 'http://php.net/eu/mi/nulla.xml', people: 'Jeffrey--Rivera' },
       { campus_ids: [8], category_ids: [2], discipline_ids: [20, 9], tags: [], id: 'de2032294eaf524ba62d1d5120552e31f8ca2264', title: 'Gembucket', description: 'In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.', year: 2003, url: 'http://comsenz.com/vulputate/ut/ultrices.png', people: 'Carl--Owens' },
     ];
+    const mockSearchResults = mockProjects;
 
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service and assign it to a variable with the same name
@@ -62,6 +61,17 @@ describe('projectList', () => {
       $httpBackend.expectGET(`${url}/projects`).respond(mockProjects);
       $httpBackend.flush();
       expect(ctrl.projects).toEqual(mockProjects);
+    });
+
+    it('should search projects', () => {
+      expect(ctrl.searchString).toEqual('');
+      expect(ctrl.projects).toEqual([]);
+      ctrl.searchString = 'test';
+      ctrl.updateSearch();
+      const query = { query_string: 'test' };
+      $httpBackend.expectPOST(`${url}/search`, query).respond(mockSearchResults);
+      $httpBackend.flush();
+      expect(ctrl.projects).toEqual(mockSearchResults);
     });
   });
 });

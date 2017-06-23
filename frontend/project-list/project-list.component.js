@@ -7,6 +7,10 @@ angular
       this.categories = [];
       this.disciplines = [];
       this.projects = [];
+      this.searchString = '';
+
+      const projectsApi = new Api('/projects');
+      const searchApi = new Api('/search');
 
       const loadCampuses = () => {
         const api = new Api('/campuses');
@@ -48,8 +52,7 @@ angular
       };
 
       const loadProjects = () => {
-        const api = new Api('/projects');
-        api.get().then((response) => {
+        projectsApi.get().then((response) => {
           this.projects = response.data;
           // addStuffToProjects();
         }, (e) => {
@@ -58,6 +61,17 @@ angular
         });
       };
 
+      const searchProjects = () => {
+        const query = { query_string: this.searchString };
+        searchApi.post(query).then((response) => {
+          this.projects = response.data;
+        }, (error) => {
+          console.warn(error);
+          this.projects = [];
+        });
+      };
+
+      this.updateSearch = () => (this.searchString === '' ? loadProjects() : searchProjects());
 
       const init = () => {
         loadCampuses();
