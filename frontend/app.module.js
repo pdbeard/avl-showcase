@@ -1,6 +1,5 @@
 angular.module('showcaseApp', [
-  // 'apiHost',
-  // 'apiUrl',
-  // 'api',
+  'ngRoute',
   'projectList',
+  'projectDetail',
 ]);

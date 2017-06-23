@@ -53,7 +53,7 @@
              id="project-{{ project.id }}"
              ng-repeat="project in $ctrl.projects track by project.id">
           <div class="panel--interactive">
-            <a href="#" ng-click="showDetails = !showDetails">
+            <a href="#!/projects/{{ project.id }}" ng-click="showDetails = !showDetails">
               <figure class="media image">
                 <img id="image-thumbnail"
                      ng-if="!project.image_ref"
