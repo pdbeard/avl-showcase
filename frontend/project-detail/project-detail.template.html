@@ -1,0 +1,59 @@
+<main role="main" class="no-section-nav">
+  <section class="section">
+    <div class="row" id="project">
+      <div class="feature">
+        <figure class="media image">
+          <img ng-if="!$ctrl.project.image_ref" src="https://placehold.it/1024x512" alt="" class="image-thumbnail-detailed">
+          <img ng-if="$ctrl.project.image_ref" ng-src="{{ apiHost }}/image/{{ $ctrl.project.image_ref }}" class="image-thumbnail-detailed">
+        </figure>
+        <div class="content">
+          <h2 class="title">{{ $ctrl.project.title }}</h2>
+          <p>{{ $ctrl.project.description }}</p>
+
+          <dl class="inline">
+            <dt>Year</dt>
+            <dd>{{ $ctrl.project.year }}</dd>
+            <!--<dt>
+              <ng-pluralize count="$ctrl.project.peopleObjects.length" when="{1: 'Person', 'other': 'People', 'NaN': 'error, yo!'}"></ng-pluralize>
+            </dt>
+            <dd>
+              <span ng-repeat="person in $ctrl.project.peopleObjects">
+                {{ person.name_first }} {{ person.name_last }},
+              </span>
+            </dd>
+            <dt>
+              <ng-pluralize count="$ctrl.project.campus_names.length" when="{1: 'Campus', 'other': 'Campuses', 'NaN': 'error, yo!'}"></ng-pluralize>
+            </dt>
+            <dd>
+              <span ng-repeat="name in $ctrl.project.campus_names">{{ name }}, </span>
+            </dd>
+            <dt>
+              <ng-pluralize count="$ctrl.project.category_names.length" when="{1: 'Category', 'other': 'Categories', 'NaN': 'error, yo!'}"></ng-pluralize>
+            </dt>
+            <dd>
+              <span ng-repeat="name in $ctrl.project.category_names">{{ name }}, </span>
+            </dd>
+            <dt>
+              <ng-pluralize count="$ctrl.project.discipline_names.length" when="{1: 'Discipline', 'other': 'Disciplines', 'NaN': 'error, yo!'}"></ng-pluralize>
+            </dt>
+            <dd>
+              <span ng-repeat="name in $ctrl.project.discipline_names">{{ name }}, </span>
+            </dd>-->
+            <dt>
+              <ng-pluralize count="$ctrl.project.tags.length" when="{1: 'Tag', 'other': 'Tags', 'NaN': 'error, yo!'}"></ng-pluralize>
+            </dt>
+            <dd>
+              <span ng-repeat="tag in $ctrl.project.tags">{{ tag }}, </span>
+            </dd>
+            <dt>URL</dt>
+            <dd>
+              <a ng-href="{{$ctrl.project.url}}" target="_blank">{{ $ctrl.project.url }}</a>
+            </dd>
+          </dl>
+
+          <a href="../#!/projects" class="button " title="Close project details">Close project details</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
