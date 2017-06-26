@@ -13,32 +13,32 @@
           <dl class="inline">
             <dt>Year</dt>
             <dd>{{ $ctrl.project.year }}</dd>
-            <!--<dt>
-              <ng-pluralize count="$ctrl.project.peopleObjects.length" when="{1: 'Person', 'other': 'People', 'NaN': 'error, yo!'}"></ng-pluralize>
+            <dt>
+              <ng-pluralize count="$ctrl.peopleObjects.length" when="{1: 'Person', 'other': 'People', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
             <dd>
-              <span ng-repeat="person in $ctrl.project.peopleObjects">
+              <span ng-repeat="person in $ctrl.peopleObjects">
                 {{ person.name_first }} {{ person.name_last }},
               </span>
             </dd>
             <dt>
-              <ng-pluralize count="$ctrl.project.campus_names.length" when="{1: 'Campus', 'other': 'Campuses', 'NaN': 'error, yo!'}"></ng-pluralize>
+              <ng-pluralize count="$ctrl.campusNames.length" when="{1: 'Campus', 'other': 'Campuses', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
             <dd>
-              <span ng-repeat="name in $ctrl.project.campus_names">{{ name }}, </span>
+              <span ng-repeat="name in $ctrl.campusNames">{{ name }}, </span>
             </dd>
             <dt>
-              <ng-pluralize count="$ctrl.project.category_names.length" when="{1: 'Category', 'other': 'Categories', 'NaN': 'error, yo!'}"></ng-pluralize>
+              <ng-pluralize count="$ctrl.categoryNames.length" when="{1: 'Category', 'other': 'Categories', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
             <dd>
-              <span ng-repeat="name in $ctrl.project.category_names">{{ name }}, </span>
+              <span ng-repeat="name in $ctrl.categoryNames">{{ name }}, </span>
             </dd>
             <dt>
-              <ng-pluralize count="$ctrl.project.discipline_names.length" when="{1: 'Discipline', 'other': 'Disciplines', 'NaN': 'error, yo!'}"></ng-pluralize>
+              <ng-pluralize count="$ctrl.disciplineNames.length" when="{1: 'Discipline', 'other': 'Disciplines', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
             <dd>
-              <span ng-repeat="name in $ctrl.project.discipline_names">{{ name }}, </span>
-            </dd>-->
+              <span ng-repeat="name in $ctrl.disciplineNames">{{ name }}, </span>
+            </dd>
             <dt>
               <ng-pluralize count="$ctrl.project.tags.length" when="{1: 'Tag', 'other': 'Tags', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
