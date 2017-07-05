@@ -31,8 +31,12 @@
   <script type="application/javascript" src="api-url/api-url.service.js"></script>
   <script type="application/javascript" src="api/api.module.js"></script>
   <script type="application/javascript" src="api/api.service.js"></script>
+  <script type="application/javascript" src="authentication/authentication.module.js"></script>
+  <script type="application/javascript" src="authentication/authentication.service.js"></script>
   <script type="application/javascript" src="project-list/project-list.module.js"></script>
   <script type="application/javascript" src="project-list/project-list.component.js"></script>
+  <script type="application/javascript" src="login-button/login-button.module.js"></script>
+  <script type="application/javascript" src="login-button/login-button.component.js"></script>
   <script type="application/javascript" src="project-detail/project-detail.module.js"></script>
   <script type="application/javascript" src="project-detail/project-detail.component.js"></script>
 </head>
@@ -49,7 +53,7 @@
             <span class="show-on-mobile" itemprop="name">IU</span>
           </a>
         </p>
-        <span class="bg-crimson" style="background-color: transparent">
+        <!--<span class="bg-crimson" style="background-color: transparent">
           <a href="#"
             class="button "
             title="Admin Mode"
@@ -64,13 +68,14 @@
               Add Project
             </a>
           </span>
-        </span>
+        </span>-->
       </div>
     </div>
     <div class="inner-wrap">
       <header class="site-header" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity" role="banner">
         <div class="row pad">
           <h1><a class="title" href="" itemprop="department">AVL Showcase</a></h1>
+          <login-button></login-button>
         </div>
       </header>
 

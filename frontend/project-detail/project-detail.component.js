@@ -2,8 +2,8 @@ angular
   .module('projectDetail')
   .component('projectDetail', {
     templateUrl: 'project-detail/project-detail.template.html',
-    controller: ['$routeParams', 'Api',
-      function ProjectDetailController($routeParams, Api) {
+    controller: ['$routeParams', 'Api', 'Authentication',
+      function ProjectDetailController($routeParams, Api, Authentication) {
         this.projectId = $routeParams.projectId;
         this.project = {};
         this.peopleObjects = [];
@@ -13,6 +13,7 @@ angular
         this.categoryNames = [];
         this.disciplines = [];
         this.disciplineNames = [];
+        this.isAdmin = () => Authentication.isAdmin();
 
         this.createPeopleObjects = () => {
           const peopleStrings = this.project.people.split(';');

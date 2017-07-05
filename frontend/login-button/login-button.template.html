@@ -1,0 +1,17 @@
+<span ng-if="!Authentication.isAdmin()">
+  <!--<a href="#"
+    class="button right"
+    title="Log in as Admin"
+    ng-click="Authentication.authenticateAsAdmin()">
+    Log in as Admin
+  </a>-->
+  <button class="button right" ng-click="$ctrl.authenticateAsAdmin()">Log in as Admin</button>
+</span>
+<span ng-if="$ctrl.isAdmin">
+  <a href="#"
+    class="button "
+    title="Add Project"
+    ng-click="">
+    Create new project
+  </a>
+</span>
