@@ -59,9 +59,10 @@
                      ng-if="!project.image_ref"
                      alt=""
                      style="background-image:url('assets/160x120.png')">
+                <!-- hard-coded php server url -- fix -->
                 <img id="image-thumbnail"
                      ng-if="project.image_ref"
-                     ng-style="{'background-image':'url({{ apiHost }}/image/{{ project.image_ref }})'}">
+                     ng-style="{'background-image':'url(http://localhost:8080/image/{{ project.image_ref }})'}">
               </figure>
               <h2 class="title">{{ project.title }}</h2>
               <p>

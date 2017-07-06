@@ -1,4 +1,4 @@
-<span ng-if="!Authentication.isAdmin()">
+<span ng-if="!$ctrl.isAdmin">
   <!--<a href="#"
     class="button right"
     title="Log in as Admin"
@@ -8,9 +8,9 @@
   <button class="button right" ng-click="$ctrl.authenticateAsAdmin()">Log in as Admin</button>
 </span>
 <span ng-if="$ctrl.isAdmin">
-  <a href="#"
+  <a href="../#!/project-create"
     class="button "
-    title="Add Project"
+    title="Create new project"
     ng-click="">
     Create new project
   </a>
