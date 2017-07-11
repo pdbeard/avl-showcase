@@ -15,7 +15,7 @@ angular
           category_ids: [],
           discipline_ids: [],
           tags: [],
-          people: [],
+          people: '',
         };
         const EMPTY_FORM = {
           tagsString: '',
@@ -26,26 +26,13 @@ angular
           disciplineCheckboxes: [],
           imageData: null,
         }; // form inputs that need to be transformed before submitting
+        let campuses = [];
+        let categories = [];
+        let disciplines = [];
 
         this.project = angular.copy(EMPTY_PROJECT);
         this.form = angular.copy(EMPTY_FORM);
-        this.campuses = [];
-        this.categories = [];
-        this.disciplines = [];
         this.isAdmin = () => Authentication.isAdmin();
-
-        this.createPeopleObjects = () => {
-          const peopleStrings = this.project.people.split(';');
-
-          this.peopleObjects = peopleStrings.map((personString) => {
-            const personStringSplit = personString.split('--');
-
-            return {
-              name_first: personStringSplit[0],
-              name_last: personStringSplit[1],
-            };
-          });
-        };
 
         const submitProject = function submitProject() {
           const api = new Api('/projects');
@@ -133,47 +120,47 @@ angular
         this.resetForm = function () {
           this.project = angular.copy(EMPTY_PROJECT);
           this.form = angular.copy(EMPTY_FORM);
-          this.form.campusCheckboxes = angular.copy(this.campuses);
-          this.form.categoryCheckboxes = angular.copy(this.categories);
-          this.form.disciplineCheckboxes = angular.copy(this.disciplines);
+          this.form.campusCheckboxes = angular.copy(campuses);
+          this.form.categoryCheckboxes = angular.copy(categories);
+          this.form.disciplineCheckboxes = angular.copy(disciplines);
         };
 
         const getCampuses = () => {
           const api = new Api('/campuses');
           api.get().then((response) => {
-            this.campuses = response.data;
+            campuses = response.data;
 
             // add campus info to the form for checkboxes
-            this.form.campusCheckboxes = angular.copy(this.campuses);
+            this.form.campusCheckboxes = angular.copy(campuses);
           }, (e) => {
             console.warn(e);
-            this.campuses = [];
+            campuses = [];
           });
         };
 
         const getCategories = () => {
           const api = new Api('/categories');
           api.get().then((response) => {
-            this.categories = response.data;
+            categories = response.data;
 
             // add category info to the form for checkboxes
-            this.form.categoryCheckboxes = angular.copy(this.categories);
+            this.form.categoryCheckboxes = angular.copy(categories);
           }, (e) => {
             console.warn(e);
-            this.categories = [];
+            categories = [];
           });
         };
 
         const getDisciplines = () => {
           const api = new Api('/disciplines');
           api.get().then((response) => {
-            this.disciplines = response.data;
+            disciplines = response.data;
 
             // add discipline info to the form for checkboxes
-            this.form.disciplineCheckboxes = angular.copy(this.disciplines);
+            this.form.disciplineCheckboxes = angular.copy(disciplines);
           }, (e) => {
             console.warn(e);
-            this.disciplines = [];
+            disciplines = [];
           });
         };
 
