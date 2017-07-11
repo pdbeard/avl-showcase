@@ -5,7 +5,7 @@ angular
     controller: ['Api', 'Authentication', '$q',
       function ProjectCreateController(Api, Authentication, $q) {
         const self = this;
-        const EMPTY = {
+        const EMPTY_PROJECT = {
           title: '',
           description: '',
           url: '',
@@ -17,9 +17,7 @@ angular
           tags: [],
           people: [],
         };
-
-        this.project = angular.copy(EMPTY);
-        this.form = {
+        const EMPTY_FORM = {
           tagsString: '',
           peopleObjects: [],
           peopleStrings: [],
@@ -28,6 +26,9 @@ angular
           disciplineCheckboxes: [],
           imageData: null,
         }; // form inputs that need to be transformed before submitting
+
+        this.project = angular.copy(EMPTY_PROJECT);
+        this.form = angular.copy(EMPTY_FORM);
         this.campuses = [];
         this.categories = [];
         this.disciplines = [];
@@ -82,23 +83,7 @@ angular
             }
           });
 
-          // self.project.title = 'test';
-          // self.project.description = 'test';
-          // self.project.url = 'dfgdgfd';
-          // self.project.year = '3333';
-          // self.project.image_ref = 'kjhkjhkjhkjh';
-          // self.project.campus_ids = [1];
-          // self.project.category_ids = [1];
-          // self.project.discipline_ids = [1];
-          // self.project.tags = ['lkjlkj'];
-          // self.project.people = 'Andrea--Jacob';
-
-          console.log(self.project);
-
           api.post(self.project).then((response) => {
-            console.log('success');
-            console.log(response);
-
             // const projects = response.data;
             // for (let i = 0; i < projects.length; i += 1) {
             //   $scope.projects.unshift(projects[0]);
@@ -119,12 +104,8 @@ angular
           const d = $q.defer();
           const api = new Api('/images');
           api.post({ blob: btoa(blob) }).then((response) => {
-            console.log('success');
-            console.log(response);
             d.resolve(response);
           }, (response) => {
-            console.log('failure');
-            console.log(response);
             if (response.status === 409) {
               d.resolve(response);
             } else {
@@ -136,13 +117,9 @@ angular
 
         // create new project
         this.submitForm = function () {
-          console.log('form submitted');
-          console.log(this.form);
           if (this.form.imageData) {
             uploadBlob(this.form.imageData).then((response) => {
               this.project.image_ref = response.data.digest;
-              console.log(response.data.digest);
-              console.log(this.project.image_ref);
               submitProject();
             }, (e) => {
               console.warn(e);
@@ -151,6 +128,14 @@ angular
           } else {
             submitProject();
           }
+        };
+
+        this.resetForm = function () {
+          this.project = angular.copy(EMPTY_PROJECT);
+          this.form = angular.copy(EMPTY_FORM);
+          this.form.campusCheckboxes = angular.copy(this.campuses);
+          this.form.categoryCheckboxes = angular.copy(this.categories);
+          this.form.disciplineCheckboxes = angular.copy(this.disciplines);
         };
 
         const getCampuses = () => {
@@ -192,21 +177,6 @@ angular
           });
         };
 
-        const getProject = () => {
-          const api = new Api(`/project/${this.projectId}`);
-          api.get().then((response) => {
-            this.project = response.data;
-            this.createPeopleObjects();
-            getCampuses();
-            getCategories();
-            getDisciplines();
-          }, (e) => {
-            console.warn(e);
-            this.project = {};
-          });
-        };
-
-        // getProject();
         getCampuses();
         getCategories();
         getDisciplines();

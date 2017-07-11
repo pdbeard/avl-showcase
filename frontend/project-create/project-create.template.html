@@ -155,8 +155,8 @@
             </div>
           </div>
           <div>
-            <a href="#" class="button invert" title="Reset" ng-click="guestbookCtlr.clearForm(mainForm)">Reset form</a>
-            <!--<a href="#!/project-create" class="button " title="Submit" ng-click="this.submitProject()">Submit new project</a>-->
+            <!--<a href="#!/project-create" class="button invert" title="Reset" ng-click="">Reset form</a>-->
+            <button class="button invert" ng-click="$ctrl.resetForm()">Reset form</button>
             <button class="button" ng-click="$ctrl.submitForm()">Submit new project</button>
           </div>
         </fieldset>
