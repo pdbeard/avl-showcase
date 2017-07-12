@@ -2,8 +2,8 @@ angular
   .module('projectDetail')
   .component('projectDetail', {
     templateUrl: 'project-detail/project-detail.template.html',
-    controller: ['$routeParams', 'Api', 'Authentication',
-      function ProjectDetailController($routeParams, Api, Authentication) {
+    controller: ['$routeParams', '$location', 'Api', 'Authentication',
+      function ProjectDetailController($routeParams, $location, Api, Authentication) {
         this.projectId = $routeParams.projectId;
         this.project = {};
         this.peopleObjects = [];
@@ -14,6 +14,22 @@ angular
         this.disciplines = [];
         this.disciplineNames = [];
         this.isAdmin = () => Authentication.isAdmin();
+
+        this.deleteProject = () => {
+          const api = new Api(`/projects/${this.projectId}`);
+          api.delete().then((response) => {
+            console.log(response);
+            console.log('project deleted!');
+            $location.url('/projects');
+            // $scope.successTextAlert = 'Project Deleted!';
+            // $scope.showSuccessAlert = true;
+          }, (e) => {
+            console.warn(e);
+            window.alert('Deleting the post failed.');
+            // $scope.failTextAlert = 'Deleting the projected failed.';
+            // $scope.showFailAlert = true;
+          });
+        };
 
         this.createPeopleObjects = () => {
           const peopleStrings = this.project.people.split(';');

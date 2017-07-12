@@ -3,6 +3,7 @@ describe('projectDetail', () => {
 
   describe('ProjectDetailController', () => {
     let $httpBackend;
+    let $location;
     let ctrl;
     const url = 'http://localhost:8080';
     const mockProject = { campus_ids: [1, 3], category_ids: [2, 3], discipline_ids: [1, 2], tags: ['definition', 'Versatile'], id: 'fe4cb1d025bd7c4bbd7845ffd36a2f2045b246f5', title: 'Tin', description: 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.\n\nDuis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.', year: 2010, url: 'http://reuters.com/accumsan/odio/curabitur/convallis.html', people: 'Victor--Gomez' };
@@ -33,10 +34,12 @@ describe('projectDetail', () => {
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service and assign it to a variable with the same name
     // as the service while avoiding a name conflict.
-    beforeEach(inject(($componentController, _$httpBackend_, $routeParams) => {
+    beforeEach(inject(($componentController, _$httpBackend_, $routeParams, _$location_) => {
       $httpBackend = _$httpBackend_;
       $routeParams.projectId = '000';
       ctrl = $componentController('projectDetail');
+      $location = _$location_;
+      spyOn($location, 'url').and.returnValue(`/projects/${ctrl.projectId}`);
     }));
 
     it('should get project id from routeParams', () => {
@@ -105,5 +108,14 @@ describe('projectDetail', () => {
       ctrl.createDisciplineNames();
       expect(ctrl.disciplineNames).toEqual(mockDisciplineNames);
     });
+
+    // not sure how to test delete
+    // it('should delete project', () => {
+    //   expect($location.url()).toEqual(`/projects/${ctrl.projectId}`);
+    //   ctrl.deleteProject();
+    //   $httpBackend.expectDELETE(`${url}/projects/${ctrl.projectId}`).respond({ status: 204 });
+    //   $httpBackend.flush();
+    //   expect($location.url()).toEqual('/projects');
+    // });
   });
 });
