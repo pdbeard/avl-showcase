@@ -11,6 +11,9 @@ angular
         .when('/projects/:projectId', {
           template: '<project-detail></project-detail>',
         })
+        .when('/projects/:projectId/edit', {
+          template: '<project-edit></project-edit>',
+        })
         .when('/project-create', {
           template: '<project-create></project-create>',
         })

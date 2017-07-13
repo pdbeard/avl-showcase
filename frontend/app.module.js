@@ -4,4 +4,5 @@ angular.module('showcaseApp', [
   'projectDetail',
   'loginButton',
   'projectCreate',
+  'projectEdit',
 ]);
