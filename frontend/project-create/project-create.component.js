@@ -2,8 +2,8 @@ angular
   .module('projectCreate')
   .component('projectCreate', {
     templateUrl: 'project-create/project-create.template.html',
-    controller: ['Api', 'Authentication', '$q',
-      function ProjectCreateController(Api, Authentication, $q) {
+    controller: ['Api', 'Authentication', '$q','$location',
+      function ProjectCreateController(Api, Authentication, $q, $location) {
         const self = this;
         const EMPTY_PROJECT = {
           title: '',
@@ -32,7 +32,9 @@ angular
 
         this.project = angular.copy(EMPTY_PROJECT);
         this.form = angular.copy(EMPTY_FORM);
-        this.isAdmin = () => Authentication.isAdmin();
+        this.authentication = Authentication;
+
+        this.goToProjects = () => $location.url('/projects');
 
         const submitProject = function submitProject() {
           const api = new Api('/projects');

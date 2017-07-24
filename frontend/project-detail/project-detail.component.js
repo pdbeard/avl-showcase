@@ -13,7 +13,10 @@ angular
         this.categoryNames = [];
         this.disciplines = [];
         this.disciplineNames = [];
-        this.isAdmin = () => Authentication.isAdmin();
+        this.authentication = Authentication;
+
+        this.goToProjects = () => $location.url('/projects');
+        this.goToEdit = () => $location.url(`/projects/${this.projectId}/edit`);
 
         this.deleteProject = () => {
           const api = new Api(`/projects/${this.projectId}`);

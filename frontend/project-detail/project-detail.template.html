@@ -52,13 +52,11 @@
             </dd>
           </dl>
 
-          <div class="cta text-center section bg-gray" ng-if="$ctrl.isAdmin()">
+          <div class="cta text-center section bg-gray" ng-if="$ctrl.authentication.isAdmin">
             <h4>Modify this project</h4>
             <ul class="button-group cta">
               <li>
-                <a ng-href="../#!/projects/{{$ctrl.projectId}}/edit" class="button invert" title="Edit project">
-                  Edit project
-                </a>
+                <button class="button invert" ng-click="$ctrl.goToEdit()">Edit project</button>
               </li>
               <li>
                 <button class="button invert" ng-click="$ctrl.deleteProject()">Delete project</button>
@@ -66,7 +64,7 @@
             </ul>
           </div>
           <div class="section">
-            <a href="../#!/projects" class="button " title="Return to search">Return to search</a>
+            <button class="button" ng-click="$ctrl.goToProjects()">Return to search</button>
           </div>
         </div>
       </div>

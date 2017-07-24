@@ -1,16 +1,22 @@
+/* eslint no-param-reassign: "off" */
 angular
   .module('loginButton')
   .component('loginButton', {
     templateUrl: 'login-button/login-button.template.html',
-    controller: ['Authentication', '$window', '$http', '$scope', function LoginButtonController(Authentication, $window, $http, $scope) {
-      this.isAdmin = false;
+    controller: ['Authentication', '$window', '$location', '$http', '$scope', function LoginButtonController(Authentication, $window, $location, $http, $scope) {
+      const self = this;
+      this.authentication = Authentication;
       this.authenticateAsAdmin = function authenticateAsAdmin() {
-        if (!Authentication.isAdmin()) {
+        if (!this.authentication.isAdmin) {
           const host = $window.location.host;
           const hash = $window.location.hash;
           const cas = 'https://cas.iu.edu/cas/login?cassvc=IU&casurl=';
           $window.location.assign(`${cas}http://${host}/${hash}`);
         }
+      };
+
+      this.goToProjectCreate = function goToProjectCreate() {
+        $location.url('/project-create');
       };
 
       const checkForCasTicket = function checkForCasTicket() {
@@ -28,14 +34,10 @@ angular
           // });
 
           // assume valid ticket because of above error
-          Authentication.authenticateAsAdmin();
+          self.authentication.isAdmin = true;
         }
       };
 
-      $scope.$watch(() => Authentication.isAdmin(), (oldVal, newVal) => {
-        this.isAdmin = newVal;
-      });
-
-      checkForCasTicket();
+      if (!this.authentication.isAdmin) checkForCasTicket();
     }],
   });

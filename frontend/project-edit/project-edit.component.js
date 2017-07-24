@@ -2,8 +2,8 @@ angular
   .module('projectEdit')
   .component('projectEdit', {
     templateUrl: 'project-edit/project-edit.template.html',
-    controller: ['Api', 'Authentication', '$q', '$routeParams',
-      function ProjectEditController(Api, Authentication, $q, $routeParams) {
+    controller: ['Api', 'Authentication', '$q', '$routeParams', '$location',
+      function ProjectEditController(Api, Authentication, $q, $routeParams, $location) {
         const self = this;
         const EMPTY_PROJECT = {
           title: '',
@@ -33,7 +33,9 @@ angular
         this.projectId = $routeParams.projectId;
         this.project = angular.copy(EMPTY_PROJECT);
         this.form = angular.copy(EMPTY_FORM);
-        this.isAdmin = () => Authentication.isAdmin();
+        this.authentication = Authentication;
+
+        this.goToProjects = () => $location.url('/projects');
 
         const getCampuses = () => {
           const api = new Api('/campuses');

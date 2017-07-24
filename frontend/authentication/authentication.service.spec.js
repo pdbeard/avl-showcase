@@ -6,8 +6,8 @@ describe('Authentication', () => {
   }));
 
   it('should set and report authentication status', function() {
-    expect(Authentication.isAdmin()).toBe(false);
-    Authentication.authenticateAsAdmin();
-    expect(Authentication.isAdmin()).toBe(true);
+    expect(Authentication.isAdmin).toBe(false);
+    Authentication.isAdmin = true;
+    expect(Authentication.isAdmin).toBe(true);
   });
 });

@@ -2,112 +2,103 @@
   <section class="section">
     <div class="row">
       <form novalidate>
+        <h3>Create New Project</h3>
+        <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted }">
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="title">Title</label>
+            </div>
+            <div class="form-item-input">
+              <input type="text" name="uTitle" id="title" ng-model="$ctrl.project.title" required="" placeholder="Enter a title">
+            </div>
+            <div ng-show="mainForm.$submitted ">
+              <div ng-show="mainForm.uTitle.$error.required" class="help-block">Please choose a title.</div>
+            </div>
+          </div>
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="campus">Campus</label>
+            </div>
+            <div class="form-item-input">
+              <ul>
+                <li ng-repeat="campus in $ctrl.form.campusCheckboxes">
+                  <input type="checkbox" id="{{campus.id}}" value="{{campus.id}}" ng-model="$ctrl.form.campusCheckboxes[$index].checked">
+                  <label for="{{campus.id}}">{{campus.name}}</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="campus">Category</label>
+            </div>
+            <div class="form-item-input">
+              <ul>
+                <li ng-repeat="category in $ctrl.form.categoryCheckboxes">
+                  <input type="checkbox" id="{{cateogry.id}}" value="{{category.id}}" ng-model="$ctrl.form.categoryCheckboxes[$index].checked">
+                  <label for="{{category.id}}">{{category.name}}</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="campus">Discipline</label>
+            </div>
+            <div class="form-item-input">
+              <ul>
+                <li ng-repeat="discipline in $ctrl.form.disciplineCheckboxes">
+                  <input type="checkbox" id="{{discipline.id}}" value="{{discipline.id}}" ng-model="$ctrl.form.disciplineCheckboxes[$index].checked">
+                  <label for="{{discipline.id}}">{{discipline.name}}</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="description">Description</label>
+            </div>
+            <div class="form-item-input">
+              <textarea id="description" rows="4" ng-model="$ctrl.project.description" name="uDescription" placeholder="Enter a short description of the project"></textarea>
+            </div>
+            <div ng-show="mainForm.$submitted || mainForm.uDescription.$touched">
+              <div ng-show="mainForm.uDescription.$error.required" class="help-block">Please type a description.</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="year">Year</label>
+            </div>
+            <div class="form-item-input">
+              <input type="text" class="form-control" id="year" name="uYear" ng-model="$ctrl.project.year" placeholder="Enter year as YYYY"
+                required="">
+            </div>
+            <div ng-show="mainForm.$submitted || mainForm.uYear.$touched">
+              <div ng-show="mainForm.uYear.$error.required" class="help-block">Please choose a year.</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="url">URL</label>
+            </div>
+            <div class="form-item-input">
+              <input type="text" class="form-control" id="URL" name="uURL" ng-model="$ctrl.project.url" placeholder="Enter the project page URL"
+                required="">
+            </div>
+            <div ng-show="mainForm.$submitted || mainForm.uURL.$touched">
+              <div ng-show="mainForm.uURL.$error.required" class="help-block">Please share a URL.</div>
+            </div>
+          </div>
+        </div>
         <fieldset class="fieldset">
-          <legend>Create new project</legend>
-          <h3>Create New Project</h3>
-          <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted }">
-            <div class="form-item">
-              <div class="form-item-label">
-                <label for="title">Title</label>
-              </div>
-              <div class="form-item-input">
-                <input type="text" name="uTitle" id="title" ng-model="$ctrl.project.title" required="" placeholder="Enter a title">
-              </div>
-              <div ng-show="mainForm.$submitted ">
-                <div ng-show="mainForm.uTitle.$error.required" class="help-block">Please choose a title.</div>
-              </div>
-            </div>
-            <div class="form-item">
-              <div class="form-item-label">
-                <label for="campus">Campus</label>
-              </div>
-              <div class="form-item-input">
-                <ul>
-                  <li ng-repeat="campus in $ctrl.form.campusCheckboxes">
-                    <input type="checkbox" id="{{campus.id}}" value="{{campus.id}}" ng-model="$ctrl.form.campusCheckboxes[$index].checked">
-                    <label for="{{campus.id}}">{{campus.name}}</label>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="form-item">
-              <div class="form-item-label">
-                <label for="campus">Category</label>
-              </div>
-              <div class="form-item-input">
-                <ul>
-                  <li ng-repeat="category in $ctrl.form.categoryCheckboxes">
-                    <input type="checkbox" id="{{cateogry.id}}" value="{{category.id}}" ng-model="$ctrl.form.categoryCheckboxes[$index].checked">
-                    <label for="{{category.id}}">{{category.name}}</label>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="form-item">
-              <div class="form-item-label">
-                <label for="campus">Discipline</label>
-              </div>
-              <div class="form-item-input">
-                <ul>
-                  <li ng-repeat="discipline in $ctrl.form.disciplineCheckboxes">
-                    <input type="checkbox" id="{{discipline.id}}" value="{{discipline.id}}" ng-model="$ctrl.form.disciplineCheckboxes[$index].checked">
-                    <label for="{{discipline.id}}">{{discipline.name}}</label>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
-            <div class="form-item">
-              <div class="form-item-label">
-                <label for="description">Description</label>
-              </div>
-              <div class="form-item-input">
-                <textarea id="description" rows="4" ng-model="$ctrl.project.description" name="uDescription" placeholder="Enter a short description of the project"></textarea>
-              </div>
-              <div ng-show="mainForm.$submitted || mainForm.uDescription.$touched">
-                <div ng-show="mainForm.uDescription.$error.required" class="help-block">Please type a description.</div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
-            <div class="form-item">
-              <div class="form-item-label">
-                <label for="year">Year</label>
-              </div>
-              <div class="form-item-input">
-                <input type="text" class="form-control" id="year" name="uYear" ng-model="$ctrl.project.year" placeholder="Enter year as YYYY"
-                  required="">
-              </div>
-              <div ng-show="mainForm.$submitted || mainForm.uYear.$touched">
-                <div ng-show="mainForm.uYear.$error.required" class="help-block">Please choose a year.</div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
-            <div class="form-item">
-              <div class="form-item-label">
-                <label for="url">URL</label>
-              </div>
-              <div class="form-item-input">
-                <input type="text" class="form-control" id="URL" name="uURL" ng-model="$ctrl.project.url" placeholder="Enter the project page URL"
-                  required="">
-              </div>
-              <div ng-show="mainForm.$submitted || mainForm.uURL.$touched">
-                <div ng-show="mainForm.uURL.$error.required" class="help-block">Please share a URL.</div>
-              </div>
-            </div>
-          </div>
+          <legend>People</legend>
           <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uFirstname.$touched }">
-            <div class="form-item">
-              <div class="form-item-label">
-                <label for="add_person">People</label>
-              </div>
-              <div class="form-item-input">
-                <!--<a href="#" class="button invert" title="Add person" ng-click="form.peopleObjects.push({name_first: '', name_last: ''})">Add person</a>-->
-                <button class="button invert" ng-click="$ctrl.form.peopleObjects.push({name_first: '', name_last: ''})">Add person</button>
-              </div>
-            </div>
             <div class="grid halves form-item" ng-repeat="person in $ctrl.form.peopleObjects">
               <div class="grid-item">
                 <div class="form-item-label">
@@ -132,50 +123,63 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uTags.$touched }">
             <div class="form-item">
-              <div class="form-item-label">
-                <label for="tags" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">Tags</label>
-              </div>
+              <br>
               <div class="form-item-input">
-                <input type="text" name="uTags" id="tags" ng-model="$ctrl.form.tagsString" placeholder="Enter tags separated by commas" />
-              </div>
-              <div ng-show="mainForm.$submitted || mainForm.uTags.$touched">
-                <div ng-show="mainForm.uTags.$error.required" class="help-block">Please add Tags.</div>
+                <button class="button invert" ng-click="$ctrl.form.peopleObjects.push({name_first: '', name_last: ''})">Add person</button>
               </div>
             </div>
           </div>
+        </fieldset>
+        <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uTags.$touched }">
           <div class="form-item">
             <div class="form-item-label">
-              <label for="file-upload">Upload an image</label>
+              <label for="tags" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">Tags</label>
+            </div>
+            <div class="form-item-input">
+              <input type="text" name="uTags" id="tags" ng-model="$ctrl.form.tagsString" placeholder="Enter tags separated by commas" />
+            </div>
+            <div ng-show="mainForm.$submitted || mainForm.uTags.$touched">
+              <div ng-show="mainForm.uTags.$error.required" class="help-block">Please add Tags.</div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="form-item">
+          <div class="form-item-label">
+            <label for="file-upload">Upload an image</label>
+          </div>
+          <div class="form-item-input">
+            <input type="file" accept="image/*" name="file-upload" id="file-upload" blob="$ctrl.form.imageData" />
+          </div>
+        </div> -->
+        <fieldset class="fieldset">
+          <legend>Image</legend>
+          <div class="form-item">
+            <div class="form-item-label">
+              <label ng-if="!$ctrl.project.image_ref" for="file-upload">Upload an image</label>
             </div>
             <div class="form-item-input">
               <input type="file" accept="image/*" name="file-upload" id="file-upload" blob="$ctrl.form.imageData" />
             </div>
           </div>
-          <div>
-            <!--<a href="#!/project-create" class="button invert" title="Reset" ng-click="">Reset form</a>-->
-            <button class="button invert" ng-click="$ctrl.resetForm()">Reset form</button>
-            <button class="button" ng-click="$ctrl.submitForm()">Submit new project</button>
-          </div>
         </fieldset>
+        <div>
+          <button class="button invert" ng-click="$ctrl.resetForm()">Reset form</button>
+          <button class="button" ng-click="$ctrl.submitForm()">Submit new project</button>
+        </div>
       </form>
     </div>
     <div class="content">
-      <div class="cta text-center section bg-gray" ng-if="$ctrl.isAdmin()">
+      <div class="cta text-center section bg-gray" ng-if="$ctrl.authentication.isAdmin">
         <h4>Create this project</h4>
         <ul class="button-group cta">
           <li>
-            <!--<a href="#" class="button invert" title="Edit project" ng-click="this.submitProject()">
-              Submit
-            </a>-->
             <button class="button" ng-click="$ctrl.submitForm()">Submit</button>
           </li>
         </ul>
       </div>
       <div class="section">
-        <a href="../#!/projects" class="button " title="Return to search">Return to search</a>
+        <button class="button" ng-click="$ctrl.goToProjects()">Return to search</button>
       </div>
     </div>
   </section>
