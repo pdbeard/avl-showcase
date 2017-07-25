@@ -1,13 +1,9 @@
 /*
 Crimson #990000
 Cream #EDEBEB
-
 */
 
-
-
 /* Space out content a bit */
-
 .crimson{
   background-color:#990000;
   padding:2em 0em 1em 6em;
@@ -15,7 +11,7 @@ Cream #EDEBEB
 .quote{}
 
 body {
-  padding-top: 20px;
+  /*padding-top: 20px;*/
   padding-bottom: 20px;
   overflow:auto;
 }
@@ -117,7 +113,6 @@ form {
     -o-transition: all 1s ease;
     -ms-transition: all 1s ease;
     transition: all 1s ease;
-    
     border:2px solid#e5e5e5;
 }
 
@@ -309,28 +304,7 @@ form {
 
 
 .image-thumbnail-detailed{
-  /*max-width:100%;*/
-  /*max-height:100%;*/
-  /*display:block;*/
-
-  /*position:static;*/
-  
-  /*padding-top:2.3vw;*/
-  /*margin-top:2.3vw;*/
-  
-  /*margin:auto;*/
-  /*position:absolute;*/
-  /*top:0; left:0; bottom: 0; right: 0;*/
-
-  /*max-height:100%;*/
   width:100%;
-   /*vertical-align: middle;*/
-
-  /*padding-right:0px !important;*/
-  /*padding-left:0px !important; */
-
-  
-
 }
 
 
@@ -364,4 +338,10 @@ col-centered{
 
 .shadow-5 {
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+/****************************   IU BRAND OVERRIDE  *******************************/
+
+#branding-bar {
+  position: initial;
 }
