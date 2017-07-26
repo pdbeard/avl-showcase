@@ -47,7 +47,7 @@ angular
 
             // check boxes that belong to this project
             this.project.campus_ids.forEach((campusId) => {
-              this.form.campusCheckboxes.find(campus => campus.id === campusId).checked = 'checked';
+              this.form.campusCheckboxes.find(campus => campus.id === campusId).checked = true;
             });
           }, (e) => {
             console.warn(e);
@@ -65,7 +65,7 @@ angular
 
             // check boxes that belong to this project
             this.project.category_ids.forEach((categoryId) => {
-              this.form.categoryCheckboxes.find(category => category.id === categoryId).checked = 'checked';
+              this.form.categoryCheckboxes.find(category => category.id === categoryId).checked = true;
             });
           }, (e) => {
             console.warn(e);
@@ -83,7 +83,7 @@ angular
 
             // check boxes that belong to this project
             this.project.discipline_ids.forEach((disciplineId) => {
-              this.form.disciplineCheckboxes.find(discipline => discipline.id === disciplineId).checked = 'checked';
+              this.form.disciplineCheckboxes.find(discipline => discipline.id === disciplineId).checked = true;
             });
           }, (e) => {
             console.warn(e);
@@ -119,7 +119,7 @@ angular
           });
         };
 
-        const submitProject = function submitProject() {
+        const submitProject = () => {
           const api = new Api(`/project/${self.project.id}/edit`);
 
           // convert people objects into strings
@@ -155,7 +155,7 @@ angular
             }
           });
 
-          api.put(self.project).then((response) => {
+          api.put(self.project).then(() => {
             console.log('edit successful');
             // $scope.successTextAlert = 'Project edited.';
             // $scope.showSuccessAlert = true;
@@ -200,7 +200,7 @@ angular
           }
         };
 
-        this.resetForm = function () {
+        this.resetForm = () => {
           // this.project = angular.copy(EMPTY_PROJECT);
           // this.form = angular.copy(EMPTY_FORM);
           // this.form.campusCheckboxes = angular.copy(campuses);

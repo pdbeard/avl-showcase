@@ -22,7 +22,7 @@
             <div class="form-item-input">
               <ul>
                 <li ng-repeat="campus in $ctrl.form.campusCheckboxes">
-                  <input type="checkbox" id="{{campus.id}}" value="{{campus.id}}" ng-model="$ctrl.form.campusCheckboxes[$index].checked">
+                  <input type="checkbox" id="{{campus.id}}" value="{{campus.id}}" ng-model="campus.checked">
                   <label for="{{campus.id}}">{{campus.name}}</label>
                 </li>
               </ul>
@@ -35,7 +35,7 @@
             <div class="form-item-input">
               <ul>
                 <li ng-repeat="category in $ctrl.form.categoryCheckboxes">
-                  <input type="checkbox" id="{{cateogry.id}}" value="{{category.id}}" ng-model="$ctrl.form.categoryCheckboxes[$index].checked">
+                  <input type="checkbox" id="{{cateogry.id}}" value="{{category.id}}" ng-model="category.checked">
                   <label for="{{category.id}}">{{category.name}}</label>
                 </li>
               </ul>
@@ -48,7 +48,7 @@
             <div class="form-item-input">
               <ul>
                 <li ng-repeat="discipline in $ctrl.form.disciplineCheckboxes">
-                  <input type="checkbox" id="{{discipline.id}}" value="{{discipline.id}}" ng-model="$ctrl.form.disciplineCheckboxes[$index].checked">
+                  <input type="checkbox" id="{{discipline.id}}" value="{{discipline.id}}" ng-model="discipline.checked">
                   <label for="{{discipline.id}}">{{discipline.name}}</label>
                 </li>
               </ul>
