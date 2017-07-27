@@ -18,7 +18,6 @@ angular
           people: '',
         };
         const EMPTY_FORM = {
-          tagsString: '',
           peopleObjects: [],
           peopleStrings: [],
           campusCheckboxes: [],
@@ -36,6 +35,10 @@ angular
 
         this.goToProjects = () => $location.url('/projects');
 
+        this.updateTags = (tagsArray) => {
+          this.project.tags = tagsArray;
+        };
+
         const submitProject = function submitProject() {
           const api = new Api('/projects');
 
@@ -44,9 +47,6 @@ angular
 
           // convert people strings into single string
           self.project.people = self.form.peopleStrings.join(';');
-
-          // convert tags string into array
-          self.project.tags = self.form.tagsString.split(/\s*,\s*/);
 
           // add campuses to campus_ids if checked
           // $scope.formdata.campus_ids = [];

@@ -33,7 +33,6 @@ describe('projectCreate', () => {
       people: '',
     };
     const EMPTY_FORM = {
-      tagsString: '',
       peopleObjects: [],
       peopleStrings: [],
       campusCheckboxes: [],
@@ -50,7 +49,7 @@ describe('projectCreate', () => {
       campus_ids: [],
       category_ids: [],
       discipline_ids: [],
-      tags: [],
+      tags: ['tag1', 'tag2'],
       people: '',
     };
     const mockProjectPostSubmit = {

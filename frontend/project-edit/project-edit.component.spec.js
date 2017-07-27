@@ -33,7 +33,6 @@ describe('projectEdit', () => {
       people: '',
     };
     const EMPTY_FORM = {
-      tagsString: '',
       peopleObjects: [],
       peopleStrings: [],
       campusCheckboxes: [],
@@ -62,11 +61,10 @@ describe('projectEdit', () => {
       campus_ids: [3],
       category_ids: [2, 3],
       discipline_ids: [1, 2],
-      tags: ['tag1', 'tag2', 'tag3'],
+      tags: ['tag1', 'tag2'],
       people: 'fName1--lName1;fName2--lName2;fName3--lName3',
     };
     const mockForm = {
-      tagsString: 'tag1, tag2',
       peopleObjects: [
         {
           name_first: 'fName1',
@@ -96,7 +94,6 @@ describe('projectEdit', () => {
       imageData: null,
     };
     const mockFormEdited = {
-      tagsString: 'tag1, tag2, tag3',
       peopleObjects: [
         {
           name_first: 'fName1',

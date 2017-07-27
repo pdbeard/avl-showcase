@@ -132,18 +132,18 @@
           </div>
         </fieldset>
         <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uTags.$touched }">
-          <div class="form-item">
-            <div class="form-item-label">
-              <label for="tags" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">Tags</label>
-            </div>
-            <div class="form-item-input">
-              <input type="text" name="uTags" id="tags" ng-model="$ctrl.form.tagsString" placeholder="Enter tags separated by commas" />
-            </div>
-            <div ng-show="mainForm.$submitted || mainForm.uTags.$touched">
-              <div ng-show="mainForm.uTags.$error.required" class="help-block">Please add Tags.</div>
+            <div class="form-item">
+              <div class="form-item-label">
+                <label for="tags" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">Tags</label>
+              </div>
+              <div class="form-item-input">
+                <input-choices on-update="$ctrl.updateTags(tagsArray)"></input-choices>
+              </div>
+              <div ng-show="mainForm.$submitted || mainForm.uTags.$touched">
+                <div ng-show="mainForm.uTags.$error.required" class="help-block">Please add Tags.</div>
+              </div>
             </div>
           </div>
-        </div>
         <!-- <div class="form-item">
           <div class="form-item-label">
             <label for="file-upload">Upload an image</label>

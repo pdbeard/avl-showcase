@@ -24,15 +24,13 @@
     },
     "ecmaVersion": 6,
     "globals": {
-      "angular": false
+      "angular": false,
+      "Choices": false
     }
   },
   "scripts": {
     "serve": "node ./node_modules/browser-sync/bin/browser-sync start --server 'frontend' --files 'frontend'",
     "test": "node ./node_modules/karma/bin/karma start karma.conf.js",
     "test-single-run": "node ./node_modules/karma/bin/karma start karma.conf.js --single-run"
-  },
-  "dependencies": {
-    "choices.js": "^2.7.7"
   }
 }
