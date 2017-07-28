@@ -46,9 +46,9 @@ describe('projectCreate', () => {
       url: 'http://mock.url',
       year: '9999',
       image_ref: null,
-      campus_ids: [],
-      category_ids: [],
-      discipline_ids: [],
+      campus_ids: [1, 3],
+      category_ids: [2, 3],
+      discipline_ids: [1, 2],
       tags: ['tag1', 'tag2'],
       people: '',
     };

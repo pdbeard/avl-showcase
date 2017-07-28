@@ -2,7 +2,7 @@ angular
   .module('projectCreate')
   .component('projectCreate', {
     templateUrl: 'project-create/project-create.template.html',
-    controller: ['Api', 'Authentication', '$q','$location',
+    controller: ['Api', 'Authentication', '$q', '$location',
       function ProjectCreateController(Api, Authentication, $q, $location) {
         const self = this;
         const EMPTY_PROJECT = {
@@ -35,6 +35,23 @@ angular
 
         this.goToProjects = () => $location.url('/projects');
 
+        this.updateSelect = (selectObject) => {
+          switch (selectObject.field) {
+            case 'campus':
+              this.project.campus_ids = selectObject.values;
+              break;
+            case 'category':
+              this.project.category_ids = selectObject.values;
+              break;
+            case 'discipline':
+              this.project.discipline_ids = selectObject.values;
+              console.log(this.project.discipline_ids);
+              break;
+            default:
+              console.log('unrecognized selectObject.field');
+          }
+        };
+
         this.updateTags = (tagsArray) => {
           this.project.tags = tagsArray;
         };
@@ -48,45 +65,23 @@ angular
           // convert people strings into single string
           self.project.people = self.form.peopleStrings.join(';');
 
-          // add campuses to campus_ids if checked
-          // $scope.formdata.campus_ids = [];
-          self.form.campusCheckboxes.forEach((checkbox) => {
-            if (checkbox.checked) {
-              self.project.campus_ids.push(checkbox.id);
-            }
-          });
-
-          // add categories to category_ids if checked
-          // $scope.formdata.category_ids = [];
-          self.form.categoryCheckboxes.forEach((checkbox) => {
-            if (checkbox.checked) {
-              self.project.category_ids.push(checkbox.id);
-            }
-          });
-
-          // add disciplines to discipline_ids if checked
-          // $scope.formdata.discipline_ids = [];
-          self.form.disciplineCheckboxes.forEach((checkbox) => {
-            if (checkbox.checked) {
-              self.project.discipline_ids.push(checkbox.id);
-            }
-          });
-
-          api.post(self.project).then((response) => {
-            // const projects = response.data;
-            // for (let i = 0; i < projects.length; i += 1) {
-            //   $scope.projects.unshift(projects[0]);
-            // }
-            // $scope.successTextAlert = 'Project added';
-            // $scope.showSuccessAlert = true;
-            // resetForm();
-          }, (e) => {
-            console.warn(e);
-            // window.alert('Creating the post failed.');
-            // resetForm();
-            // $scope.failTextAlert = 'Creating the project failed.';
-            // $scope.showFailAlert = true;
-          });
+          console.log('submitProject...');
+          console.log(self.project);
+          // api.post(self.project).then((response) => {
+          //   // const projects = response.data;
+          //   // for (let i = 0; i < projects.length; i += 1) {
+          //   //   $scope.projects.unshift(projects[0]);
+          //   // }
+          //   // $scope.successTextAlert = 'Project added';
+          //   // $scope.showSuccessAlert = true;
+          //   // resetForm();
+          // }, (e) => {
+          //   console.warn(e);
+          //   // window.alert('Creating the post failed.');
+          //   // resetForm();
+          //   // $scope.failTextAlert = 'Creating the project failed.';
+          //   // $scope.showFailAlert = true;
+          // });
         };
 
         const uploadBlob = function (blob) {

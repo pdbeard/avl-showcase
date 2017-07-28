@@ -3,4 +3,5 @@ angular.module('projectCreate', [
   'authentication',
   'blob',
   'inputTags',
+  'selectMultiple',
 ]);

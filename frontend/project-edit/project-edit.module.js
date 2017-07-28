@@ -4,4 +4,5 @@ angular.module('projectEdit', [
   'authentication',
   'blob',
   'inputTags',
+  'selectMultiple',
 ]);

@@ -50,7 +50,7 @@ angular
 
             // check boxes that belong to this project
             this.project.campus_ids.forEach((campusId) => {
-              this.form.campusCheckboxes.find(campus => campus.id === campusId).checked = true;
+              this.form.campusCheckboxes.find(campus => campus.id === campusId).selected = true;
             });
           }, (e) => {
             console.warn(e);
@@ -68,7 +68,7 @@ angular
 
             // check boxes that belong to this project
             this.project.category_ids.forEach((categoryId) => {
-              this.form.categoryCheckboxes.find(category => category.id === categoryId).checked = true;
+              this.form.categoryCheckboxes.find(category => category.id === categoryId).selected = true;
             });
           }, (e) => {
             console.warn(e);
@@ -86,7 +86,7 @@ angular
 
             // check boxes that belong to this project
             this.project.discipline_ids.forEach((disciplineId) => {
-              this.form.disciplineCheckboxes.find(discipline => discipline.id === disciplineId).checked = true;
+              this.form.disciplineCheckboxes.find(discipline => discipline.id === disciplineId).selected = true;
             });
           }, (e) => {
             console.warn(e);

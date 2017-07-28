@@ -17,41 +17,26 @@
           </div>
           <div class="form-item">
             <div class="form-item-label">
-              <label for="campus">Campus</label>
+              <label for="select-item-one">Campus</label>
             </div>
             <div class="form-item-input">
-              <ul>
-                <li ng-repeat="campus in $ctrl.form.campusCheckboxes">
-                  <input type="checkbox" id="{{campus.id}}" value="{{campus.id}}" ng-model="$ctrl.form.campusCheckboxes[$index].checked">
-                  <label for="{{campus.id}}">{{campus.name}}</label>
-                </li>
-              </ul>
+              <select-multiple field="campus" options-objects="$ctrl.form.campusCheckboxes" on-update="$ctrl.updateSelect({ field: field, values: selected })"></select-multiple>
             </div>
           </div>
           <div class="form-item">
             <div class="form-item-label">
-              <label for="campus">Category</label>
+              <label for="select-item-one">Category</label>
             </div>
             <div class="form-item-input">
-              <ul>
-                <li ng-repeat="category in $ctrl.form.categoryCheckboxes">
-                  <input type="checkbox" id="{{cateogry.id}}" value="{{category.id}}" ng-model="$ctrl.form.categoryCheckboxes[$index].checked">
-                  <label for="{{category.id}}">{{category.name}}</label>
-                </li>
-              </ul>
+               <select-multiple field="category" options-objects="$ctrl.form.categoryCheckboxes" on-update="$ctrl.updateSelect({ field: field, values: selected })"></select-multiple>
             </div>
           </div>
           <div class="form-item">
             <div class="form-item-label">
-              <label for="campus">Discipline</label>
+              <label for="select-item-one">Discipline</label>
             </div>
             <div class="form-item-input">
-              <ul>
-                <li ng-repeat="discipline in $ctrl.form.disciplineCheckboxes">
-                  <input type="checkbox" id="{{discipline.id}}" value="{{discipline.id}}" ng-model="$ctrl.form.disciplineCheckboxes[$index].checked">
-                  <label for="{{discipline.id}}">{{discipline.name}}</label>
-                </li>
-              </ul>
+               <select-multiple field="discipline" options-objects="$ctrl.form.disciplineCheckboxes" on-update="$ctrl.updateSelect({ field: field, values: selected })"></select-multiple>
             </div>
           </div>
         </div>
@@ -132,18 +117,18 @@
           </div>
         </fieldset>
         <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uTags.$touched }">
-            <div class="form-item">
-              <div class="form-item-label">
-                <label for="tags" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">Tags</label>
-              </div>
-              <div class="form-item-input">
-                <input-tags on-update="$ctrl.updateTags(tagsArray)"></input-tags>
-              </div>
-              <div ng-show="mainForm.$submitted || mainForm.uTags.$touched">
-                <div ng-show="mainForm.uTags.$error.required" class="help-block">Please add Tags.</div>
-              </div>
+          <div class="form-item">
+            <div class="form-item-label">
+              <label for="tags" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">Tags</label>
+            </div>
+            <div class="form-item-input">
+              <input-tags on-update="$ctrl.updateTags(tagsArray)"></input-tags>
+            </div>
+            <div ng-show="mainForm.$submitted || mainForm.uTags.$touched">
+              <div ng-show="mainForm.uTags.$error.required" class="help-block">Please add Tags.</div>
             </div>
           </div>
+        </div>
         <!-- <div class="form-item">
           <div class="form-item-label">
             <label for="file-upload">Upload an image</label>
