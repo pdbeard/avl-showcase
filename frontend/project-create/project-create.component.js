@@ -36,6 +36,8 @@ angular
         this.goToProjects = () => $location.url('/projects');
 
         this.updateSelect = (selectObject) => {
+          // console.log('create update...');
+          // console.log(selectObject);
           switch (selectObject.field) {
             case 'campus':
               this.project.campus_ids = selectObject.values;
@@ -45,11 +47,11 @@ angular
               break;
             case 'discipline':
               this.project.discipline_ids = selectObject.values;
-              console.log(this.project.discipline_ids);
               break;
             default:
               console.log('unrecognized selectObject.field');
           }
+          // console.log(this.project.discipline_ids);
         };
 
         this.updateTags = (tagsArray) => {
@@ -65,23 +67,21 @@ angular
           // convert people strings into single string
           self.project.people = self.form.peopleStrings.join(';');
 
-          console.log('submitProject...');
-          console.log(self.project);
-          // api.post(self.project).then((response) => {
-          //   // const projects = response.data;
-          //   // for (let i = 0; i < projects.length; i += 1) {
-          //   //   $scope.projects.unshift(projects[0]);
-          //   // }
-          //   // $scope.successTextAlert = 'Project added';
-          //   // $scope.showSuccessAlert = true;
-          //   // resetForm();
-          // }, (e) => {
-          //   console.warn(e);
-          //   // window.alert('Creating the post failed.');
-          //   // resetForm();
-          //   // $scope.failTextAlert = 'Creating the project failed.';
-          //   // $scope.showFailAlert = true;
-          // });
+          api.post(self.project).then((response) => {
+            // const projects = response.data;
+            // for (let i = 0; i < projects.length; i += 1) {
+            //   $scope.projects.unshift(projects[0]);
+            // }
+            // $scope.successTextAlert = 'Project added';
+            // $scope.showSuccessAlert = true;
+            // resetForm();
+          }, (e) => {
+            console.warn(e);
+            // window.alert('Creating the post failed.');
+            // resetForm();
+            // $scope.failTextAlert = 'Creating the project failed.';
+            // $scope.showFailAlert = true;
+          });
         };
 
         const uploadBlob = function (blob) {

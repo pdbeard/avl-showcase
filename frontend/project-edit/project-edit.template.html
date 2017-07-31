@@ -39,45 +39,6 @@
                <select-multiple field="discipline" options-objects="$ctrl.form.disciplineCheckboxes" on-update="$ctrl.updateSelect({ field: field, values: selected })"></select-multiple>
             </div>
           </div>
-          <!-- <div class="form-item">
-            <div class="form-item-label">
-              <label for="campus">Campus</label>
-            </div>
-            <div class="form-item-input">
-              <ul>
-                <li ng-repeat="campus in $ctrl.form.campusCheckboxes">
-                  <input type="checkbox" id="{{campus.id}}" value="{{campus.id}}" ng-model="campus.checked">
-                  <label for="{{campus.id}}">{{campus.name}}</label>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="form-item">
-            <div class="form-item-label">
-              <label for="campus">Category</label>
-            </div>
-            <div class="form-item-input">
-              <ul>
-                <li ng-repeat="category in $ctrl.form.categoryCheckboxes">
-                  <input type="checkbox" id="{{cateogry.id}}" value="{{category.id}}" ng-model="category.checked">
-                  <label for="{{category.id}}">{{category.name}}</label>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="form-item">
-            <div class="form-item-label">
-              <label for="campus">Discipline</label>
-            </div>
-            <div class="form-item-input">
-              <ul>
-                <li ng-repeat="discipline in $ctrl.form.disciplineCheckboxes">
-                  <input type="checkbox" id="{{discipline.id}}" value="{{discipline.id}}" ng-model="discipline.checked">
-                  <label for="{{discipline.id}}">{{discipline.name}}</label>
-                </li>
-              </ul>
-            </div>
-          </div> -->
         </div>
         <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
           <div class="form-item">
@@ -187,10 +148,10 @@
             </div>
           </div>
         </fieldset>
-        <div>
+        <!-- <div>
           <button class="button invert" ng-click="$ctrl.resetForm()">Reset form</button>
           <button class="button" ng-click="$ctrl.submitForm()">Submit changes</button>
-        </div>
+        </div> -->
       </form>
     </div>
     <div class="content">
@@ -198,7 +159,7 @@
         <h4>Edit this project</h4>
         <ul class="button-group cta">
           <li>
-            <button class="button invert" ng-click="$ctrl.resetForm()">Reset form</button>
+            <!-- <button class="button invert" ng-click="$ctrl.resetForm()">Reset form</button> -->
             <button class="button" ng-click="$ctrl.submitForm()">Submit changes</button>
           </li>
         </ul>

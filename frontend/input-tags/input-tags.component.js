@@ -24,8 +24,13 @@ angular
       // also, must clear values before setting new ones
       this.$onChanges = (changesObj) => {
         if (changesObj.tagsArray.currentValue) {
+          // console.log('changes...');
+          // console.log(changesObj.tagsArray.currentValue);
+          // console.log(this.tagsChoices.getValue(true));
           this.tagsChoices.clearStore();
+          // console.log(this.tagsChoices.getValue(true));
           this.tagsChoices.setValue(changesObj.tagsArray.currentValue);
+          // console.log(this.tagsChoices.getValue(true));
         }
       };
 

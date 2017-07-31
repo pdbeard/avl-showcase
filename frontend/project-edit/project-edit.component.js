@@ -36,6 +36,22 @@ angular
 
         this.goToProjects = () => $location.url('/projects');
 
+        this.updateSelect = (selectObject) => {
+          switch (selectObject.field) {
+            case 'campus':
+              this.project.campus_ids = selectObject.values;
+              break;
+            case 'category':
+              this.project.category_ids = selectObject.values;
+              break;
+            case 'discipline':
+              this.project.discipline_ids = selectObject.values;
+              break;
+            default:
+              console.log('unrecognized selectObject.field');
+          }
+        };
+
         this.updateTags = (tagsArray) => {
           this.project.tags = tagsArray;
         };
@@ -129,30 +145,6 @@ angular
 
           // convert people strings into single string
           self.project.people = self.form.peopleStrings.join(';');
-
-          // add campuses to campus_ids if checked
-          self.project.campus_ids = [];
-          self.form.campusCheckboxes.forEach((checkbox) => {
-            if (checkbox.checked) {
-              self.project.campus_ids.push(checkbox.id);
-            }
-          });
-
-          // add categories to category_ids if checked
-          self.project.category_ids = [];
-          self.form.categoryCheckboxes.forEach((checkbox) => {
-            if (checkbox.checked) {
-              self.project.category_ids.push(checkbox.id);
-            }
-          });
-
-          // add disciplines to discipline_ids if checked
-          self.project.discipline_ids = [];
-          self.form.disciplineCheckboxes.forEach((checkbox) => {
-            if (checkbox.checked) {
-              self.project.discipline_ids.push(checkbox.id);
-            }
-          });
 
           api.put(self.project).then(() => {
             console.log('edit successful');

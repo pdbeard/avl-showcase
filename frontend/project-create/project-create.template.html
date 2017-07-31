@@ -122,7 +122,7 @@
               <label for="tags" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">Tags</label>
             </div>
             <div class="form-item-input">
-              <input-tags on-update="$ctrl.updateTags(tagsArray)"></input-tags>
+              <input-tags tags-array="$ctrl.project.tags" on-update="$ctrl.updateTags(tagsArray)"></input-tags>
             </div>
             <div ng-show="mainForm.$submitted || mainForm.uTags.$touched">
               <div ng-show="mainForm.uTags.$error.required" class="help-block">Please add Tags.</div>
@@ -148,10 +148,10 @@
             </div>
           </div>
         </fieldset>
-        <div>
+        <!-- <div>
           <button class="button invert" ng-click="$ctrl.resetForm()">Reset form</button>
           <button class="button" ng-click="$ctrl.submitForm()">Submit new project</button>
-        </div>
+        </div> -->
       </form>
     </div>
     <div class="content">
