@@ -8,51 +8,17 @@
 
   <title>AVL Showcase Prototype</title>
 
+  <!-- library styles -->
   <link href="//www.iu.edu/favicon.ico" rel="shortcut icon" type="image/x-icon" />
   <link href="https://fonts.iu.edu/style.css?family=BentonSans:regular,bold|BentonSansCond:regular|GeorgiaPro:regular" media="screen"
     rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="//assets.iu.edu/web/fonts/icon-font.css" media="screen" type="text/css">
   <link rel="stylesheet" href="//assets.iu.edu/brand/3.x/brand.css" type="text/css">
   <link type="text/css" rel="stylesheet" href="//assets.iu.edu/web/3.x/css/iu-framework.min.css">
-  <!-- <link type="text/css" rel="stylesheet" href="https://unpkg.com/choices.js@2.8.10/assets/styles/css/base.min.css"> -->
   <link type="text/css" rel="stylesheet" href="https://unpkg.com/choices.js@2.8.10/assets/styles/css/choices.min.css">
 
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-    crossorigin="anonymous"></script>
+  <!-- custom styles -->
   <link type="text/css" rel="stylesheet" href="custom.css" />
-  <!--<script type="application/javascript" src="angular.js"></script>-->
-  <!--<script type="application/javascript" src="app.js"></script>-->
-  <!--<script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>-->
-
-  <script type="application/javascript" src="https://unpkg.com/choices.js@2.8.10"></script>
-  <script type="application/javascript" src="angular.min.js"></script>
-  <script type="application/javascript" src="angular-route.min.js"></script>
-  <script type="application/javascript" src="app.module.js"></script>
-  <script type="application/javascript" src="app.config.js"></script>
-  <script type="application/javascript" src="api-host/api-host.module.js"></script>
-  <script type="application/javascript" src="api-host/api-host.value.js"></script>
-  <script type="application/javascript" src="api-url/api-url.module.js"></script>
-  <script type="application/javascript" src="api-url/api-url.service.js"></script>
-  <script type="application/javascript" src="api/api.module.js"></script>
-  <script type="application/javascript" src="api/api.service.js"></script>
-  <script type="application/javascript" src="authentication/authentication.module.js"></script>
-  <script type="application/javascript" src="authentication/authentication.service.js"></script>
-  <script type="application/javascript" src="blob/blob.module.js"></script>
-  <script type="application/javascript" src="blob/blob.directive.js"></script>
-  <script type="application/javascript" src="input-tags/input-tags.module.js"></script>
-  <script type="application/javascript" src="input-tags/input-tags.component.js"></script>
-  <script type="application/javascript" src="login-button/login-button.module.js"></script>
-  <script type="application/javascript" src="login-button/login-button.component.js"></script>
-  <script type="application/javascript" src="project-create/project-create.module.js"></script>
-  <script type="application/javascript" src="project-create/project-create.component.js"></script>
-  <script type="application/javascript" src="project-edit/project-edit.module.js"></script>
-  <script type="application/javascript" src="project-edit/project-edit.component.js"></script>
-  <script type="application/javascript" src="project-detail/project-detail.module.js"></script>
-  <script type="application/javascript" src="project-detail/project-detail.component.js"></script>
-  <script type="application/javascript" src="project-list/project-list.module.js"></script>
-  <script type="application/javascript" src="project-list/project-list.component.js"></script>
-  <script type="application/javascript" src="select-multiple/select-multiple.module.js"></script>
-  <script type="application/javascript" src="select-multiple/select-multiple.component.js"></script>
 </head>
 
 <body>
@@ -95,6 +61,39 @@
     <!-- /.inner-wrap -->
   </div>
   <!-- /.off-canvas-wrap -->
+
+  <!-- libraries -->
+  <script type="application/javascript" src="https://unpkg.com/angular@1.6.5/angular.min.js"></script>
+  <script type="application/javascript" src="https://unpkg.com/angular-route@1.6.5/angular-route.min.js"></script>
+  <script type="application/javascript" src="https://unpkg.com/choices.js@2.8.10"></script>
+
+  <!-- modules -->
+  <script type="application/javascript" src="app.module.js"></script>
+  <script type="application/javascript" src="app.config.js"></script>
+  <script type="application/javascript" src="api-host/api-host.module.js"></script>
+  <script type="application/javascript" src="api-host/api-host.value.js"></script>
+  <script type="application/javascript" src="api-url/api-url.module.js"></script>
+  <script type="application/javascript" src="api-url/api-url.service.js"></script>
+  <script type="application/javascript" src="api/api.module.js"></script>
+  <script type="application/javascript" src="api/api.service.js"></script>
+  <script type="application/javascript" src="authentication/authentication.module.js"></script>
+  <script type="application/javascript" src="authentication/authentication.service.js"></script>
+  <script type="application/javascript" src="blob/blob.module.js"></script>
+  <script type="application/javascript" src="blob/blob.directive.js"></script>
+  <script type="application/javascript" src="input-tags/input-tags.module.js"></script>
+  <script type="application/javascript" src="input-tags/input-tags.component.js"></script>
+  <script type="application/javascript" src="login-button/login-button.module.js"></script>
+  <script type="application/javascript" src="login-button/login-button.component.js"></script>
+  <script type="application/javascript" src="project-create/project-create.module.js"></script>
+  <script type="application/javascript" src="project-create/project-create.component.js"></script>
+  <script type="application/javascript" src="project-edit/project-edit.module.js"></script>
+  <script type="application/javascript" src="project-edit/project-edit.component.js"></script>
+  <script type="application/javascript" src="project-detail/project-detail.module.js"></script>
+  <script type="application/javascript" src="project-detail/project-detail.component.js"></script>
+  <script type="application/javascript" src="project-list/project-list.module.js"></script>
+  <script type="application/javascript" src="project-list/project-list.component.js"></script>
+  <script type="application/javascript" src="select-multiple/select-multiple.module.js"></script>
+  <script type="application/javascript" src="select-multiple/select-multiple.component.js"></script>
 </body>
 
 </html>
