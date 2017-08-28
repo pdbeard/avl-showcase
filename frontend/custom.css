@@ -26,3 +26,34 @@
 #branding-bar {
   position: initial;
 }
+
+/* choices override */
+div .choices__list--multiple .choices__item {
+  background-color: #008264;
+  border-color: #008264;
+}
+
+/* how to change selected color? */
+/* div .choices__list--multiple .choices__item is-highlighted{
+  background-color: #171A1A;
+  border-color: #008264;
+} */
+
+.choices[data-type*="select-multiple"] .choices__button, .choices[data-type*="text"] .choices__button {
+  border-left: 0px none;
+}
+
+.choices__input {
+  background-color: #fefefe;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100% !important;
+  padding: .5rem;
+  margin: 0 0 1rem;
+}
+
+div .choices__inner {
+  background-color: white;
+  border: 0;
+  padding: 0;
+}
