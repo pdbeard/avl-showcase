@@ -6,12 +6,11 @@ angular
     controller: ['Authentication', '$window', '$location', '$http', '$scope', function LoginButtonController(Authentication, $window, $location, $http, $scope) {
       const self = this;
       this.authentication = Authentication;
+
       this.authenticateAsAdmin = function authenticateAsAdmin() {
         if (!this.authentication.isAdmin) {
-          const host = $window.location.host;
-          const hash = $window.location.hash;
           const cas = 'https://cas.iu.edu/cas/login?cassvc=IU&casurl=';
-          $window.location.assign(`${cas}http://${host}/${hash}`);
+          $window.location.assign(`${cas}${$location.absUrl()}`);
         }
       };
 
