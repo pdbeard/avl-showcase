@@ -4,8 +4,7 @@
       <div class="feature">
         <figure class="media image">
           <img ng-if="!$ctrl.project.image_ref" src="https://placehold.it/1024x512" alt="" class="image-thumbnail-detailed">
-          <!-- hard-coded php server address -- fix in future -->
-          <img ng-if="$ctrl.project.image_ref" ng-src="http://localhost:8080/image/{{ $ctrl.project.image_ref }}" class="image-thumbnail-detailed">
+          <img ng-if="$ctrl.project.image_ref" ng-src="{{$ctrl.apiHost}}/image/{{ $ctrl.project.image_ref }}" class="image-thumbnail-detailed">
         </figure>
         <div class="content">
           <h2 class="title">{{ $ctrl.project.title }}</h2>

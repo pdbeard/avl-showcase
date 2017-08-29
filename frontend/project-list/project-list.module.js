@@ -1,1 +1,1 @@
-angular.module('projectList', ['api']);
+angular.module('projectList', ['api', 'apiHost']);

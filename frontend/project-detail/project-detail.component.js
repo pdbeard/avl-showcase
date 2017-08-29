@@ -2,8 +2,8 @@ angular
   .module('projectDetail')
   .component('projectDetail', {
     templateUrl: 'project-detail/project-detail.template.html',
-    controller: ['$routeParams', '$location', 'Api', 'Authentication',
-      function ProjectDetailController($routeParams, $location, Api, Authentication) {
+    controller: ['$routeParams', '$location', 'Api', 'apiHost', 'Authentication',
+      function ProjectDetailController($routeParams, $location, Api, apiHost, Authentication) {
         this.projectId = $routeParams.projectId;
         this.project = {};
         this.peopleObjects = [];
@@ -14,6 +14,7 @@ angular
         this.disciplines = [];
         this.disciplineNames = [];
         this.authentication = Authentication;
+        this.apiHost = apiHost;
 
         this.goToProjects = () => $location.url('/projects');
         this.goToEdit = () => $location.url(`/projects/${this.projectId}/edit`);

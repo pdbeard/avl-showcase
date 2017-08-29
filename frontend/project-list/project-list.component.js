@@ -2,12 +2,13 @@ angular
   .module('projectList')
   .component('projectList', {
     templateUrl: 'project-list/project-list.template.html',
-    controller: ['Api', function ProjectListController(Api) {
+    controller: ['Api', 'apiHost', function ProjectListController(Api, apiHost) {
       this.campuses = [];
       this.categories = [];
       this.disciplines = [];
       this.projects = [];
       this.searchString = '';
+      this.apiHost = apiHost;
 
       const projectsApi = new Api('/projects');
       const searchApi = new Api('/search');

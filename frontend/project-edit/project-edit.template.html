@@ -131,12 +131,8 @@
         </div>
         <fieldset class="fieldset">
           <legend>Image</legend>
-          <!-- <figure class="media image">
-            <img src="https://placehold.it/768x512" alt="Placeholder Image" />
-          </figure> -->
           <figure class="media image">
-            <!-- hard-coded php server address -- fix in future -->
-            <img ng-if="$ctrl.project.image_ref" ng-src="http://localhost:8080/image/{{ $ctrl.project.image_ref }}" style="max-height: 500px">
+            <img ng-if="$ctrl.project.image_ref" ng-src="{{$ctrl.apiHost}}/image/{{ $ctrl.project.image_ref }}" style="max-height: 500px">
           </figure>
           <div class="form-item">
             <div class="form-item-label">
@@ -148,10 +144,6 @@
             </div>
           </div>
         </fieldset>
-        <!-- <div>
-          <button class="button invert" ng-click="$ctrl.resetForm()">Reset form</button>
-          <button class="button" ng-click="$ctrl.submitForm()">Submit changes</button>
-        </div> -->
       </form>
     </div>
     <div class="content">
