@@ -14,7 +14,6 @@ angular
         placeholderValue: 'Enter tags',
         duplicateItems: false,
       });
-
       this.$onInit = () => {
         if (this.tagsArray) { this.tagsChoices.setValue(this.tagsArray); }
       };
@@ -31,6 +30,9 @@ angular
           // console.log(this.tagsChoices.getValue(true));
           this.tagsChoices.setValue(changesObj.tagsArray.currentValue);
           // console.log(this.tagsChoices.getValue(true));
+
+      console.log(this.tagsChoices);
+
         }
       };
 

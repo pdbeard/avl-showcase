@@ -36,8 +36,8 @@ angular
         this.goToProjects = () => $location.url('/projects');
 
         this.updateSelect = (selectObject) => {
-          // console.log('create update...');
-          // console.log(selectObject);
+          console.log('create update...');
+          console.log(selectObject);
           switch (selectObject.field) {
             case 'campus':
               this.project.campus_ids = selectObject.values;
@@ -46,6 +46,12 @@ angular
               this.project.category_ids = selectObject.values;
               break;
             case 'discipline':
+              this.project.discipline_ids = selectObject.values;
+              break;
+            case 'reset':
+              console.log("reset initiated");
+              this.project.campus_ids = selectObject.values;
+              this.project.category_ids = selectObject.values;
               this.project.discipline_ids = selectObject.values;
               break;
             default:
@@ -68,19 +74,17 @@ angular
           self.project.people = self.form.peopleStrings.join(';');
 
           api.post(self.project).then((response) => {
-            // const projects = response.data;
-            // for (let i = 0; i < projects.length; i += 1) {
-            //   $scope.projects.unshift(projects[0]);
-            // }
-            // $scope.successTextAlert = 'Project added';
-            // $scope.showSuccessAlert = true;
-            // resetForm();
+
+            self.message_style = "alert success one-third float-center";
+            self.info_message = "Project Created!";
+            self.resetForm();
+
           }, (e) => {
             console.warn(e);
-            // window.alert('Creating the post failed.');
-            // resetForm();
-            // $scope.failTextAlert = 'Creating the project failed.';
-            // $scope.showFailAlert = true;
+
+            self.message_style = "alert error one-third float-center";
+            self.info_message = e.data.error;
+            self.resetForm();
           });
         };
 
@@ -117,9 +121,17 @@ angular
         this.resetForm = function () {
           this.project = angular.copy(EMPTY_PROJECT);
           this.form = angular.copy(EMPTY_FORM);
-          this.form.campusCheckboxes = angular.copy(campuses);
-          this.form.categoryCheckboxes = angular.copy(categories);
-          this.form.disciplineCheckboxes = angular.copy(disciplines);
+          // this.form.campusCheckboxes = angular.copy(campuses);
+          // this.form.categoryCheckboxes = angular.copy(categories);
+          // this.form.disciplineCheckboxes = angular.copy(disciplines);
+          // console.log(this.form.campusCheckboxes);
+          const reset = {
+                field:"reset",
+                values: []
+          }
+
+          self.updateSelect(reset);
+          self.updateTags();
         };
 
         const getCampuses = () => {

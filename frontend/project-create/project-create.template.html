@@ -150,6 +150,9 @@
             <button class="button" ng-click="$ctrl.submitForm()">Submit</button>
           </li>
         </ul>
+        <div ng-class ="$ctrl.message_style">
+          <p>{{$ctrl.info_message}}</p>
+        </div>
       </div>
       <div class="section">
         <button class="button" ng-click="$ctrl.goToProjects()">Return to search</button>
