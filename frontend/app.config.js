@@ -17,6 +17,9 @@ angular
         .when('/project-create', {
           template: '<project-create></project-create>',
         })
+        .when('/project-create/:projectId', {
+          template: '<project-create></project-create>',
+        })
         .otherwise('/projects');
     },
   ]);

@@ -2,8 +2,8 @@ angular
   .module('projectCreate')
   .component('projectCreate', {
     templateUrl: 'project-create/project-create.template.html',
-    controller: ['Api', 'Authentication', '$q', '$location',
-      function ProjectCreateController(Api, Authentication, $q, $location) {
+    controller: ['Api', 'Authentication', '$q', '$routeParams','$location',
+      function ProjectCreateController(Api, Authentication, $q, $routeParams, $location) {
         const self = this;
         const EMPTY_PROJECT = {
           title: '',
@@ -29,15 +29,24 @@ angular
         let categories = [];
         let disciplines = [];
 
+        this.projectId = $routeParams.projectId;
+        console.log(this.projectId);
         this.project = angular.copy(EMPTY_PROJECT);
         this.form = angular.copy(EMPTY_FORM);
         this.authentication = Authentication;
 
         this.goToProjects = () => $location.url('/projects');
 
+        if (this.projectId){
+          this.goToCreated = () => $location.url(`/projects/${this.projectId}`);
+          this.message_success = "alert success one-third float-center";
+          this.message_content = "Project created!"
+          console.log(true);
+        }
+
         this.updateSelect = (selectObject) => {
-          console.log('create update...');
-          console.log(selectObject);
+          // console.log('create update...');
+          // console.log(selectObject);
           switch (selectObject.field) {
             case 'campus':
               this.project.campus_ids = selectObject.values;
@@ -49,13 +58,13 @@ angular
               this.project.discipline_ids = selectObject.values;
               break;
             case 'reset':
-              console.log("reset initiated");
+              // console.log("reset initiated");
               this.project.campus_ids = selectObject.values;
               this.project.category_ids = selectObject.values;
               this.project.discipline_ids = selectObject.values;
               break;
             default:
-              console.log('unrecognized selectObject.field');
+              // console.log('unrecognized selectObject.field');
           }
           // console.log(this.project.discipline_ids);
         };
@@ -75,16 +84,21 @@ angular
 
           api.post(self.project).then((response) => {
 
-            self.message_style = "alert success one-third float-center";
-            self.info_message = "Project Created!";
-            self.resetForm();
+          
+            // self.message_style = "alert success one-third float-center";
+            // self.info_message = response.data.success;
+            // self.new_id = response.data.id;
+            $location.url(`/project-create/${response.data.id}`);
+            // console.warn(response);
+            // self.resetForm();
 
           }, (e) => {
             console.warn(e);
 
             self.message_style = "alert error one-third float-center";
             self.info_message = e.data.error;
-            self.resetForm();
+            self.projectId = undefined; 
+
           });
         };
 

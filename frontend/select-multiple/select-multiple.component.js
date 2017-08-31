@@ -45,3 +45,14 @@ angular
       };
     },
   });
+
+  // angular.factory("onChanges" function() {
+  //   return {
+  //     myFunction: function(){
+  //       console.log("Factory");
+  //     }
+  //   };
+
+  // });
+
+

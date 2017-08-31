@@ -121,34 +121,34 @@ $app->post('/projects', function() use ($app)
     // error_log(json_encode($people) . " fff\n", 3, "/var/tmp/my-errors.log");
 
     if (empty($title)) {
-        $app->argument_required('Argument "title" is required');
+        $app->argument_required('Argument "Title" is required');
         return;
     } else if (empty($description)) {
-        $app->argument_required('Argument "description" is required');
+        $app->argument_required('Argument "Description" is required');
         return;
     }else if (empty($url)) {
-        $app->argument_required('Argument "url" is required');
+        $app->argument_required('Argument "URL" is required');
         return;
     }else if (empty($year)) {
-        $app->argument_required('Argument "year" is required');
+        $app->argument_required('Argument "Year" is required');
         return;
     }else if (empty($campus_ids)) {
-        $app->argument_required('Argument "campus_ids" is required');
+        $app->argument_required('Argument "Campus" is required');
         return;
     }else if (empty($category_ids)) {
-        $app->argument_required('Argument "category_ids" is required');
+        $app->argument_required('Argument "Category" is required');
         return;
     }else if (empty($discipline_ids)) {
-        $app->argument_required('Argument "discipline_ids" is required');
+        $app->argument_required('Argument "Discipline" is required');
         return;
     }else if (empty($tags)) {
-        $app->argument_required('Argument "tags" is required');
+        $app->argument_required('Argument "Tags" is required');
         return;
     }else if (empty($image_ref)) {
-        $app->argument_required('Argument "image_ref" is required');
+        $app->argument_required('Argument "Image" is required');
         return;
     }else if (empty($people)) {
-        $app->argument_required('Argument "people" is required');
+        $app->argument_required('Argument "People" is required');
         return;
     }
 
@@ -176,16 +176,20 @@ $app->post('/projects', function() use ($app)
 
 //Currently Breaks post for some reason.
 
-//    if ($state) {
-//        $app->refreshTable('showcase.projects');
-//        $qry = $app->conn->prepare("SELECT p.* FROM showcase.projects AS p WHERE p.id = ?");
-//        $qry->bindParam(1, $id);
-//        $qry->execute();
-//        $result = $qry->fetchAll(PDO::FETCH_ASSOC);
-//        $app->success(201, $result);
-//    } else {
-//        $app->resource_error(500, $app->conn->errorInfo());
-//    }
+   if ($state) {
+       $app->refreshTable('showcase.projects');
+       $qry = $app->conn->prepare("SELECT p.* FROM showcase.projects AS p WHERE p.id = ?");
+       $qry->bindParam(1, $id);
+       $qry->execute();
+    //    $result = $qry->fetchAll(PDO::FETCH_ASSOC);
+       $result = array(
+            "success"=>"Project Created!",
+            "id" => $id   
+        );
+       $app->success(201, $result, $id);
+   } else {
+       $app->resource_error(500, $app->conn->errorInfo());
+   }
 
 })->name('post-project');
 

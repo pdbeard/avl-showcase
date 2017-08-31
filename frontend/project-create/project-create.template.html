@@ -1,4 +1,9 @@
 <main role="main" class="no-section-nav">
+  <div ng-show ="$ctrl.projectId" ng-class ="$ctrl.message_success">
+    <h5 class="text-center">{{$ctrl.message_content}}<h1>
+    <button class="button bg-mint float-center" ng-click="$ctrl.goToCreated()">View new project</button>
+  </div>
+
   <section class="section">
     <div class="row">
       <form novalidate>
