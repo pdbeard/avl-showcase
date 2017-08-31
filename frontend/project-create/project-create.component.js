@@ -25,6 +25,7 @@ angular
           disciplineCheckboxes: [],
           imageData: null,
         }; // form inputs that need to be transformed before submitting
+
         let campuses = [];
         let categories = [];
         let disciplines = [];
@@ -75,22 +76,19 @@ angular
 
         const submitProject = function submitProject() {
           const api = new Api('/projects');
-
           // convert people objects into strings
           self.form.peopleStrings = self.form.peopleObjects.map(person => `${person.name_first}--${person.name_last}`);
 
           // convert people strings into single string
           self.project.people = self.form.peopleStrings.join(';');
-
           api.post(self.project).then((response) => {
-
-          
-            // self.message_style = "alert success one-third float-center";
-            // self.info_message = response.data.success;
-            // self.new_id = response.data.id;
-            $location.url(`/project-create/${response.data.id}`);
-            // console.warn(response);
-            // self.resetForm();
+      
+          // self.message_style = "alert success one-third float-center";
+          // self.info_message = response.data.success;
+          // self.new_id = response.data.id;
+          $location.url(`/project-create/${response.data.id}`);
+          // console.warn(response);
+          // self.resetForm();
 
           }, (e) => {
             console.warn(e);
