@@ -139,8 +139,6 @@ angular
         };
 
         const submitProject = () => {
-
-          console.log("3.A");
           const api = new Api(`/project/${self.project.id}/edit`);
 
           // convert people objects into strings
@@ -150,15 +148,11 @@ angular
           self.project.people = self.form.peopleStrings.join(';');
 
           api.put(self.project).then((response) => {
-
-            console.log("3.B");
             self.message_style = "alert success one-third float-center";
             self.info_message  = "Post has been successfully edited";
             console.warn(response);
           }, (e) => {
             // console.log('edit failed');
-
-            console.log("3.C");
             console.warn(e);
             self.message_style = "alert error one-third float-center";
             self.info_message  = "Editing the post failed. " + e.data.error;
@@ -182,7 +176,6 @@ angular
             //   console.log("1.A");
             // } else {
               d.reject(response);
-              console.log("1.B :" );
             }
           });
           return d.promise;
@@ -193,11 +186,8 @@ angular
           if (this.form.imageData) {
             uploadBlob(this.form.imageData).then((response) => {
               this.project.image_ref = response.data.digest;
-
-              console.log("2.A");
               submitProject();
             }, (e) => {
-              console.log("2.B");
               console.warn(e);
               self.message_style = "alert error one-third float-center";
               self.info_message  = "Editing the post failed. " + e.data.error;

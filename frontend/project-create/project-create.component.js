@@ -37,7 +37,7 @@ angular
 
         this.goToProjects = () => $location.url('/projects');
 
-        if (this.projectId){
+        if (this.projectId) {
           this.goToCreated = () => $location.url(`/projects/${this.projectId}`);
           this.message_success = "alert success one-third float-center";
           this.message_content = "Project created!"
@@ -56,12 +56,12 @@ angular
             case 'discipline':
               this.project.discipline_ids = selectObject.values;
               break;
-            case 'reset':
-              // console.log("reset initiated");
-              this.project.campus_ids = selectObject.values;
-              this.project.category_ids = selectObject.values;
-              this.project.discipline_ids = selectObject.values;
-              break;
+            // case 'reset':
+            //   // console.log("reset initiated");
+            //   this.project.campus_ids = selectObject.values;
+            //   this.project.category_ids = selectObject.values;
+            //   this.project.discipline_ids = selectObject.values;
+            //   break;
             default:
               // console.log('unrecognized selectObject.field');
           }
