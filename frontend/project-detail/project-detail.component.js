@@ -15,24 +15,42 @@ angular
         this.disciplineNames = [];
         this.authentication = Authentication;
         this.apiHost = apiHost;
-
+        this.confirmDelete = false;
+        this.acknowledgeDelete = false;
         this.goToProjects = () => $location.url('/projects');
         this.goToEdit = () => $location.url(`/projects/${this.projectId}/edit`);
 
         this.deleteProject = () => {
-          const api = new Api(`/projects/${this.projectId}`);
-          api.delete().then((response) => {
-            console.log(response);
-            console.log('project deleted!');
+          this.confirmDelete = true;
+          this.message_style = "alert info one-third float-center";
+          this.info_message  = "Are you sure you want to delete this project?";
+
+
+          this.deleteYes = () => {
+            this.acknowledgeDelete = true;
+            this.confirmDelete = false;
+            const api = new Api(`/projects/${this.projectId}`);
+            api.delete().then((response) => {
+              this.message_style = "alert success one-third float-center";
+              this.info_message = "Project Deleted!";
+              // console.log(response);
+              // console.log('Project deleted!');
+            }, (e) => {
+              console.warn(e);
+              // window.alert('Deleting the post failed.');
+              this.message_style = "alert error one-third float-center";
+              this.info_message  = "Deleting the post failed.";
+            });
+          }
+
+          this.deleteNo =() => {
+            this.confirmDelete = false;
+
+          }
+ 
+          this.deleteAcknowledge = () =>{
             $location.url('/projects');
-            // $scope.successTextAlert = 'Project Deleted!';
-            // $scope.showSuccessAlert = true;
-          }, (e) => {
-            console.warn(e);
-            window.alert('Deleting the post failed.');
-            // $scope.failTextAlert = 'Deleting the projected failed.';
-            // $scope.showFailAlert = true;
-          });
+          }
         };
 
         this.createPeopleObjects = () => {

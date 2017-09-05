@@ -139,6 +139,8 @@ angular
         };
 
         const submitProject = () => {
+
+          console.log("3.A");
           const api = new Api(`/project/${self.project.id}/edit`);
 
           // convert people objects into strings
@@ -147,16 +149,23 @@ angular
           // convert people strings into single string
           self.project.people = self.form.peopleStrings.join(';');
 
-          api.put(self.project).then(() => {
-            console.log('edit successful');
-            // $scope.successTextAlert = 'Project edited.';
-            // $scope.showSuccessAlert = true;
-            // resetForm();
+          api.put(self.project).then((response) => {
+
+            console.log("3.B");
+            self.message_style = "alert success one-third float-center";
+            self.info_message  = "Post has been successfully edited";
+            console.warn(response);
           }, (e) => {
-            console.log('edit failed');
+            // console.log('edit failed');
+
+            console.log("3.C");
             console.warn(e);
+            self.message_style = "alert error one-third float-center";
+            self.info_message  = "Editing the post failed. " + e.data.error;
+
+
             // window.alert('Editing the post failed.');
-            self.resetForm();
+            // self.resetForm();
             // $scope.failTextAlert = 'Editing the post failed.';
             // $scope.showFailAlert = true;
           });
@@ -169,9 +178,11 @@ angular
             d.resolve(response);
           }, (response) => {
             if (response.status === 409) {
-              d.resolve(response);
-            } else {
+            //   d.reject(response);
+            //   console.log("1.A");
+            // } else {
               d.reject(response);
+              console.log("1.B :" );
             }
           });
           return d.promise;
@@ -182,10 +193,15 @@ angular
           if (this.form.imageData) {
             uploadBlob(this.form.imageData).then((response) => {
               this.project.image_ref = response.data.digest;
+
+              console.log("2.A");
               submitProject();
             }, (e) => {
+              console.log("2.B");
               console.warn(e);
-              window.alert('Image upload failed.');
+              self.message_style = "alert error one-third float-center";
+              self.info_message  = "Editing the post failed. " + e.data.error;
+              // window.alert('Image upload failed.');
             });
           } else {
             submitProject();

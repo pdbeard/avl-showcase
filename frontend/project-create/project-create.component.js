@@ -31,7 +31,6 @@ angular
         let disciplines = [];
 
         this.projectId = $routeParams.projectId;
-        console.log(this.projectId);
         this.project = angular.copy(EMPTY_PROJECT);
         this.form = angular.copy(EMPTY_FORM);
         this.authentication = Authentication;
@@ -42,7 +41,6 @@ angular
           this.goToCreated = () => $location.url(`/projects/${this.projectId}`);
           this.message_success = "alert success one-third float-center";
           this.message_content = "Project created!"
-          console.log(true);
         }
 
         this.updateSelect = (selectObject) => {
@@ -82,14 +80,13 @@ angular
           // convert people strings into single string
           self.project.people = self.form.peopleStrings.join(';');
           api.post(self.project).then((response) => {
-      
-          // self.message_style = "alert success one-third float-center";
-          // self.info_message = response.data.success;
-          // self.new_id = response.data.id;
-          $location.url(`/project-create/${response.data.id}`);
-          // console.warn(response);
-          // self.resetForm();
-
+  
+            // self.message_style = "alert success one-third float-center";
+            // self.info_message = response.data.success;
+            // self.new_id = response.data.id;
+            $location.url(`/project-create/${response.data.id}`);
+            // console.warn(response);
+            // self.resetForm();
           }, (e) => {
             console.warn(e);
 
@@ -107,8 +104,8 @@ angular
             d.resolve(response);
           }, (response) => {
             if (response.status === 409) {
-              d.resolve(response);
-            } else {
+            //   d.resolve(response);
+            // } else {
               d.reject(response);
             }
           });
@@ -123,7 +120,8 @@ angular
               submitProject();
             }, (e) => {
               console.warn(e);
-              window.alert('Image upload failed.');
+              self.message_style = "alert error one-third float-center";
+              self.info_message  = "Editing the post failed. " + e.data.error;
             });
           } else {
             submitProject();

@@ -372,11 +372,14 @@ $app->get('/images', function() use ($app)
  */
 $app->post('/images', function() use ($app)
 {
+
     $data = json_decode($app->request->getBody());
     if (!isset($data->blob)) {
         $app->argument_required('Argument "blob" is required');
         return;
     }
+
+ 
     $content = base64_decode($data->blob);
     $digest  = sha1($content);
     $ch      = curl_init("{$app->config['blob_url']}project_images/{$digest}");
@@ -385,8 +388,12 @@ $app->post('/images', function() use ($app)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $result = curl_exec($ch);
     $info   = curl_getinfo($ch);
+
+    // error_log(print_r($info, TRUE) ."\nEnd Info\n\n", 3, "/var/tmp/my-errors.log");
+
     if ($info['http_code'] != 201) {
-        $app->resource_error($info['http_code'], curl_error($ch));
+        $app->resource_error($info['http_code'], 'Image is already in use. Duplicate images are not supported. Choose a new image');
+        return;
     } else {
         $app->success($info['http_code'], array(
             'url' => "/image/{$digest}",
