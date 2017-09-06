@@ -37,6 +37,8 @@ angular
 
         this.goToProjects = () => $location.url('/projects');
 
+        this.goToCreated = () => $location.url(`/projects/${this.projectId}`);
+
         this.updateSelect = (selectObject) => {
           switch (selectObject.field) {
             case 'campus':
@@ -198,14 +200,14 @@ angular
           }
         };
 
-        this.resetForm = () => {
-          // this.project = angular.copy(EMPTY_PROJECT);
-          // this.form = angular.copy(EMPTY_FORM);
-          // this.form.campusCheckboxes = angular.copy(campuses);
-          // this.form.categoryCheckboxes = angular.copy(categories);
-          // this.form.disciplineCheckboxes = angular.copy(disciplines);
-          getProject();
-        };
+        // this.resetForm = () => {
+        //   // this.project = angular.copy(EMPTY_PROJECT);
+        //   // this.form = angular.copy(EMPTY_FORM);
+        //   // this.form.campusCheckboxes = angular.copy(campuses);
+        //   // this.form.categoryCheckboxes = angular.copy(categories);
+        //   // this.form.disciplineCheckboxes = angular.copy(disciplines);
+        //   getProject();
+        // };
 
         getProject();
       },

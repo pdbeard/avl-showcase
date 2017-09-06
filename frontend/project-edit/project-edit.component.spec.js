@@ -146,17 +146,19 @@ describe('projectEdit', () => {
       expect(ctrl.form).toEqual(EMPTY_FORM);
     });
 
-    it('should reset the form', () => {
-      ctrl.project = mockProjectEdited;
-      $httpBackend.expectGET(`${url}/project/${ctrl.projectId}`).respond(mockProject);
-      $httpBackend.expectGET(`${url}/campuses`).respond(mockCampuses);
-      $httpBackend.expectGET(`${url}/categories`).respond(mockCategories);
-      $httpBackend.expectGET(`${url}/disciplines`).respond(mockDisciplines);
-      $httpBackend.flush();
-      ctrl.resetForm();
-      expect(ctrl.project).toEqual(mockProject);
-      expect(ctrl.form).toEqual(mockForm);
-    });
+    //Not using reset currently 
+
+    // it('should reset the form', () => {
+    //   ctrl.project = mockProjectEdited;
+    //   $httpBackend.expectGET(`${url}/project/${ctrl.projectId}`).respond(mockProject);
+    //   $httpBackend.expectGET(`${url}/campuses`).respond(mockCampuses);
+    //   $httpBackend.expectGET(`${url}/categories`).respond(mockCategories);
+    //   $httpBackend.expectGET(`${url}/disciplines`).respond(mockDisciplines);
+    //   $httpBackend.flush();
+    //   ctrl.resetForm();
+    //   expect(ctrl.project).toEqual(mockProject);
+    //   expect(ctrl.form).toEqual(mockForm);
+    // });
 
     it('should submit the form', () => {
       ctrl.project = mockProject;

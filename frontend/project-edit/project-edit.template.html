@@ -147,16 +147,20 @@
       </form>
     </div>
     <div class="content">
-      <div class="cta text-center section bg-gray" ng-if="$ctrl.authentication.isAdmin">
+      <div class="text-center section bg-gray" ng-if="$ctrl.authentication.isAdmin">
         <h4>Edit this project</h4>
-        <ul class="button-group cta">
+        <ul class="button-group">
           <li>
             <!-- <button class="button invert" ng-click="$ctrl.resetForm()">Reset form</button> -->
             <button class="button" ng-click="$ctrl.submitForm()">Submit changes</button>
           </li>
+          <li>
+              <!-- <button class="button float-center" ng-click="$ctrl.goToCreated()">Return to project page</button> -->
+          </li>
         </ul>
         <div ng-class ="$ctrl.message_style">
             <p>{{$ctrl.info_message}}</p>
+            <!-- <button class="button success float-center" ng-click="$ctrl.goToCreated()">View project page</button> -->
         </div>
       </div>
       <div class="section">

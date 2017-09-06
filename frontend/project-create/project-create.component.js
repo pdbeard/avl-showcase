@@ -40,7 +40,7 @@ angular
         if (this.projectId) {
           this.goToCreated = () => $location.url(`/projects/${this.projectId}`);
           this.message_success = "alert success one-third float-center";
-          this.message_content = "Project created!"
+          this.message_content = "Project created!";
         }
 
         this.updateSelect = (selectObject) => {
@@ -128,21 +128,21 @@ angular
           }
         };
 
-        this.resetForm = function () {
-          this.project = angular.copy(EMPTY_PROJECT);
-          this.form = angular.copy(EMPTY_FORM);
-          // this.form.campusCheckboxes = angular.copy(campuses);
-          // this.form.categoryCheckboxes = angular.copy(categories);
-          // this.form.disciplineCheckboxes = angular.copy(disciplines);
-          // console.log(this.form.campusCheckboxes);
-          const reset = {
-                field:"reset",
-                values: []
-          }
+        // this.resetForm = function () {
+        //   this.project = angular.copy(EMPTY_PROJECT);
+        //   this.form = angular.copy(EMPTY_FORM);
+        //   // this.form.campusCheckboxes = angular.copy(campuses);
+        //   // this.form.categoryCheckboxes = angular.copy(categories);
+        //   // this.form.disciplineCheckboxes = angular.copy(disciplines);
+        //   // console.log(this.form.campusCheckboxes);
+        //   // const reset = {
+        //   //       field:"reset",
+        //   //       values: []
+        //   // }
 
-          self.updateSelect(reset);
-          self.updateTags();
-        };
+        //   self.updateSelect(reset);
+        //   self.updateTags();
+        // };
 
         const getCampuses = () => {
           const api = new Api('/campuses');
