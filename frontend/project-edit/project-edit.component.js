@@ -34,6 +34,7 @@ angular
         this.form = angular.copy(EMPTY_FORM);
         this.authentication = Authentication;
         this.apiHost = apiHost;
+        this.success = false;
 
         this.goToProjects = () => $location.url('/projects');
 
@@ -152,6 +153,7 @@ angular
           api.put(self.project).then((response) => {
             self.message_style = "alert success one-third float-center";
             self.info_message  = "Post has been successfully edited";
+            this.success = true;
             console.warn(response);
           }, (e) => {
             // console.log('edit failed');

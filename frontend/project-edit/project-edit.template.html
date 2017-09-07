@@ -155,12 +155,12 @@
             <button class="button" ng-click="$ctrl.submitForm()">Submit changes</button>
           </li>
           <li>
-              <!-- <button class="button float-center" ng-click="$ctrl.goToCreated()">Return to project page</button> -->
+              <button class="button float-center" ng-click="$ctrl.goToCreated()">Return to project page</button>
           </li>
         </ul>
         <div ng-class ="$ctrl.message_style">
             <p>{{$ctrl.info_message}}</p>
-            <!-- <button class="button success float-center" ng-click="$ctrl.goToCreated()">View project page</button> -->
+            <button ng-show ="$ctrl.success" class="button success float-center" ng-click="$ctrl.goToCreated()">View project page</button>
         </div>
       </div>
       <div class="section">
