@@ -31,7 +31,7 @@ angular
           this.tagsChoices.setValue(changesObj.tagsArray.currentValue);
           // console.log(this.tagsChoices.getValue(true));
 
-      console.log(this.tagsChoices);
+      // console.log(this.tagsChoices);
 
         }
       };

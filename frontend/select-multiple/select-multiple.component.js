@@ -24,20 +24,19 @@ angular
 
           this.selectChoices.passedElement.addEventListener('change', () => {
             this.onUpdate({ field: this.field, selected: this.selectChoices.getValue(true) });
-            // console.log(`${this.field} choices changed...`);
-            // console.log(changesObject);
-            // console.log(this.selectChoices.getValue(true));
+            console.log(this.selectChoices);
+            // console.log(this.selectChoices);
+            // console.log(this.selectChoices.getValue());
           });
         }
 
         if (this.selectChoices && changesObject.optionsObjects.currentValue) {
           // console.log(`${this.field} optionsObject changed...`);
-          // console.log(changesObject.optionsObjects.currentValue);
           // console.log(this.selectChoices.getValue(true));
           this.selectChoices.clearStore();
           // console.log(this.selectChoices.getValue(true));
           this.selectChoices.setChoices(changesObject.optionsObjects.currentValue, 'id', 'name', true);
-          // console.log(this.selectChoices.getValue(true));
+          // console.log(changesObject.optionsObjects.curentValue);
         }
       };
 
@@ -45,14 +44,3 @@ angular
       };
     },
   });
-
-  // angular.factory("onChanges" function() {
-  //   return {
-  //     myFunction: function(){
-  //       console.log("Factory");
-  //     }
-  //   };
-
-  // });
-
-

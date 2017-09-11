@@ -45,7 +45,7 @@ angular
 
         this.updateSelect = (selectObject) => {
           // console.log('create update...');
-          // console.log(selectObject);
+          // console.log(selectObject.values);
           switch (selectObject.field) {
             case 'campus':
               this.project.campus_ids = selectObject.values;
@@ -161,7 +161,7 @@ angular
           const api = new Api('/categories');
           api.get().then((response) => {
             categories = response.data;
-
+            // console.log(categories);
             // add category info to the form for checkboxes
             this.form.categoryCheckboxes = angular.copy(categories);
           }, (e) => {

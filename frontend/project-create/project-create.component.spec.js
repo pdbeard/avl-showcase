@@ -110,7 +110,7 @@ describe('projectCreate', () => {
     });
 
     it('should initiate project and form', () => {
-      console.log(ctrl);
+      // console.log(ctrl);
       expect(ctrl.project).toEqual(EMPTY_PROJECT);
       expect(ctrl.form).toEqual(EMPTY_FORM);
     });
