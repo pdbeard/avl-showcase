@@ -1,12 +1,12 @@
 {"id":1, "name":"Virtual Reality" ,"gname":"one"}
 {"id":2, "name":"Augmented Reality","gname":"one"}
-{"id":3, "name":"3D Digitization","gname":"one"}
-{"id":4, "name":"3D Scanning","gname":"one"}
-{"id":5, "name":"3D Printing","gname":"two"}
-{"id":6, "name":"Photogrammetry","gname":"two"}
-{"id":7, "name":"3D Modeling","gname":"two"}
-{"id":8, "name":"Ultra High Resolution Media","gname":"two"}
-{"id":9, "name":"360 Media","gname":"three"}
-{"id":10, "name":"3D Media","gname":"three"}
-{"id":11, "name":"Science On a Sphere","gname":"three"}
-{"id":12, "name":"Visualization","gname":"three"}
+{"id":3, "name":"Scientific Visualization","gname":"one"}
+{"id":4, "name":"Information Visualization","gname":"one"}
+{"id":5, "name":"360 Media","gname":"two"}
+{"id":6, "name":"Stereoscopic Media","gname":"two"}
+{"id":7, "name":"Ultra Resolution Media","gname":"two"}
+{"id":8, "name":"3D Scanning","gname":"three"}
+{"id":9, "name":"Photogrammetry","gname":"three"}
+{"id":10, "name":"3D Printing","gname":"three"}
+{"id":11, "name":"Advanced Interaction","gname":"four"}
+{"id":12, "name":"Science On a Sphere","gname":"five"}

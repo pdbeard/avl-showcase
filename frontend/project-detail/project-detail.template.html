@@ -28,7 +28,7 @@
               <span ng-repeat="name in $ctrl.campusNames">{{ name }}<span ng-if="!$last">, </span></span>
             </dd>
             <dt>
-              <ng-pluralize count="$ctrl.categoryNames.length" when="{1: 'Category', 'other': 'Categories', 'NaN': 'error, yo!'}"></ng-pluralize>
+              <ng-pluralize count="$ctrl.categoryNames.length" when="{1: 'Technology', 'other': 'Technologies', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
             <dd>
               <span ng-repeat="name in $ctrl.categoryNames">{{ name }}<span ng-if="!$last">, </span></span>
