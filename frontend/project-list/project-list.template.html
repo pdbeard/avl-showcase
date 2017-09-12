@@ -37,11 +37,24 @@
 
   <section class="section">
     <div class="row">
-      <h2 class="section-title">
-        <span ng-show="$ctrl.searchString.length > 0">Search Results: </span>{{ $ctrl.projects.length }}
-        <ng-pluralize count="$ctrl.projects.length"
-                      when="{'0': 'Projects', 'one':'Project', 'other': 'Projects'}"></ng-pluralize>
-      </h2>
+      <div class="grid">
+        <div class ="grid-item">
+          <div class="two-thirds">
+            <h2 class="section-title">
+              <span ng-show="$ctrl.searchString.length > 0">Search Results: </span>{{ $ctrl.projects.length }}
+              <ng-pluralize count="$ctrl.projects.length"
+                            when="{'0': 'Projects', 'one':'Project', 'other': 'Projects'}"></ng-pluralize>
+            </h2>
+          </div> 
+          <div class="one-third">
+            <select class="form-control" ng-model="$ctrl.sortBy">
+              <option value="None">-- Select --</option>
+              <option value="title">Title</option>
+              <option value="year">Year</option>
+            </select>
+          </div>
+        </div>
+      </div>
       <div class="alert alert-warning" ng-if="$ctrl.projects.length === 0 && $ctrl.searchString.length > 0">
         No projects found for "{{ $ctrl.searchString }}"
       </div>
@@ -51,7 +64,7 @@
         </div>-->
         <div class="grid-item"
              id="project-{{ project.id }}"
-             ng-repeat="project in $ctrl.projects track by project.id">
+             ng-repeat="project in $ctrl.projects | orderBy:$ctrl.sortBy track by project.id">
           <div class="panel--interactive">
             <a href="#!/projects/{{ project.id }}" ng-click="showDetails = !showDetails">
               <figure class="media image">
@@ -71,6 +84,7 @@
           </div>
         </div>
       </div>
+    </div>  
   </section>
   <!--<section class="section">
     <div style="text-align: center">

@@ -2,8 +2,8 @@ angular
   .module('projectCreate')
   .component('projectCreate', {
     templateUrl: 'project-create/project-create.template.html',
-    controller: ['Api', 'Authentication', '$q', '$location',
-      function ProjectCreateController(Api, Authentication, $q, $location) {
+    controller: ['Api', 'Authentication', '$q', '$routeParams','$location',
+      function ProjectCreateController(Api, Authentication, $q, $routeParams, $location) {
         const self = this;
         const EMPTY_PROJECT = {
           title: '',
@@ -25,19 +25,27 @@ angular
           disciplineCheckboxes: [],
           imageData: null,
         }; // form inputs that need to be transformed before submitting
+
         let campuses = [];
         let categories = [];
         let disciplines = [];
 
+        this.projectId = $routeParams.projectId;
         this.project = angular.copy(EMPTY_PROJECT);
         this.form = angular.copy(EMPTY_FORM);
         this.authentication = Authentication;
 
         this.goToProjects = () => $location.url('/projects');
 
+        if (this.projectId) {
+          this.goToCreated = () => $location.url(`/projects/${this.projectId}`);
+          this.message_success = "alert success one-third float-center";
+          this.message_content = "Project created!";
+        }
+
         this.updateSelect = (selectObject) => {
           // console.log('create update...');
-          // console.log(selectObject);
+          // console.log(selectObject.values);
           switch (selectObject.field) {
             case 'campus':
               this.project.campus_ids = selectObject.values;
@@ -48,8 +56,14 @@ angular
             case 'discipline':
               this.project.discipline_ids = selectObject.values;
               break;
+            // case 'reset':
+            //   // console.log("reset initiated");
+            //   this.project.campus_ids = selectObject.values;
+            //   this.project.category_ids = selectObject.values;
+            //   this.project.discipline_ids = selectObject.values;
+            //   break;
             default:
-              console.log('unrecognized selectObject.field');
+              // console.log('unrecognized selectObject.field');
           }
           // console.log(this.project.discipline_ids);
         };
@@ -60,27 +74,26 @@ angular
 
         const submitProject = function submitProject() {
           const api = new Api('/projects');
-
           // convert people objects into strings
           self.form.peopleStrings = self.form.peopleObjects.map(person => `${person.name_first}--${person.name_last}`);
 
           // convert people strings into single string
           self.project.people = self.form.peopleStrings.join(';');
-
           api.post(self.project).then((response) => {
-            // const projects = response.data;
-            // for (let i = 0; i < projects.length; i += 1) {
-            //   $scope.projects.unshift(projects[0]);
-            // }
-            // $scope.successTextAlert = 'Project added';
-            // $scope.showSuccessAlert = true;
-            // resetForm();
+  
+            // self.message_style = "alert success one-third float-center";
+            // self.info_message = response.data.success;
+            // self.new_id = response.data.id;
+            $location.url(`/project-create/${response.data.id}`);
+            // console.warn(response);
+            // self.resetForm();
           }, (e) => {
             console.warn(e);
-            // window.alert('Creating the post failed.');
-            // resetForm();
-            // $scope.failTextAlert = 'Creating the project failed.';
-            // $scope.showFailAlert = true;
+
+            self.message_style = "alert error one-third float-center";
+            self.info_message = e.data.error;
+            self.projectId = undefined; 
+
           });
         };
 
@@ -91,8 +104,8 @@ angular
             d.resolve(response);
           }, (response) => {
             if (response.status === 409) {
-              d.resolve(response);
-            } else {
+            //   d.resolve(response);
+            // } else {
               d.reject(response);
             }
           });
@@ -107,20 +120,29 @@ angular
               submitProject();
             }, (e) => {
               console.warn(e);
-              window.alert('Image upload failed.');
+              self.message_style = "alert error one-third float-center";
+              self.info_message  = "Editing the post failed. " + e.data.error;
             });
           } else {
             submitProject();
           }
         };
 
-        this.resetForm = function () {
-          this.project = angular.copy(EMPTY_PROJECT);
-          this.form = angular.copy(EMPTY_FORM);
-          this.form.campusCheckboxes = angular.copy(campuses);
-          this.form.categoryCheckboxes = angular.copy(categories);
-          this.form.disciplineCheckboxes = angular.copy(disciplines);
-        };
+        // this.resetForm = function () {
+        //   this.project = angular.copy(EMPTY_PROJECT);
+        //   this.form = angular.copy(EMPTY_FORM);
+        //   // this.form.campusCheckboxes = angular.copy(campuses);
+        //   // this.form.categoryCheckboxes = angular.copy(categories);
+        //   // this.form.disciplineCheckboxes = angular.copy(disciplines);
+        //   // console.log(this.form.campusCheckboxes);
+        //   // const reset = {
+        //   //       field:"reset",
+        //   //       values: []
+        //   // }
+
+        //   self.updateSelect(reset);
+        //   self.updateTags();
+        // };
 
         const getCampuses = () => {
           const api = new Api('/campuses');
@@ -139,7 +161,7 @@ angular
           const api = new Api('/categories');
           api.get().then((response) => {
             categories = response.data;
-
+            // console.log(categories);
             // add category info to the form for checkboxes
             this.form.categoryCheckboxes = angular.copy(categories);
           }, (e) => {

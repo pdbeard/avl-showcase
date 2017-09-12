@@ -1,4 +1,9 @@
 <main role="main" class="no-section-nav">
+  <div ng-show ="$ctrl.projectId" ng-class ="$ctrl.message_success">
+    <h5 class="text-center">{{$ctrl.message_content}}<h1>
+    <button class="button success float-center" ng-click="$ctrl.goToCreated()">View new project</button>
+  </div>
+
   <section class="section">
     <div class="row">
       <form novalidate>
@@ -150,6 +155,9 @@
             <button class="button" ng-click="$ctrl.submitForm()">Submit</button>
           </li>
         </ul>
+        <div ng-class ="$ctrl.message_style">
+          <p>{{$ctrl.info_message}}</p>
+        </div>
       </div>
       <div class="section">
         <button class="button" ng-click="$ctrl.goToProjects()">Return to search</button>

@@ -87,7 +87,8 @@ CREATE TABLE showcase.campuses (
 DROP TABLE IF EXISTS showcase.categories;
 CREATE TABLE showcase.categories (
   id INTEGER,
-  name STRING INDEX USING FULLTEXT WITH (analyzer = 'myanalyzer')
+  name STRING INDEX USING FULLTEXT WITH (analyzer = 'myanalyzer'),
+  gname STRING INDEX USING FULLTEXT WITH (analyzer = 'myanalyzer')
 ) WITH (number_of_replicas = 0);
 
 -- disciplines table

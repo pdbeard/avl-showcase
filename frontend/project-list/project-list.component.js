@@ -9,6 +9,7 @@ angular
       this.projects = [];
       this.searchString = '';
       this.apiHost = apiHost;
+      // this.sortBy = 'year';
 
       const projectsApi = new Api('/projects');
       const searchApi = new Api('/search');
@@ -56,6 +57,7 @@ angular
         projectsApi.get().then((response) => {
           this.projects = response.data;
           // addStuffToProjects();
+          console.log(this.projects);
         }, (e) => {
           console.warn(e);
           this.projects = [];
@@ -66,6 +68,11 @@ angular
         const query = { query_string: this.searchString };
         searchApi.post(query).then((response) => {
           this.projects = response.data;
+
+          this.projects.forEach((result) => {
+            console.log(result.year);
+          });
+
         }, (error) => {
           console.warn(error);
           this.projects = [];

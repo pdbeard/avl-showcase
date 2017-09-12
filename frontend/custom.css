@@ -57,3 +57,11 @@ div .choices__inner {
   border: 0;
   padding: 0;
 }
+
+.float-center{
+  margin-top:20px;
+  margin-bottom:0px;
+  padding-top:10px;
+  padding-bottom:10px;
+  float:none;
+}

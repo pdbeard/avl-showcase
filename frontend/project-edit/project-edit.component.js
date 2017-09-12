@@ -34,8 +34,11 @@ angular
         this.form = angular.copy(EMPTY_FORM);
         this.authentication = Authentication;
         this.apiHost = apiHost;
+        this.success = false;
 
         this.goToProjects = () => $location.url('/projects');
+
+        this.goToCreated = () => $location.url(`/projects/${this.projectId}`);
 
         this.updateSelect = (selectObject) => {
           switch (selectObject.field) {
@@ -147,16 +150,20 @@ angular
           // convert people strings into single string
           self.project.people = self.form.peopleStrings.join(';');
 
-          api.put(self.project).then(() => {
-            console.log('edit successful');
-            // $scope.successTextAlert = 'Project edited.';
-            // $scope.showSuccessAlert = true;
-            // resetForm();
+          api.put(self.project).then((response) => {
+            self.message_style = "alert success one-third float-center";
+            self.info_message  = "Post has been successfully edited";
+            this.success = true;
+            console.warn(response);
           }, (e) => {
-            console.log('edit failed');
+            // console.log('edit failed');
             console.warn(e);
+            self.message_style = "alert error one-third float-center";
+            self.info_message  = "Editing the post failed. " + e.data.error;
+
+
             // window.alert('Editing the post failed.');
-            self.resetForm();
+            // self.resetForm();
             // $scope.failTextAlert = 'Editing the post failed.';
             // $scope.showFailAlert = true;
           });
@@ -169,8 +176,9 @@ angular
             d.resolve(response);
           }, (response) => {
             if (response.status === 409) {
-              d.resolve(response);
-            } else {
+            //   d.reject(response);
+            //   console.log("1.A");
+            // } else {
               d.reject(response);
             }
           });
@@ -185,21 +193,23 @@ angular
               submitProject();
             }, (e) => {
               console.warn(e);
-              window.alert('Image upload failed.');
+              self.message_style = "alert error one-third float-center";
+              self.info_message  = "Editing the post failed. " + e.data.error;
+              // window.alert('Image upload failed.');
             });
           } else {
             submitProject();
           }
         };
 
-        this.resetForm = () => {
-          // this.project = angular.copy(EMPTY_PROJECT);
-          // this.form = angular.copy(EMPTY_FORM);
-          // this.form.campusCheckboxes = angular.copy(campuses);
-          // this.form.categoryCheckboxes = angular.copy(categories);
-          // this.form.disciplineCheckboxes = angular.copy(disciplines);
-          getProject();
-        };
+        // this.resetForm = () => {
+        //   // this.project = angular.copy(EMPTY_PROJECT);
+        //   // this.form = angular.copy(EMPTY_FORM);
+        //   // this.form.campusCheckboxes = angular.copy(campuses);
+        //   // this.form.categoryCheckboxes = angular.copy(categories);
+        //   // this.form.disciplineCheckboxes = angular.copy(disciplines);
+        //   getProject();
+        // };
 
         getProject();
       },

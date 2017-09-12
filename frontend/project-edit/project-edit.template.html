@@ -28,7 +28,7 @@
               <label for="select-item-one">Category</label>
             </div>
             <div class="form-item-input">
-               <select-multiple field="category" options-objects="$ctrl.form.categoryCheckboxes" on-update="$ctrl.updateSelect({ field: field, values: selected })"></select-multiple>
+              <select-multiple field="category" options-objects="$ctrl.form.categoryCheckboxes" on-update="$ctrl.updateSelect({ field: field, values: selected })"></select-multiple>
             </div>
           </div>
           <div class="form-item">
@@ -36,7 +36,7 @@
               <label for="select-item-one">Discipline</label>
             </div>
             <div class="form-item-input">
-               <select-multiple field="discipline" options-objects="$ctrl.form.disciplineCheckboxes" on-update="$ctrl.updateSelect({ field: field, values: selected })"></select-multiple>
+              <select-multiple field="discipline" options-objects="$ctrl.form.disciplineCheckboxes" on-update="$ctrl.updateSelect({ field: field, values: selected })"></select-multiple>
             </div>
           </div>
         </div>
@@ -145,21 +145,27 @@
           </div>
         </fieldset>
       </form>
-    </div>
-    <div class="content">
-      <div class="cta text-center section bg-gray" ng-if="$ctrl.authentication.isAdmin">
-        <h4>Edit this project</h4>
-        <ul class="button-group cta">
-          <li>
-            <!-- <button class="button invert" ng-click="$ctrl.resetForm()">Reset form</button> -->
-            <button class="button" ng-click="$ctrl.submitForm()">Submit changes</button>
-          </li>
-        </ul>
-      </div>
-      <div class="section">
-        <button class="button" ng-click="$ctrl.goToProjects()">Return to search</button>
+      <div class="content">
+        <div class="text-center section bg-gray" ng-if="$ctrl.authentication.isAdmin">
+          <h4>Edit this project</h4>
+          <ul class="button-group">
+            <li>
+              <!-- <button class="button invert" ng-click="$ctrl.resetForm()">Reset form</button> -->
+              <button class="button" ng-click="$ctrl.submitForm()">Submit changes</button>
+            </li>
+            <li>
+                <button class="button float-center" ng-click="$ctrl.goToCreated()">Return to project page</button>
+            </li>
+          </ul>
+          <div ng-class ="$ctrl.message_style">
+              <p>{{$ctrl.info_message}}</p>
+              <button ng-show ="$ctrl.success" class="button success float-center" ng-click="$ctrl.goToCreated()">View project page</button>
+          </div>
+        </div>
+        <div class="section">
+          <button class="button" ng-click="$ctrl.goToProjects()">Return to search</button>
+        </div>
       </div>
     </div>
   </section>
-
 </main>
