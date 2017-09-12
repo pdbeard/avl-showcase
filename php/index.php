@@ -64,24 +64,6 @@ $app->get('/', function() use ($app)
 })->name('default');
 
 /**
- * Get the post for a given id.
- */
-//$app->get('/post/:id', function($id) use ($app)
-//{
-//    $qry = $app->conn->prepare("SELECT p.*, c.name as country, c.geometry as area
-//            FROM guestbook.posts AS p, guestbook.countries AS c
-//            WHERE within(p.user['location'], c.geometry) AND p.id = ?");
-//    $qry->bindParam(1, $id);
-//    $qry->execute();
-//    $result = $qry->fetch(PDO::FETCH_ASSOC);
-//    if (!$result) {
-//        $app->not_found("Post with id=\"{$id}\" not found");
-//    } else {
-//        $app->success(200, $result);
-//    }
-//})->name('post-get');
-
-/**
  * Get the project for a given id.
  */
 $app->get('/project/:id', function($id) use ($app)
@@ -497,6 +479,45 @@ $app->post('/search', function() use ($app)
     $app->success(200, $result);
 
 })->name('search');
+
+/**
+ * Validates the given CAS ticket
+ */
+$app->post('/cas', function() use ($app)
+{
+  $data = json_decode($app->request->getBody());
+
+  //  if (empty($ticket)) {
+  //      $app->not_found('Please provide a CAS ticket: /cas/<ticket>');
+  //      return;
+  //  }
+
+  $_url = 'https://cas.iu.edu/cas/validate';
+  $cassvc = 'IU';
+  $ticket = $data->ticket;
+  $casurl = $data->url;
+  $params = "cassvc=$cassvc&casticket=$ticket&casurl=$casurl";
+  $urlNew = "$_url?$params";
+
+  // send validation request to CAS server
+  $ch     = curl_init("{$urlNew}");
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $result = curl_exec($ch);
+
+  // split CAS answer into access and user
+  list($access,$user) = explode("\n",$result,2);
+  $access = trim($access);
+  $user = trim($user);
+
+  if (!$result || $access != 'yes') {
+    // error_log("\n" . "no result or access denied!" . "\n", 3, "/var/tmp/my-errors.log");
+    $info = curl_getinfo($ch);
+    $app->not_found("CAS token not validated!");
+  } else {
+    // error_log("\n" . "you got it, dude!" . "\n", 3, "/var/tmp/my-errors.log");
+    $app->success(200, $user);
+  }
+ })->name('cas-validate');
 
 $app->run();
 ?>
