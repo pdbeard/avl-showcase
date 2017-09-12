@@ -14,36 +14,36 @@
             <dt>Year</dt>
             <dd>{{ $ctrl.project.year }}</dd>
             <dt>
-              <ng-pluralize count="$ctrl.peopleObjects.length" when="{1: 'Person', 'other': 'People', 'NaN': 'error, yo!'}"></ng-pluralize>
+              <ng-pluralize count="$ctrl.peopleObjects.length" when="{1: 'Participant', 'other': 'Participants', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
             <dd>
               <span ng-repeat="person in $ctrl.peopleObjects">
-                {{ person.name_first }} {{ person.name_last }},
+                {{ person.name_first }} {{ person.name_last }}<span ng-if="!$last">, </span>
               </span>
             </dd>
             <dt>
               <ng-pluralize count="$ctrl.campusNames.length" when="{1: 'Campus', 'other': 'Campuses', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
             <dd>
-              <span ng-repeat="name in $ctrl.campusNames">{{ name }}, </span>
+              <span ng-repeat="name in $ctrl.campusNames">{{ name }}<span ng-if="!$last">, </span></span>
             </dd>
             <dt>
               <ng-pluralize count="$ctrl.categoryNames.length" when="{1: 'Category', 'other': 'Categories', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
             <dd>
-              <span ng-repeat="name in $ctrl.categoryNames">{{ name }}, </span>
+              <span ng-repeat="name in $ctrl.categoryNames">{{ name }}<span ng-if="!$last">, </span></span>
             </dd>
             <dt>
               <ng-pluralize count="$ctrl.disciplineNames.length" when="{1: 'Discipline', 'other': 'Disciplines', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
             <dd>
-              <span ng-repeat="name in $ctrl.disciplineNames">{{ name }}, </span>
+              <span ng-repeat="name in $ctrl.disciplineNames">{{ name }}<span ng-if="!$last">, </span></span>
             </dd>
             <dt>
               <ng-pluralize count="$ctrl.project.tags.length" when="{1: 'Tag', 'other': 'Tags', 'NaN': 'error, yo!'}"></ng-pluralize>
             </dt>
             <dd>
-              <span ng-repeat="tag in $ctrl.project.tags">{{ tag }}, </span>
+              <span ng-repeat="tag in $ctrl.project.tags">{{ tag }}<span ng-if="!$last">, </span></span>
             </dd>
             <dt>URL</dt>
             <dd>
@@ -68,7 +68,7 @@
                 </li>
                 <li>
                   <button class="button primary float-center" ng-click="$ctrl.deleteNo()">No</button>
-                </li> 
+                </li>
               </ul>
             </div>
             <div ng-show ="$ctrl.acknowledgeDelete" ng-class ="$ctrl.message_style">

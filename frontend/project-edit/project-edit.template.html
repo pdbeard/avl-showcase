@@ -82,7 +82,7 @@
           </div>
         </div>
         <fieldset class="fieldset">
-          <legend>People</legend>
+          <legend>Participants</legend>
           <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uFirstname.$touched }">
             <div class="grid halves form-item" ng-repeat="person in $ctrl.form.peopleObjects">
               <div class="grid-item">
@@ -111,7 +111,7 @@
             <div class="form-item">
               <br>
               <div class="form-item-input">
-                <button class="button invert" ng-click="$ctrl.form.peopleObjects.push({name_first: '', name_last: ''})">Add person</button>
+                <button class="button invert" ng-click="$ctrl.form.peopleObjects.push({name_first: '', name_last: ''})">Add participant</button>
               </div>
             </div>
           </div>
