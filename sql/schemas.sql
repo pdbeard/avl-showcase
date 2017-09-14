@@ -68,6 +68,7 @@ CREATE ANALYZER myanalyzer (
 DROP TABLE IF EXISTS showcase.projects;
 CREATE TABLE showcase.projects (
     id STRING PRIMARY KEY,
+    created timestamp,
     title STRING INDEX USING FULLTEXT WITH (analyzer = 'myanalyzer'),
     description STRING INDEX USING FULLTEXT WITH (analyzer = 'myanalyzer'),
     year STRING,

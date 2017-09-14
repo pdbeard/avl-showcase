@@ -65,3 +65,22 @@ div .choices__inner {
   padding-bottom:10px;
   float:none;
 }
+
+.font-white{
+  color:white;
+}
+
+.font-smaller{
+  font-family: "BentonSansRegular", "Helvetica Neue", Helvetica, sans-serif;
+  
+  font-size:.875rem;
+  text-transform: initial;
+}
+
+.font-normal{
+  font-weight: 100;
+}
+
+.full-width{
+  width:100%;
+}

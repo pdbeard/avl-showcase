@@ -71,6 +71,7 @@ angular
 
           this.projects.forEach((result) => {
             console.log(result.year);
+            console.log(result.created);
           });
 
         }, (error) => {
