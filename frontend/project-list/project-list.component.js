@@ -70,7 +70,7 @@ angular
           this.projects = response.data;
 
           this.projects.forEach((result) => {
-            console.log(result.year);
+            console.log("Project year " + result.year);
             console.log(result.created);
           });
 
