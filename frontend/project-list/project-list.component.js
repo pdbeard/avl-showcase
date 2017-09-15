@@ -57,7 +57,6 @@ angular
         projectsApi.get().then((response) => {
           this.projects = response.data;
           // addStuffToProjects();
-          console.log(this.projects);
         }, (e) => {
           console.warn(e);
           this.projects = [];
