@@ -2,5 +2,6 @@
   <button class="button right" ng-click="$ctrl.authenticateAsAdmin()">Log in as Admin</button>
 </span>
 <span ng-if="$ctrl.authentication.isAdmin">
+  <span>Logged in as {{$ctrl.username}}</span>
   <button class="button right" ng-click="$ctrl.goToProjectCreate()">Create new project</button>
 </span>

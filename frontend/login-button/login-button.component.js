@@ -6,6 +6,7 @@ angular
     controller: ['Authentication', '$window', '$location', '$http', 'Api', function LoginButtonController(Authentication, $window, $location, $http, Api) {
       const self = this;
       this.authentication = Authentication;
+      this.username = '';
 
       this.authenticateAsAdmin = function authenticateAsAdmin() {
         if (!this.authentication.isAdmin) {
@@ -21,11 +22,12 @@ angular
       const checkForCasTicket = function checkForCasTicket() {
         if ($window.location.search) {
           const casTicket = $window.location.search.substring('?casticket='.length);
+          const urlWithoutCasTicket = $location.absUrl().replace($window.location.search, '');
 
           const api = new Api('/cas');
           const data = {
             ticket: casTicket,
-            url: $location.absUrl().replace($window.location.search, ''),
+            url: urlWithoutCasTicket,
           };
           api.post(data).then((response) => {
             const authorizedUsers = [
@@ -43,6 +45,7 @@ angular
 
             if (authorizedUsers.includes(response.data)) {
               self.authentication.isAdmin = true;
+              self.username = response.data;
             } else {
               // valid IU credentials, but not on AVL list
               // need to show error alert
