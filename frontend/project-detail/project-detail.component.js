@@ -19,17 +19,17 @@ angular
         this.acknowledgeDelete = false;
         this.goToProjects = () => $location.url('/projects');
         this.goToEdit = () => $location.url(`/projects/${this.projectId}/edit`);
-
+        
         this.deleteProject = () => {
           this.confirmDelete = true;
           this.message_style = "alert info one-third float-center";
           this.info_message  = "Are you sure you want to delete this project?";
 
-
           this.deleteYes = () => {
             this.acknowledgeDelete = true;
             this.confirmDelete = false;
             const api = new Api(`/projects/${this.projectId}`);
+            deleteImg();
             api.delete().then((response) => {
               this.message_style = "alert success one-third float-center";
               this.info_message = "Project Deleted!";
@@ -51,6 +51,16 @@ angular
           this.deleteAcknowledge = () =>{
             $location.url('/projects');
           }
+        };
+
+        const deleteImg = () => {
+          const api = new Api(`/image/${this.project.image_ref}`);
+          api.delete().then((response) => {
+            console.log("Deleted: "+ response);
+            // console.log(response);
+          }, (e) => {
+            console.warn(e);
+          });
         };
 
         this.createPeopleObjects = () => {

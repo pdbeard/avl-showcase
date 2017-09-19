@@ -33,13 +33,15 @@ class CrateResource extends \Slim\Slim
         $this->resource_error(404, $message);
     }
 
-    function resource_error($status, $message, $contenttype = 'application/json')
+    function resource_error($status, $message, $check = NULL, $contenttype = 'application/json')
     {
+
         $this->response->headers->set('Content-Type', $contenttype);
         $this->response->setStatus($status);
         $this->response->write(json_encode(array(
             "error" => $message,
-            "status" => $status
+            "status" => $status,
+            "check" => $check
         )));
     }
 
@@ -374,7 +376,7 @@ $app->post('/images', function() use ($app)
     // error_log(print_r($info, TRUE) ."\nEnd Info\n\n", 3, "/var/tmp/my-errors.log");
 
     if ($info['http_code'] != 201) {
-        $app->resource_error($info['http_code'], 'Image is already in use. Duplicate images are not supported. Choose a new image');
+        $app->resource_error($info['http_code'], 'The image you selected is being used by another project. Choose a new image', $digest);
         return;
     } else {
         $app->success($info['http_code'], array(

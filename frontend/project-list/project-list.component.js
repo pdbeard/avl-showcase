@@ -57,7 +57,7 @@ angular
         projectsApi.get().then((response) => {
           this.projects = response.data;
           // addStuffToProjects();
-          console.log(this.projects);
+          // console.log(this.projects);
         }, (e) => {
           console.warn(e);
           this.projects = [];
@@ -69,10 +69,10 @@ angular
         searchApi.post(query).then((response) => {
           this.projects = response.data;
 
-          this.projects.forEach((result) => {
-            console.log("Project year " + result.year);
-            console.log(result.created);
-          });
+          // this.projects.forEach((result) => {
+          //   console.log("Project year " + result.year);
+          //   console.log(result.created);
+          // });
 
         }, (error) => {
           console.warn(error);

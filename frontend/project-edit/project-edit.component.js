@@ -60,6 +60,16 @@ angular
           this.project.tags = tagsArray;
         };
 
+        const deleteImg = () => {
+          const api = new Api(`/image/${this.project.image_ref}`);
+          api.delete().then((response) => {
+            console.log("Deleted: "+ response);
+            // console.log(response);
+          }, (e) => {
+            console.warn(e);
+          });
+        };
+
         const getCampuses = () => {
           const api = new Api('/campuses');
           api.get().then((response) => {
@@ -187,12 +197,14 @@ angular
 
         // create new project
         this.submitForm = function () {
+          deleteImg();
           if (this.form.imageData) {
             uploadBlob(this.form.imageData).then((response) => {
               this.project.image_ref = response.data.digest;
               submitProject();
             }, (e) => {
               console.warn(e);
+              console.log(e.data.check);
               self.message_style = "alert error one-third float-center";
               self.info_message  = "Editing the post failed. " + e.data.error;
               // window.alert('Image upload failed.');
