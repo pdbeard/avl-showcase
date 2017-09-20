@@ -44,24 +44,48 @@
           <login-button class="float-right"></login-button>
         </div>
       </header>
+      <nav role="navigation" aria-label="Main navigation" id="nav-main" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement"
+        class="main show-for-large dropdown">
+        <ul class="row pad">
+          <li class="show-on-sticky home">
+            <a href="/">Home</a>
+          </li>
+          <li class="first">
+            <a href="#!/projects/search" itemprop="url">
+              <span itemprop="name">Search</span>
+            </a>
+          </li>
+          <li>
+            <a href="#!/projects/featured" itemprop="url">
+              <span itemprop="name">Featured</span>
+            </a>
+          </li>
+          <li>
+            <a href="" itemprop="url">
+              <span itemprop="name" class="text-disabled">Advanced</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
       <div ng-view autoscroll="true"></div>
 
-      <div class="section bg-mahogany belt">
+      <div class="section bg-mahogany bg-dark belt">
         <div class="row pad">
           <div class="belt-nav one-third">
             <ul>
               <li>
                 <a href="https://pti.iu.edu/">Pervasive Technology Institute</a>
-                <p class ="bg-dark font-smaller">PTI enables innovation through collaboration. This helps further IU's mission of research, education, and engagement—both in and beyond Indiana.</p>
+                <p class="bg-dark font-smaller">PTI enables innovation through collaboration. This helps further IU's mission of research, education, and
+                  engagement—both in and beyond Indiana.</p>
               </li>
             </ul>
           </div>
-          <div class="belt-nav one-third clearfix">              
+          <div class="belt-nav one-third clearfix">
             <ul class="text-center">
-              <li class ="">
+              <li class="">
                 <a href="https://pti.iu.edu/contact/consulting/index.html?group=rt">Get in touch</a>
-                <p class ="bg-dark font-smaller">To contact the AVL directly email vishelp@iu.edu</p>
+                <p class="bg-dark font-smaller">To contact the AVL directly email vishelp@iu.edu</p>
               </li>
             </ul>
           </div>
@@ -122,6 +146,8 @@
   <script type="application/javascript" src="project-list/project-list.component.js"></script>
   <script type="application/javascript" src="select-multiple/select-multiple.module.js"></script>
   <script type="application/javascript" src="select-multiple/select-multiple.component.js"></script>
+
+
 </body>
 
 </html>

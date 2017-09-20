@@ -72,7 +72,7 @@ div .choices__inner {
 
 .font-smaller{
   font-family: "BentonSansRegular", "Helvetica Neue", Helvetica, sans-serif;
-  
+
   font-size:.875rem;
   text-transform: initial;
 }
@@ -83,4 +83,8 @@ div .choices__inner {
 
 .full-width{
   width:100%;
+}
+
+.text-disabled {
+  color: #ACA39A;
 }

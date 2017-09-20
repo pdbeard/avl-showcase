@@ -1,27 +1,25 @@
 <main role="main" class="no-section-nav">
-  <section class="section">
+  <section class="section" ng-if="$ctrl.mode === 'search'">
     <div class="row pad" id="search">
       <form>
-        <fieldset class="fieldset">
-          <legend>Search projects</legend>
-          <p>Search for projects, yo</p>
-          <div class="form-item">
-            <div class="form-item-label">
-              <label for="search">Search for projects:</label>
-            </div>
-            <div class="form-item-input">
-              <input type="text"
-                     name="search"
-                     id="search"
-                     ng-model="$ctrl.searchString"
-                     ng-change="$ctrl.updateSearch()"
-                     placeholder="Search projects">
-            </div>
+        <div class="form-item">
+          <div class="form-item-label">
+            <label for="search">Search for projects</label>
           </div>
-        </fieldset>
+          <div class="form-item-input">
+            <input type="text" name="search" id="search" ng-model="$ctrl.searchString" ng-change="$ctrl.updateSearch()" placeholder="Search projects">
+          </div>
+        </div>
       </form>
     </div>
   </section>
+
+  <section class="section" ng-if="$ctrl.mode === 'featured'">
+      <div class="row pad">
+        <p>I'm a featured query!</p>
+      </div>
+    </section>
+
   <!--<section class="section bg-gray" id="alerts">
     <div class="row pad">
       <div class="col col-sm-2 col-sm-offset-5 alert alert-success float-alert" role="alert" ng-show="showSuccessAlert">
@@ -38,12 +36,11 @@
   <section class="section">
     <div class="row pad">
       <div class="grid">
-        <div class ="grid-item">
+        <div class="grid-item">
           <div class="two-thirds">
             <h2 class="section-title">
               <span ng-show="$ctrl.searchString.length > 0">Search Results: </span>{{ $ctrl.projects.length }}
-              <ng-pluralize count="$ctrl.projects.length"
-                            when="{'0': 'Projects', 'one':'Project', 'other': 'Projects'}"></ng-pluralize>
+              <ng-pluralize count="$ctrl.projects.length" when="{'0': 'Projects', 'one':'Project', 'other': 'Projects'}"></ng-pluralize>
             </h2>
           </div>
           <div class="one-third">
@@ -62,19 +59,12 @@
         <!--<div class="grid-item" id="project-{{ project.id }}" ng-repeat="project in projects| startFrom:currentPage*pageSize | limitTo:pageSize track by project.id"
           ng-include="'project.html'">
         </div>-->
-        <div class="grid-item"
-             id="project-{{ project.id }}"
-             ng-repeat="project in $ctrl.projects | orderBy:$ctrl.sortBy track by project.id">
+        <div class="grid-item" id="project-{{ project.id }}" ng-repeat="project in $ctrl.projects | orderBy:$ctrl.sortBy track by project.id">
           <div class="panel--interactive">
             <a href="#!/projects/{{ project.id }}" ng-click="showDetails = !showDetails">
               <figure class="media image">
-                <img id="image-thumbnail"
-                     ng-if="!project.image_ref"
-                     alt=""
-                     src="https://placehold.it/160x120">
-                <img id="image-thumbnail"
-                     ng-if="project.image_ref"
-                     ng-style="{'background-image':'url({{$ctrl.apiHost}}/image/{{ project.image_ref }})'}">
+                <img id="image-thumbnail" ng-if="!project.image_ref" alt="" src="https://placehold.it/160x120">
+                <img id="image-thumbnail" ng-if="project.image_ref" ng-style="{'background-image':'url({{$ctrl.apiHost}}/image/{{ project.image_ref }})'}">
               </figure>
               <h2 class="title">{{ project.title }}</h2>
               <p>
