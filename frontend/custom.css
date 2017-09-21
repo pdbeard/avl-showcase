@@ -85,6 +85,10 @@ div .choices__inner {
   width:100%;
 }
 
+.text-disabled {
+  color: #ACA39A;
+}
+
 .featured{
   /* background-image:    url(assets/vr.jpg); */
   /* background-size:     cover;                       */

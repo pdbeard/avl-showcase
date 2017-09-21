@@ -2,6 +2,9 @@ angular
   .module('projectList')
   .component('projectList', {
     templateUrl: 'project-list/project-list.template.html',
+    bindings: {
+      mode: '@',
+    },
     controller: ['Api', 'apiHost', function ProjectListController(Api, apiHost) {
       this.campuses = [];
       this.categories = [];
@@ -73,7 +76,6 @@ angular
           //   console.log("Project year " + result.year);
           //   console.log(result.created);
           // });
-
         }, (error) => {
           console.warn(error);
           this.projects = [];
