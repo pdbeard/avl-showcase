@@ -84,3 +84,45 @@ div .choices__inner {
 .full-width{
   width:100%;
 }
+
+.featured{
+  /* background-image:    url(assets/vr.jpg); */
+  /* background-size:     cover;                       */
+  /* background-repeat:   no-repeat; */
+  /* background-position: center center;        */
+  border-radius:       .5rem;
+  padding:.2rem .4rem;
+  min-height: 4rem;
+  /* margin:auto; */
+  /* margin-top:4rem; */
+  /* margin-bottom:.3rem; */
+}
+.featured .content{
+  padding:.3rem 0rem;
+  transform: translate(0%, 25%);
+}
+.featured h4{
+  /* padding:.5rem 0rem; */
+  margin-bottom:0rem;
+}
+.featured p{
+  margin-bottom:0rem;
+}
+.featured.majestic{
+  background-color:#512A44;
+}
+.featured.mint{
+  background-color:#008264;
+}
+.featured.midnight{
+  background-color:#006298;
+}
+.featured.gold{
+  background-color:#DC8823;
+}
+.featured img{
+  padding:.5rem 0rem;
+  margin-right:.9rem;
+  /* transform: translate(0%, 25%); */
+  max-width:20%;
+}

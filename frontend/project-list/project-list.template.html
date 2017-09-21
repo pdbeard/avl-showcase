@@ -22,18 +22,59 @@
       </form>
     </div>
   </section>
-  <!--<section class="section bg-gray" id="alerts">
-    <div class="row pad">
-      <div class="col col-sm-2 col-sm-offset-5 alert alert-success float-alert" role="alert" ng-show="showSuccessAlert">
-        <button type="button" class="close" data-ng-click="showSuccessAlert = !showSuccessAlert">×</button>
-        <strong>Done!</strong> {{successTextAlert}}
-      </div>
-      <div class="col col-sm-2 col-sm-offset-5 alert alert-danger float-alert" role="alert" ng-show="showFailAlert">
-        <button type="button" class="close" data-ng-click="showFailAlert = !showFailAlert">×</button>
-        <strong>Oh no!</strong> {{failTextAlert}}
+
+  <section class="section">
+    <div class ="row pads">
+      <div class="grid thirds ">
+        <div class="grid-item">
+            <div class="featured mint clearfix">
+                <a href="#">
+                  <img class="float-left" src="../assets/icons/vr.png" alt="">
+                <div class = "content">
+                  <h4 class="title font-white">Virtual Reality</h4>
+                  <p class="font-white">This is the panel text</p>
+                </div>
+                </a>
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="featured gold clearfix">
+                <a href="#">
+                  <img class="float-left" src="../assets/icons/data.png" alt=""> 
+                  <div class = "content">
+                  <h4 class="title font-white">Data Visualization</h4>
+                  <p class="font-white">This is text for panel two</p>
+                 </div>
+                </a>
+            </div>
+        </div>
+        <div class="grid-item">
+          <div class="featured majestic clearfix">
+              <a href="#">
+                <img class="float-left"  src="../assets/icons/media.png" alt="">
+                <div class = "content">
+                <h4 class="title font-white">Advanced Media</h4>
+                <p class="font-white">This is text for panel two</p>
+              </div>
+              </a>
+          </div>     
+        </div>
+        <!-- style="background-image:url(../assets/vr.jpg);"  -->
+        <div class="grid-item" >
+          <div class="featured midnight clearfix" > 
+              <a href="#">
+                <img class="float-left" src="../assets/icons/art.png" alt="">
+                <div class = "content">
+                <h4 class="title font-white">Immersive Art</h4>
+                <p class="font-white">This is text for panel two</p>
+                </div>
+              </a>
+          </div>            
+        </div>
       </div>
     </div>
-  </section>-->
+  </section>
+
 
   <section class="section">
     <div class="row pad">
@@ -66,7 +107,7 @@
              id="project-{{ project.id }}"
              ng-repeat="project in $ctrl.projects | orderBy:$ctrl.sortBy track by project.id">
           <div class="panel--interactive">
-            <a href="#!/projects/{{ project.id }}" ng-click="showDetails = !showDetails">
+            <a href="#!/projects/{{ project.id }}">
               <figure class="media image">
                 <img id="image-thumbnail"
                      ng-if="!project.image_ref"
