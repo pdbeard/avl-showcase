@@ -99,6 +99,7 @@ $app->post('/projects', function() use ($app)
     $tags            = $data->tags;
     $image_ref       = $data->image_ref;
     $people          = $data->people;
+    $create_time     = $data->create_time;
 
     // error_log(print_r($people, TRUE) . " ttt\n", 3, "/var/tmp/my-errors.log");
     // error_log($people[0]->name_first . " fff\n", 3, "/var/tmp/my-errors.log");
@@ -140,9 +141,9 @@ $app->post('/projects', function() use ($app)
     $now       = time() * 1000;
     $likeCount = 0;
     $qry       = $app->conn->prepare("INSERT INTO showcase.projects (
-      id, title, description, url, year, campus_ids, category_ids, discipline_ids, tags, image_ref, people
+      id, title, description, url, year, campus_ids, category_ids, discipline_ids, tags, image_ref, people, create_time
     ) VALUES (
-      ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+      ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     )");
     $qry->bindParam(1, $id);
     $qry->bindParam(2, $title);
@@ -155,6 +156,7 @@ $app->post('/projects', function() use ($app)
     $qry->bindParam(9, $tags);
     $qry->bindParam(10, $image_ref);
     $qry->bindParam(11, $people);
+    $qry->bindParam(12, $create_time);
     $state = $qry->execute();
 
 

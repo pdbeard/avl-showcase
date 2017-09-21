@@ -17,6 +17,8 @@ angular
       const projectsApi = new Api('/projects');
       const searchApi = new Api('/search');
 
+    
+
       const loadCampuses = () => {
         const api = new Api('/campuses');
         api.get().then((response) => {
@@ -72,10 +74,10 @@ angular
         searchApi.post(query).then((response) => {
           this.projects = response.data;
 
-          // this.projects.forEach((result) => {
-          //   console.log("Project year " + result.year);
-          //   console.log(result.created);
-          // });
+          this.projects.forEach((result) => {
+            console.log("Project: " + result);
+            console.log(result.create_time);
+          });
         }, (error) => {
           console.warn(error);
           this.projects = [];

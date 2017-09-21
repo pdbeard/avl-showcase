@@ -31,6 +31,7 @@ describe('projectCreate', () => {
       discipline_ids: [],
       tags: [],
       people: '',
+      create: '',
     };
     const EMPTY_FORM = {
       peopleObjects: [],
@@ -51,6 +52,7 @@ describe('projectCreate', () => {
       discipline_ids: [1, 2],
       tags: ['tag1', 'tag2'],
       people: '',
+      create_time: '',
     };
     const mockProjectPostSubmit = {
       title: 'Mock Project',
@@ -63,6 +65,7 @@ describe('projectCreate', () => {
       discipline_ids: [1, 2],
       tags: ['tag1', 'tag2'],
       people: 'fName1--lName1;fName2--lName2',
+      create_time: 'date and time',
     };
     const mockForm = {
       tagsString: 'tag1, tag2',
@@ -101,7 +104,7 @@ describe('projectCreate', () => {
     beforeEach(inject(($componentController, _$httpBackend_, $routeParams) => {
       $httpBackend = _$httpBackend_;
       $routeParams.projectId='000';
-      ctrl = $componentController('projectCreate');
+      ctrl = $componentController('projectCreate_time');
     }));
 
     it('should get project id from routeParams', () => {

@@ -16,6 +16,7 @@ angular
           discipline_ids: [],
           tags: [],
           people: '',
+          create_time: '',
         };
         const EMPTY_FORM = {
           peopleObjects: [],
@@ -73,6 +74,8 @@ angular
         };
 
         const submitProject = function submitProject() {
+          self.project.create_time = new Date();
+
           const api = new Api('/projects');
           // convert people objects into strings
           self.form.peopleStrings = self.form.peopleObjects.map(person => `${person.name_first}--${person.name_last}`);
