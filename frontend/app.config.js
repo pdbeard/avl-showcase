@@ -5,11 +5,11 @@ angular
       $locationProvider.hashPrefix('!');
 
       $routeProvider
-        .when('/projects/search', {
-          template: '<project-list mode="search"></project-list>',
+        .when('/projects', {
+          template: '<project-list></project-list>',
         })
         .when('/projects/featured', {
-          template: '<project-list mode="featured"></project-list>',
+          template: '<project-list></project-list>',
         })
         .when('/projects/:projectId', {
           template: '<project-detail></project-detail>',
@@ -23,6 +23,6 @@ angular
         .when('/project-create/:projectId', {
           template: '<project-create></project-create>',
         })
-        .otherwise('/projects/search');
+        .otherwise('/projects');
     },
   ]);
