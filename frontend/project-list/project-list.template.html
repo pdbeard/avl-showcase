@@ -1,51 +1,38 @@
 <main role="main" class="no-section-nav">
-  <section class="section" ng-if="$ctrl.mode === 'search'">
-    <div class="row pad" id="search">
-      <form>
-        <div class="form-item">
-          <div class="form-item-label">
-            <label for="search">Search for projects</label>
-          </div>
-          <div class="form-item-input">
-            <input type="text" name="search" id="search" ng-model="$ctrl.searchString" ng-change="$ctrl.updateSearch()" placeholder="Search projects">
-          </div>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <section class="section" ng-if="$ctrl.mode === 'featured'">
-  <div class ="row pads">
+  
+  <!-- <section class="section" ng-if="$ctrl.mode === 'featured'"> -->
+  <section class="section">
+    <div class ="row pads">
       <div class="grid thirds ">
         <div class="grid-item">
             <div class="featured mint clearfix">
-                <a href="" ng-click="$ctrl.searchString='test'; $ctrl.updateSearch()">
+                <a href="" ng-click="$ctrl.searchString='reagan'; $ctrl.updateSearch()">
                   <img class="float-left" src="../assets/icons/vr.png" alt="">
                 <div class = "content">
-                  <h4 class="title font-white">Virtual Reality</h4>
-                  <p class="font-white">This is the panel text</p>
+                  <h6 class="title font-white">Virtual Reality</h6>
+                  <p class="font-white subheader">"reagan"</p>
                 </div>
                 </a>
             </div>
         </div>
         <div class="grid-item">
             <div class="featured gold clearfix">
-                <a href="" ng-click="$ctrl.searchString='regrant'; $ctrl.updateSearch()">
+                <a href="" ng-click="$ctrl.searchString='beard'; $ctrl.updateSearch();">
                   <img class="float-left" src="../assets/icons/data.png" alt=""> 
                   <div class = "content">
-                  <h4 class="title font-white">Data Visualization</h4>
-                  <p class="font-white">This is text for panel two</p>
+                  <h6 class="title font-white">Data Visualization</h6>
+                  <p class="font-white">"beard"</p>
                  </div>
                 </a>
             </div>
         </div>
         <div class="grid-item">
           <div class="featured majestic clearfix">
-              <a href="" ng-click="$ctrl.searchString='sub'; $ctrl.updateSearch()">
+              <a href="" ng-click="$ctrl.searchString='boyles'; $ctrl.updateSearch()">
                 <img class="float-left"  src="../assets/icons/media.png" alt="">
                 <div class = "content">
-                <h4 class="title font-white">Advanced Media</h4>
-                <p class="font-white">This is text for panel two</p>
+                <h6 class="title font-white">Advanced Media</h6>
+                <p class="font-white">"boyles"</p>
               </div>
               </a>
           </div>     
@@ -53,11 +40,11 @@
         <!-- style="background-image:url(../assets/vr.jpg);"  -->
         <div class="grid-item" >
           <div class="featured midnight clearfix" > 
-              <a href="" ng-click="$ctrl.searchString='lotstring'; $ctrl.updateSearch()">
+              <a href="" ng-click="$ctrl.searchString='ar'; $ctrl.updateSearch()">
                 <img class="float-left" src="../assets/icons/art.png" alt="">
                 <div class = "content">
-                <h4 class="title font-white">Immersive Art</h4>
-                <p class="font-white">This is text for panel two</p>
+                <h6 class="title font-white">Immersive Art</h6>
+                <p class="font-white">"ar"</p>
                 </div>
               </a>
           </div>            
@@ -65,7 +52,22 @@
       </div>
     </div>
   </section>
-
+<!-- <section class="section" ng-if="$ctrl.mode === 'search'"> -->
+    <section class="section">
+        <div class="row pad" id="search">
+          <form>
+            <div class="form-item">
+              <div class="form-item-label">
+                <label for="search">Search for projects</label>
+              </div>
+              <div class="form-item-input">
+                <input type="text" name="search" id="search" ng-model="$ctrl.searchString" ng-change="$ctrl.updateSearch()" placeholder="Search projects">
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    
   <section class="section">
     <div class="row pad">
       <div class="grid">

@@ -19,6 +19,7 @@ angular
         this.acknowledgeDelete = false;
         this.goToProjects = () => $location.url('/projects');
         this.goToEdit = () => $location.url(`/projects/${this.projectId}/edit`);
+        // this.trustDesc = $sce.trustAsHtml(this.project.description);
         
         this.deleteProject = () => {
           this.confirmDelete = true;
