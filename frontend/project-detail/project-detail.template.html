@@ -1,3 +1,8 @@
+<style type="text/css">
+  project-detail .description {
+    white-space: pre-line;
+  }
+</style>
 <main role="main" class="no-section-nav">
   <section class="section">
     <div class="row pad" id="project">
@@ -8,7 +13,7 @@
         </figure>
         <div class="content">
           <h2 class="title">{{ $ctrl.project.title }}</h2>
-          <div>{{$ctrl.project.description}}</div>
+          <p>{{ $ctrl.project.description }}</p>
 
           <dl class="inline">
             <dt>Year</dt>

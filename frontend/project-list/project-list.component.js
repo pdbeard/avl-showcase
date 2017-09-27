@@ -2,9 +2,6 @@ angular
   .module('projectList')
   .component('projectList', {
     templateUrl: 'project-list/project-list.template.html',
-    bindings: {
-      mode: '@',
-    },
     controller: ['Api', 'apiHost', function ProjectListController(Api, apiHost) {
       this.campuses = [];
       this.categories = [];
@@ -17,7 +14,6 @@ angular
       const projectsApi = new Api('/projects');
       const searchApi = new Api('/search');
 
-    
 
       const loadCampuses = () => {
         const api = new Api('/campuses');

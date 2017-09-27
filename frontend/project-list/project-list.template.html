@@ -1,8 +1,6 @@
 <main role="main" class="no-section-nav">
-  
-  <!-- <section class="section" ng-if="$ctrl.mode === 'featured'"> -->
   <section class="section">
-    <div class ="row pads">
+    <div class="row pads">
       <div class="grid thirds ">
         <div class="grid-item">
             <div class="featured mint clearfix">
@@ -24,7 +22,7 @@
                   <p class="font-white">"beard"</p>
                  </div>
                 </a>
-            </div>
+          </div>
         </div>
         <div class="grid-item">
           <div class="featured majestic clearfix">
@@ -52,26 +50,26 @@
       </div>
     </div>
   </section>
-<!-- <section class="section" ng-if="$ctrl.mode === 'search'"> -->
-    <section class="section">
-        <div class="row pad" id="search">
-          <form>
-            <div class="form-item">
-              <div class="form-item-label">
-                <label for="search">Search for projects</label>
-              </div>
-              <div class="form-item-input">
-                <input type="text" name="search" id="search" ng-model="$ctrl.searchString" ng-change="$ctrl.updateSearch()" placeholder="Search projects">
-              </div>
-            </div>
-          </form>
+
+  <section class="section">
+    <div class="row pad" id="search">
+      <form>
+        <div class="form-item">
+          <div class="form-item-label">
+            <label for="search">Search for projects</label>
+          </div>
+          <div class="form-item-input">
+            <input type="text" name="search" id="search" ng-model="$ctrl.searchString" ng-change="$ctrl.updateSearch()" placeholder="Search projects">
+          </div>
         </div>
-      </section>
-    
+      </form>
+    </div>
+  </section>
+
   <section class="section">
     <div class="row pad">
       <div class="grid">
-        <div class ="grid-item">
+        <div class="grid-item">
           <div class="two-thirds">
             <h2 class="section-title">
               <span ng-show="$ctrl.searchString.length > 0">Search Results: </span>{{ $ctrl.projects.length }}
