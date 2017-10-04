@@ -90,26 +90,19 @@ div .choices__inner {
 }
 
 .featured{
-  /* background-image:    url(assets/vr.jpg); */
-  /* background-size:     cover;                       */
-  /* background-repeat:   no-repeat; */
-  /* background-position: center center;        */
-  border-radius:       .5rem;
+  border-radius: .5rem;
   padding:.2rem .4rem;
-  min-height: 4rem;
-  /* margin:auto; */
-  /* margin-top:4rem; */
-  /* margin-bottom:.3rem; */
+  min-height: 1rem;
 }
 .featured .content{
   padding:.3rem 0rem;
   transform: translate(0%, 25%);
 }
-.featured h4{
-  /* padding:.5rem 0rem; */
+.featured h6{
   margin-bottom:0rem;
 }
 .featured p{
+  font-size: 1rem;
   margin-bottom:0rem;
 }
 .featured.majestic{
@@ -128,5 +121,5 @@ div .choices__inner {
   padding:.5rem 0rem;
   margin-right:.9rem;
   /* transform: translate(0%, 25%); */
-  max-width:20%;
+  max-width:15%;
 }
