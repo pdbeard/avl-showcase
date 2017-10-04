@@ -10,17 +10,19 @@ DROP BLOB TABLE IF EXISTS guestbook_images;
 -- custom text analyzer
 CREATE ANALYZER myanalyzer (
   TOKENIZER standard,
-  -- TOKENIZER my_edge_ngram WITH (
-  --   type='edge_ngram',
-  --   min_gram='3',
-  --   max_gram='20'
-  -- ),
   TOKEN_FILTERS (
     lowercase,
     stop,
     kstem,
+    ngram WITH (
+      min_gram = 3,
+      max_gram = 20
+    ),
     synonym WITH (
       synonyms = [
+        'dave, david',
+        'pat, patrick',
+        'mike, michael',
         'bloomington, iu bloomington => iub',
         'east, iu east => iue',
         'kokomo, iu kokomo => iuk',
