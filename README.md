@@ -26,13 +26,21 @@ app requires Crate `0.54.1` or higher. The Java sample app requires Crate
 `0.57.0` or higher. Several ways exist to get an instance of Crate running,
 visit our [Getting Started][12] section to find the one that works best for you.
 
-### Import Country Data
-Once the Crate instance in running, create the schema and import country data.
+### Import Data
+Once the Crate instance in running, create the schema and import basic data.
 You need [crash][13] (Crate Shell) to connect to Crate.
 
 ```bash
 crash < sql/schemas.sql
-crash -c "COPY showcase.projects FROM '$(pwd)/sql/MOCK_DATA.json'"
+crash -c "COPY showcase.categories FROM '$(pwd)/sql/categories.json'"
+crash -c "COPY showcase.campuses FROM '$(pwd)/sql/campuses.json'"
+crash -c "COPY showcase.disciplines FROM '$(pwd)/sql/disciplines.json'"
+```
+
+Optionally import mock projects.
+
+```bash
+crash -c "COPY showcase.projects FROM '$(pwd)/sql/mock_projects.json'"
 ```
 
 ## Develop
