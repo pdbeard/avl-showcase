@@ -197,8 +197,8 @@ angular
 
         // create new project
         this.submitForm = function () {
-          deleteImg();
           if (this.form.imageData) {
+            deleteImg();
             uploadBlob(this.form.imageData).then((response) => {
               this.project.image_ref = response.data.digest;
               submitProject();

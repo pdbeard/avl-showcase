@@ -84,6 +84,7 @@ angular
           self.project.people = self.form.peopleStrings.join(';');
           api.post(self.project).then((response) => {
   
+
             // self.message_style = "alert success one-third float-center";
             // self.info_message = response.data.success;
             // self.new_id = response.data.id;
@@ -92,7 +93,7 @@ angular
             // self.resetForm();
           }, (e) => {
             console.warn(e);
-
+            deleteImg();
             self.message_style = "alert error one-third float-center";
             self.info_message = e.data.error;
             self.projectId = undefined; 
@@ -113,6 +114,16 @@ angular
             }
           });
           return d.promise;
+        };
+
+        const deleteImg = () => {
+          const api = new Api(`/image/${this.project.image_ref}`);
+          api.delete().then((response) => {
+            console.log("Deleted: "+ response);
+            // console.log(response);
+          }, (e) => {
+            console.warn(e);
+          });
         };
 
         // create new project
