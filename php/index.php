@@ -196,6 +196,7 @@ $app->put('/project/:id/edit', function($id) use ($app)
     $tags            = $data->tags;
     $image_ref       = $data->image_ref;
     $people          = $data->people;
+    $create_time     = $data->create_time;
 
     // error_log($campus_ids[1] . "\n", 3, "/var/tmp/my-errors.log");
 
@@ -241,7 +242,8 @@ $app->put('/project/:id/edit', function($id) use ($app)
                                 discipline_ids=?,
                                 tags=?,
                                 image_ref=?,
-                                people=?
+                                people=?,
+                                create_time=?
                                 WHERE id=?");
     $qry->bindParam(1, $title);
     $qry->bindParam(2, $description);
@@ -253,7 +255,8 @@ $app->put('/project/:id/edit', function($id) use ($app)
     $qry->bindParam(8, $tags);
     $qry->bindParam(9, $image_ref);
     $qry->bindParam(10, $people);
-    $qry->bindParam(11, $id);
+    $qry->bindParam(11, $create_time);
+    $qry->bindParam(12, $id);
     $state = $qry->execute();
 })->name('project-put');
 

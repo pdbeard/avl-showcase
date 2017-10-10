@@ -16,6 +16,7 @@ angular
           discipline_ids: [],
           tags: [],
           people: '',
+          create_time: '',
         };
         const EMPTY_FORM = {
           peopleObjects: [],
@@ -152,6 +153,7 @@ angular
         };
 
         const submitProject = () => {
+          self.project.create_time = new Date();
           const api = new Api(`/project/${self.project.id}/edit`);
 
           // convert people objects into strings
