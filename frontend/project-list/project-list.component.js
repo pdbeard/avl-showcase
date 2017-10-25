@@ -56,7 +56,7 @@ angular
       const loadProjects = () => {
         projectsApi.get().then((response) => {
           this.projects = response.data;
-          this.sortBy = 'create_time';
+          this.sortBy = '-create_time';
         }, (e) => {
           console.warn(e);
           this.projects = [];
