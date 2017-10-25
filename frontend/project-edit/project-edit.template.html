@@ -1,12 +1,24 @@
+<style>
+  project-edit span.required {
+    color: #BD0000;
+  }
+  project-edit span.small-right {
+    float: right;
+    font-size: 50%;
+  }
+</style>
 <main role="main" class="no-section-nav">
   <section class="section">
     <div class="row pad">
       <form novalidate>
-        <h3>Edit Project</h3>
+        <h3>
+          Edit Project
+          <span class="small-right"><span class="required">*</span> required field</span>
+        </h3>
         <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted }">
           <div class="form-item">
             <div class="form-item-label">
-              <label for="title">Title</label>
+              <label for="title">Title<span class="required">*</span></label>
             </div>
             <div class="form-item-input">
               <input type="text" name="uTitle" id="title" ng-model="$ctrl.project.title" required="" placeholder="Enter a title">
@@ -17,7 +29,7 @@
           </div>
           <div class="form-item">
             <div class="form-item-label">
-              <label for="select-item-one">Campus</label>
+              <label for="select-item-one">Campus<span class="required">*</span></label>
             </div>
             <div class="form-item-input">
               <select-multiple field="campus" options-objects="$ctrl.form.campusCheckboxes" on-update="$ctrl.updateSelect({ field: field, values: selected })"></select-multiple>
@@ -43,7 +55,7 @@
         <div class="form-group" ng-class="{ 'has-error': mainForm.$submitted || mainForm.uURL.$touched }">
           <div class="form-item">
             <div class="form-item-label">
-              <label for="description">Description</label>
+              <label for="description">Description<span class="required">*</span></label>
             </div>
             <div class="form-item-input">
               <textarea id="description" rows="4" ng-model="$ctrl.project.description" name="uDescription" placeholder="Enter a short description of the project"></textarea>
@@ -136,7 +148,7 @@
           </figure>
           <div class="form-item">
             <div class="form-item-label">
-              <label ng-if="!$ctrl.project.image_ref" for="file-upload">Upload an image</label>
+              <label ng-if="!$ctrl.project.image_ref" for="file-upload">Upload an image<span class="required">*</span></label>
               <label ng-if="$ctrl.project.image_ref" for="file-upload">Replace image</label>
             </div>
             <div class="form-item-input">
