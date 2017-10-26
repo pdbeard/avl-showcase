@@ -159,6 +159,7 @@ angular
           const api = new Api('/campuses');
           api.get().then((response) => {
             campuses = response.data;
+            campuses.sort((a, b) => a.id - b.id);
 
             // add campus info to the form for checkboxes
             this.form.campusCheckboxes = angular.copy(campuses);
@@ -172,7 +173,8 @@ angular
           const api = new Api('/categories');
           api.get().then((response) => {
             categories = response.data;
-            // console.log(categories);
+            categories.sort((a, b) => a.id - b.id);
+
             // add category info to the form for checkboxes
             this.form.categoryCheckboxes = angular.copy(categories);
           }, (e) => {
@@ -185,6 +187,17 @@ angular
           const api = new Api('/disciplines');
           api.get().then((response) => {
             disciplines = response.data;
+
+            // sort alphabetically by name
+            disciplines.sort((a, b) => {
+              if (a.name < b.name) {
+                return -1;
+              }
+              if (a.name > b.name) {
+                return 1;
+              }
+              return 0;
+            });
 
             // add discipline info to the form for checkboxes
             this.form.disciplineCheckboxes = angular.copy(disciplines);
